@@ -1,6 +1,6 @@
-# 🌈 Rainbow app ![version](https://img.shields.io/badge/v1.0-release-green?link=release)
+# 📚 Book store ![version](https://img.shields.io/badge/v1.0-release-green?link=release)
 
-## Challenge1 [(Swift Marathon X)](https://t.me/swiftmarathon) <a href="url"><img src="https://github.com/DmitryLorents/Bomba-Challenge1/blob/dmitry/readmeFix/Bomba-Challenge1/SupportingFiles/Assets.xcassets/ReadmeFiles/swiftMarathon.imageset/swift%20Marathon.jpeg" height="auto" width="30" align="center"></a>
+## Challenge2 [(Swift Marathon X)](https://t.me/swiftmarathon) <a href="url"><img src="https://github.com/DmitryLorents/Bomba-Challenge1/blob/dmitry/readmeFix/Bomba-Challenge1/SupportingFiles/Assets.xcassets/ReadmeFiles/swiftMarathon.imageset/swift%20Marathon.jpeg" height="auto" width="30" align="center"></a>
 
 ---
 
@@ -14,7 +14,7 @@
 
 ---
 
-## Developers *(team #2)*:
+## Developers *(team #7)*:
 
 * [DmitryLorents *(teamleader)*](https://github.com/DmitryLorents)
 * [Artemaj9](https://github.com/Artemaj9)
@@ -25,11 +25,11 @@
 
 ## Screenshots
 <p align="center">
-<img src="https://github.com/DmitryLorents/RainbowApp/blob/develop/RainbowApp/SupportingFiles/Assets.xcassets/Readme/mainVC.imageset/mainVC.png" width="140"/> <img src="https://github.com/DmitryLorents/RainbowApp/blob/develop/RainbowApp/SupportingFiles/Assets.xcassets/Readme/gameVC.imageset/gameVC.png" width="140"/>  <img src="https://github.com/DmitryLorents/RainbowApp/blob/develop/RainbowApp/SupportingFiles/Assets.xcassets/Readme/resultVC.imageset/resultVC.png" width="140"/> 
+<img src="" width="140"/> <img src="" width="140"/>  <img src="" width="140"/> 
 </p>
 
 <p align="center">
-  <img src="https://github.com/DmitryLorents/RainbowApp/blob/develop/RainbowApp/SupportingFiles/Assets.xcassets/Readme/settingsVC.imageset/settingsVC.png" width="140"/>  <img src="https://github.com/DmitryLorents/RainbowApp/blob/develop/RainbowApp/SupportingFiles/Assets.xcassets/Readme/rulesVC.imageset/rulesVC.png" width="140"/>
+  <img src="" width="140"/>  <img src="" width="140"/>
 </p>
 
 ---
@@ -37,7 +37,7 @@
 ## Video demonstration of the application
 
 <p align="center">
-  <img src="https://github.com/DmitryLorents/RainbowApp/blob/develop/RainbowApp/SupportingFiles/Assets.xcassets/Readme/animation.dataset/animation.gif" width="300"/>
+  <img src="" width="300"/>
 </p>
 
 
