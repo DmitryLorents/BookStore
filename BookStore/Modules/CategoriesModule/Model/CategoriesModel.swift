@@ -1,0 +1,5 @@
+//
+//  ResultsModel.swift
+//
+
+import Foundation
