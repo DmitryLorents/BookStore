@@ -8,14 +8,14 @@
 import UIKit.UICollectionView
 
 protocol CollectionViewFactoryProtocol {
-    func createCollectionView(with layout: UICollectionViewFlowLayout) -> UICollectionView
+    func createCollectionView(with layout: UICollectionViewLayout) -> UICollectionView
 }
 
-class CollectionViewFactory: CollectionViewFactoryProtocol {
-    func createCollectionView(with layout: UICollectionViewFlowLayout) -> UICollectionView {
+final class CollectionViewFactory: CollectionViewFactoryProtocol {
+    func createCollectionView(with layout: UICollectionViewLayout) -> UICollectionView {
         lazy var mainCollectionView: UICollectionView = {
             let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
-            view.backgroundColor = .cyan
+            view.backgroundColor = .systemBackground
             view.showsVerticalScrollIndicator = false
             view.translatesAutoresizingMaskIntoConstraints = false
             return view

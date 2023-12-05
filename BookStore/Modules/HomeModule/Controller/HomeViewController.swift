@@ -3,46 +3,92 @@
 //
 
 import UIKit
+import SwiftUI
 
-class HomeViewController: UIViewController {
+final class HomeViewController: UIViewController {
     //MARK: - Parameters
-    let firstStack = StackViewFactory().createStackView(with: "Top Book", subtitle: "see more")
-    let secondStack = StackViewFactory().createStackView(with: "Recent Books", subtitle: "see more")
-    let someView = CellViewFactory().createCellView(category: "Classics", name: "The Picture of Dorian Gray", author: "Oscar Wilde")
+    let sections = BookModel.sections
+    lazy var mainCollectionView = CollectionViewFactory().createCollectionView(with: createLayout())
+    
     // MARK: - Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        view.addSubview(firstStack)
-        view.addSubview(secondStack)
-        view.addSubview(someView)
+        view.addSubview(mainCollectionView)
         setupConstrints()
+        mainCollectionView.register(CustomCollectionViewCell.self, forCellWithReuseIdentifier: CustomCollectionViewCell.identifier)
+        mainCollectionView.register(SectionHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SectionHeader.identifier)
+        mainCollectionView.dataSource = self
     }
     
-    
-    
     // MARK: - Methods
+    func createLayout() -> UICollectionViewLayout {
+        let layout = UICollectionViewCompositionalLayout { sectionIndex, _ in
+            switch self.sections[sectionIndex].type {
+            case .top:
+                return LayoutBuilder().createTopBooksSection()
+            case .recent:
+                return LayoutBuilder().createTopBooksSection()
+            }
+        }
+        return layout
+    }
+    
+//    func createDataSource() -> UICollectionViewDiffableDataSource<Section, Book> {
+//        
+//    }
+    
     func setupConstrints() {
         NSLayoutConstraint.activate([
-            firstStack.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            firstStack.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            firstStack.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            firstStack.heightAnchor.constraint(equalToConstant: 100)
-        ])
-        
-        NSLayoutConstraint.activate([
-            secondStack.topAnchor.constraint(equalTo: firstStack.bottomAnchor),
-            secondStack.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            secondStack.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            secondStack.heightAnchor.constraint(equalToConstant: 100)
-        ])
-        
-        NSLayoutConstraint.activate([
-            someView.topAnchor.constraint(equalTo: secondStack.bottomAnchor, constant: 20),
-            someView.widthAnchor.constraint(equalToConstant: 176),
-            someView.heightAnchor.constraint(equalToConstant: 232),
-            someView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+            mainCollectionView.topAnchor.constraint(equalTo: view.topAnchor),
+            mainCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            mainCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            mainCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor)
         ])
     }
    
+}
+
+extension HomeViewController: UICollectionViewDataSource {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        sections.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        sections[section].books.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CustomCollectionViewCell.identifier, for: indexPath) as! CustomCollectionViewCell
+        let section = sections[indexPath.section]
+        let book = section.books[indexPath.row]
+        cell.configure(with: book)
+        
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SectionHeader.identifier, for: indexPath) as! SectionHeader
+        header.configure(with: sections[indexPath.section].type.rawValue, subtitle: "see more")
+        
+        return header
+    }
+}
+
+struct ListProvider: PreviewProvider {
+    static var previews: some View {
+        ConteinerView().ignoresSafeArea()
+    }
+    
+    struct ConteinerView: UIViewControllerRepresentable {
+        let homeVC = HomeViewController()
+        
+        func makeUIViewController(context: Context) -> some UIViewController {
+            homeVC
+        }
+        
+        func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
+            
+        }
+    }
 }

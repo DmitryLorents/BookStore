@@ -11,7 +11,7 @@ protocol StackViewFactoryProtocol {
     func createStackView(with title: String, subtitle: String) -> UIStackView
 }
 
-class StackViewFactory: StackViewFactoryProtocol {
+final class StackViewFactory: StackViewFactoryProtocol {
     func createStackView(with title: String, subtitle: String) -> UIStackView {
         lazy var title: UILabel = {
             let view = UILabel(frame: CGRect(x: 0, y: 0, width: 150, height: 20))
@@ -39,6 +39,6 @@ class StackViewFactory: StackViewFactoryProtocol {
     }
     
     deinit {
-        print("\(self) deinit")
+//        print("\(self) deinit")
     }
 }
