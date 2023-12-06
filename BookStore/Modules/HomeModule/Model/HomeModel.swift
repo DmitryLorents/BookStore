@@ -5,36 +5,42 @@
 //
 import UIKit
 
-struct Book: Hashable {
+struct Book: Hashable, Identifiable {
+    let id = UUID()
     let name: String
     let author: String
     let category: String
 }
 
-struct Section: Hashable {
-    let type: BookType
-    let books: [Book]
+enum Categorie: String, Hashable {
+    case week = "This Week"
+    case month = "This Month"
+    case year = "This Year"
 }
 
-enum BookType: String {
-    case top = "Top Books"
-    case recent = "Recent Books"
+enum BookSection: Hashable {
+    case categories(title: String, buttonTitle: String, name: [Categorie])
+    case top(books: [Book], isHidden: Bool)
+    case recent(title: String, buttonTitle: String, books: [Book], isHidden: Bool)
 }
 
 struct BookModel {
-    static let sections = [Section(type: .top,
-                                   books: [
-                                    Book(name: "Жизнь Петра Великого", author: "Антонио Катифоро", category: "Хит"),
-                                    Book(name: "В поисках гробниц Древнего Египта", author: "Крис Нонтон", category: "Хит"),
-                                    Book(name: "Алгебра счастья", author: "Скотт Гэллоуэй", category: "Хит")
-                                   ]), Section(type: .recent,
-                                              books: [
-                                                Book(name: "Город Петра Великого", author: "Антонио Катифоро", category: "Хит"),
-                                                Book(name: "В поисках гробниц Древнего Египта", author: "Крис Нонтон", category: "Хит"),
-                                                Book(name: "Алгебра счастья", author: "Скотт Гэллоуэй", category: "Хит")
-                                              ])
-                                   ]
+    static let sections: [BookSection] = [
+        .categories(title: "Top Books",
+                    buttonTitle: "see more",
+                    name: [.week, .month, .year]),
+        .top(books: [
+            Book(name: "Жизнь Петра Великого", author: "Антонио Катифоро", category: "Хит"),
+            Book(name: "В поисках гробниц Древнего Египта", author: "Крис Нонтон", category: "Хит"),
+            Book(name: "Алгебра счастья", author: "Скотт Гэллоуэй", category: "Хит")
+        ], isHidden: true),
+        .recent(title: "Recent Books", buttonTitle: "see more", books: [
+            Book(name: "Город Петра Великого", author: "Антонио Катифоро", category: "Хит"),
+            Book(name: "В поисках гробниц Древнего Египта", author: "Крис Нонтон", category: "Хит"),
+            Book(name: "Алгебра счастья", author: "Скотт Гэллоуэй", category: "Хит")
+        ], isHidden: false)
+    ]
 }
-                                   
-                                   
-                                   
+
+
+
