@@ -1,37 +1,34 @@
 //
-//  RainbowApp
+//  HomeViewController.swift
+//  BookStore
+//
+//  Created by Максим Горячкин on 05.12.2023.
 //
 
 import UIKit
 import SwiftUI
 
 final class HomeViewController: UIViewController {
-    //MARK: - Parameters
-    let sections = BookModel.sections
-    lazy var mainCollectionView = CollectionViewFactory().createCollectionView(with: LayoutBuilder().createLayout(for: sections))
-    lazy var dataSource = DataBuilder().createDataSource(for: mainCollectionView)
     
-    // MARK: - Life cycle
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .white
-        view.addSubview(mainCollectionView)
-        setupConstraints()
-        mainCollectionView.register(CustomCollectionViewCell.self, forCellWithReuseIdentifier: CustomCollectionViewCell.identifier)
-        mainCollectionView.register(CategoryCollectionViewCell.self, forCellWithReuseIdentifier: CategoryCollectionViewCell.identifier)
-        mainCollectionView.register(SectionHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SectionHeader.identifier)
-        DataBuilder().updateDataSource(for: dataSource, from: sections)
+    // MARK: - Parameters
+    
+    var sections: [BookSection]
+    
+    // MARK: - Initialization
+    
+    init(sections: [BookSection]) {
+        self.sections = sections
+        super.init(nibName: nil, bundle: nil)
+        self.view = HomeView(sections: sections)
     }
     
-    // MARK: - Methods
-    func setupConstraints() {
-        NSLayoutConstraint.activate([
-            mainCollectionView.topAnchor.constraint(equalTo: view.topAnchor),
-            mainCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            mainCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            mainCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor)
-        ])
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
+}
+
+extension HomeViewController: UICollectionViewDelegate {
+    
 }
 
 struct ListProvider: PreviewProvider {
@@ -40,7 +37,7 @@ struct ListProvider: PreviewProvider {
     }
     
     struct ConteinerView: UIViewControllerRepresentable {
-        let homeVC = HomeViewController()
+        let homeVC = HomeViewController(sections: BookModel.sections)
         
         func makeUIViewController(context: Context) -> some UIViewController {
             homeVC

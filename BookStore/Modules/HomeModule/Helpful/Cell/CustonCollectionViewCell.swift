@@ -1,5 +1,5 @@
 //
-//  CustonCollectionViewCell.swift
+//  CustomCollectionViewCell.swift
 //  BookStore
 //
 //  Created by Максим Горячкин on 04.12.2023.

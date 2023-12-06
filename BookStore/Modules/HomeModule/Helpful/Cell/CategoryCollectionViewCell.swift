@@ -1,5 +1,5 @@
 //
-//  CategoryHeader.swift
+//  CategoryCollectionViewCell.swift
 //  BookStore
 //
 //  Created by Максим Горячкин on 05.12.2023.

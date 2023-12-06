@@ -1,8 +1,10 @@
 //
-//  5Model.swift
-//  RainbowApp
+//  HomeModel.swift
+//  BookStore
 //
+//  Created by Максим Горячкин on 05.12.2023.
 //
+
 import UIKit
 
 struct Book: Hashable, Identifiable {

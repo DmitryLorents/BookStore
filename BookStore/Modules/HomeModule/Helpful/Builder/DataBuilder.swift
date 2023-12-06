@@ -8,7 +8,7 @@
 import UIKit
 
 final class DataBuilder {
-    func createDataSource(for collectionView: UICollectionView) -> UICollectionViewDiffableDataSource<BookSection, AnyHashable> {
+    func createDataSource(for collectionView: UICollectionView, from sections: [BookSection]) -> UICollectionViewDiffableDataSource<BookSection, AnyHashable> {
         let dataSource = UICollectionViewDiffableDataSource<BookSection, AnyHashable>(collectionView: collectionView) { collectionView, indexPath, item in
             switch item {
             case let model as Book:
@@ -23,6 +23,9 @@ final class DataBuilder {
                 fatalError("Unknown item type")
             }
         }
+        
+        updateDataSource(for: dataSource, from: sections)
+        updateHeader(for: dataSource, from: sections)
 
         return dataSource
     }
@@ -43,8 +46,6 @@ final class DataBuilder {
         }
         
         dataSource.apply(snapshot)
-        
-        updateHeader(for: dataSource, from: sections)
     }
     
     func updateHeader(for dataSource: UICollectionViewDiffableDataSource<BookSection, AnyHashable>, from sections: [BookSection]) {
