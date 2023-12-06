@@ -32,6 +32,7 @@
 		0AD9EF272B1C42370099F0A2 /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD9EF222B1C42370099F0A2 /* AccountViewController.swift */; };
 		0AD9EF282B1C42370099F0A2 /* AccountModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD9EF242B1C42370099F0A2 /* AccountModel.swift */; };
 		0AD9EF292B1C42370099F0A2 /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD9EF262B1C42370099F0A2 /* AccountView.swift */; };
+		84FD1DDB2B1FA44300FEC982 /* CartViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FD1DDA2B1FA44300FEC982 /* CartViewCell.swift */; };
 		ACC0F5542B0569450016C3ED /* CategoriesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC0F5532B0569450016C3ED /* CategoriesModel.swift */; };
 /* End PBXBuildFile section */
 
@@ -62,6 +63,7 @@
 		0AD9EF222B1C42370099F0A2 /* AccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
 		0AD9EF242B1C42370099F0A2 /* AccountModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountModel.swift; sourceTree = "<group>"; };
 		0AD9EF262B1C42370099F0A2 /* AccountView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
+		84FD1DDA2B1FA44300FEC982 /* CartViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartViewCell.swift; sourceTree = "<group>"; };
 		ACC0F5532B0569450016C3ED /* CategoriesModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -210,6 +212,7 @@
 			isa = PBXGroup;
 			children = (
 				0A162AB82AFD20FA00DF885A /* CartView.swift */,
+				84FD1DDA2B1FA44300FEC982 /* CartViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -453,6 +456,7 @@
 			files = (
 				0A162ACC2AFD20FA00DF885A /* CartView.swift in Sources */,
 				0ACD9E902B02BF3600FE9DBA /* SceneDelegate.swift in Sources */,
+				84FD1DDB2B1FA44300FEC982 /* CartViewCell.swift in Sources */,
 				0AD9EF1F2B1C3C8A0099F0A2 /* CustomTabBarController.swift in Sources */,
 				0ACD9E8E2B02BF0700FE9DBA /* WelcomeView.swift in Sources */,
 				0ACD9E942B02BF5200FE9DBA /* UIColor + ext.swift in Sources */,
