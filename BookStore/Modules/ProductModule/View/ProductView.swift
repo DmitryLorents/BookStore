@@ -4,6 +4,17 @@
 //
 //  Created by Andrei Shpartou on 5/12/2023.
 //
+// try to add stackView upside UIView
+//
+// calculate height from screen width
+// to add buttons
+// to transpose Constants to Model
+// to refactor code
+// to pull request my file
+
+// second stage:
+// to add TabBar
+//
 
 import UIKit
 import SnapKit
@@ -13,23 +24,22 @@ class ProductView: UIView {
     private enum ViewDefaults {
         enum CommonConstraints {
             static let sideInset = 15.0
-            static let topOffset = 20.0
+            static let topOffset = 15.0
             static let stackViewSpacing = 10.0
             static let cornerRadius = 20.0
         }
         
-        enum TitleLabel {
-            static let text = "The Picture of Dorian Gray or The magic fabulous non-predictable story"
+        enum CommonSettings {
             static let numberOfLines = 0
-            static let font = UIFont.boldSystemFont(ofSize: 20.0)
-            
-            enum Constraints {
-                static let topOffset = 80.0
-            }
+            static let bookInfoTextFont = UIFont.boldSystemFont(ofSize: 16)
+            static let bookInfoTitlesFont = UIFont.systemFont(ofSize: 15)
+            static let bookInfoSpacing = 5.0
         }
-//        enum DetailsStackView {
-//            static let spacing = 20.0
-//        }
+        
+        enum TitleLabel {
+            static let text = "The Picture of Dorian Gray / Default Book Title"
+            static let font = UIFont.boldSystemFont(ofSize: 20.0)
+        }
         
         enum CoverImageView {
             static let imageName = "book.circle.fill"
@@ -42,46 +52,68 @@ class ProductView: UIView {
         }
         
         enum AuthorLabel {
-            static let text = "Author: "
+            static let text = "Author:"
+        }
+        
+        enum AuthorTextLabel {
+            static let text = "Name Surname"
+        }
+        
+        enum CategoryLabel {
+            static let text = "Category:"
+        }
+        
+        enum CategoryTextLabel {
+            static let text = "Default category Default categoryDefault categoryDefault categoryDefault categoryDefault categoryDefault categoryDefault categoryDefault categoryDefault category"
+        }
+        
+        enum RatingLabel {
+            static let text = "Rating:"
+        }
+        
+        enum RatingTextLabel {
+            static let text = "10.0 default / 10.0 default"
         }
         
         enum DesctiptionLabel {
             static let text = "Description:"
-            static let font = UIFont.boldSystemFont(ofSize: 17.0)
         }
         
         enum DesctiptionTextLabel {
             static let text = """
-            Oscar Wilde’s only novel is the dreamlike story of a young man who sells his soul for eternal youth and beauty. In this celebrated work Wilde forged a devastating portrait of the effects of evil and debauchery on a young aesthete in late-19th-century England. Combining elements of the Gothic horror novel and decadent French fiction, the book centers on a striking premise: As Dorian Gray sinks into a life of crime and gross sensuality, his body retains perfect youth and vigor while his recently painted portrait grows day by day into a hideous record of evil, which he must keep hidden from the world. For over a century, this mesmerizing tale of horror and suspense has enjoyed wide popularity. It ranks as one of Wilde's most important creations and among the classic achievements of its kind.
+            Default Book Description: Oscar Wilde’s only novel is the dreamlike story of a young man who sells his soul for eternal youth and beauty. In this celebrated work Wilde forged a devastating portrait of the effects of evil and debauchery on a young aesthete in late-19th-century England. Combining elements of the Gothic horror novel and decadent French fiction, the book centers on a striking premise: As Dorian Gray sinks into a life of crime and gross sensuality, his body retains perfect youth and vigor while his recently painted portrait grows day by day into a hideous record of evil, which he must keep hidden from the world. For over a century, this mesmerizing tale of horror and suspense has enjoyed wide popularity. It ranks as one of Wilde's most important creations and among the classic achievements of its kind.
             """
-            static let numberOfLines = 0
-            static let font = UIFont.systemFont(ofSize: 16.0)
-            
-//            enum Constraints {
-//                static let bottomInset = 50.0
-//            }
+            static let font = UIFont.systemFont(ofSize: 15.0)
         }
-        
-//        "Oscar Wilde’s only novel is the dreamlike story of a young man who sells his soul for eternal youth and beauty. In this celebrated work Wilde forged a devastating portrait of the effects of evil and debauchery on a young aesthete in late-19th-century"
     }
     
+    // common constraints, insets, offsets
     private typealias CommonConstraints = ViewDefaults.CommonConstraints
+    // default settings
+    private typealias CommonSettings = ViewDefaults.CommonSettings
     // tittle section
     private typealias TitleLabel = ViewDefaults.TitleLabel
     // details section
     private typealias CoverImageView = ViewDefaults.CoverImageView
+    // author
     private typealias AuthorLabel = ViewDefaults.AuthorLabel
+    private typealias AuthorTextLabel = ViewDefaults.AuthorTextLabel
+    // category
+    private typealias CategoryLabel = ViewDefaults.CategoryLabel
+    private typealias CategoryTextLabel = ViewDefaults.CategoryTextLabel
+    // rating
+    private typealias RatingLabel = ViewDefaults.RatingLabel
+    private typealias RatingTextLabel = ViewDefaults.RatingTextLabel
     // description section
     private typealias DesctiptionLabel = ViewDefaults.DesctiptionLabel
     private typealias DesctiptionTextLabel = ViewDefaults.DesctiptionTextLabel
-    
     
     //MARK: - Views
     // scroll
     private lazy var scrollView = {
         let scrollView = UIScrollView()
         scrollView.showsVerticalScrollIndicator = true
-        //scrollView.alwaysBounceVertical = true
+        scrollView.alwaysBounceVertical = true
         return scrollView
     }()
     
@@ -95,7 +127,7 @@ class ProductView: UIView {
         let label = UILabel()
         label.text = TitleLabel.text
         label.font = TitleLabel.font
-        label.numberOfLines = TitleLabel.numberOfLines
+        label.numberOfLines = CommonSettings.numberOfLines
         return label
     }()
     //MARK: - BookDetailsViews
@@ -103,11 +135,13 @@ class ProductView: UIView {
         let stackView = UIStackView()
         stackView.axis = .horizontal
         stackView.spacing = CommonConstraints.stackViewSpacing
-        //stackView.alignment = .fill
-        //stackView.distribution = .fillEqually
         return stackView
     }()
-    
+    // cover
+    private lazy var coverView = {
+        let view = UIView()
+        return view
+    }()
     private lazy var coverImageView = {
         let imageView = UIImageView(image: UIImage(systemName: CoverImageView.imageName))
         imageView.contentMode = .scaleAspectFit
@@ -115,37 +149,69 @@ class ProductView: UIView {
         imageView.layer.cornerRadius = CommonConstraints.cornerRadius
         return imageView
     }()
-    
+    // bookInfoStackView
+    // bookInfo
     private lazy var bookInfoView = {
         let view = UIView()
         return view
     }()
-    
     private lazy var bookInfoStackView = {
         let stackView = UIStackView()
-        stackView.axis = .horizontal
-        stackView.alignment = .top
-        stackView.spacing = CommonConstraints.stackViewSpacing
         return stackView
     }()
-    
+    // author
     private lazy var authorLabel = {
         let label = UILabel()
         label.text = AuthorLabel.text
+        label.font = CommonSettings.bookInfoTitlesFont
         return label
     }()
     
-    private lazy var authorDescriptionLabel = {
+    private lazy var authorTextLabel = {
         let label = UILabel()
-        //label.text = "Long long text with many many strings"
+        label.numberOfLines = CommonSettings.numberOfLines
+        label.text = AuthorTextLabel.text
+        label.font = CommonSettings.bookInfoTextFont
         return label
     }()
+    // category
+    private lazy var categotyLabel = {
+        let label = UILabel()
+        label.text = CategoryLabel.text
+        label.font = CommonSettings.bookInfoTitlesFont
+        return label
+    }()
+    
+    private lazy var categoryTextLabel = {
+        let label = UILabel()
+        label.text = CategoryTextLabel.text
+        label.font = CommonSettings.bookInfoTextFont
+        label.numberOfLines = CommonSettings.numberOfLines
+        return label
+    }()
+    // rating
+    private lazy var ratingLabel = {
+        let label = UILabel()
+        label.text = RatingLabel.text
+        label.font = CommonSettings.bookInfoTitlesFont
+        return label
+    }()
+    
+    private lazy var ratingTextLabel = {
+        let label = UILabel()
+        label.text = RatingTextLabel.text
+        label.font = CommonSettings.bookInfoTextFont
+        label.numberOfLines = CommonSettings.numberOfLines
+        return label
+    }()
+    
+    
     
     //MARK: - DescriptionViews
     private lazy var descriptionLabel = {
         let label = UILabel()
         label.text = DesctiptionLabel.text
-        label.font = DesctiptionLabel.font
+        label.font = CommonSettings.bookInfoTextFont
         return label
     }()
     
@@ -153,7 +219,7 @@ class ProductView: UIView {
         let label = UILabel()
         label.text = DesctiptionTextLabel.text
         label.font = DesctiptionTextLabel.font
-        label.numberOfLines = DesctiptionTextLabel.numberOfLines
+        label.numberOfLines = CommonSettings.numberOfLines
         return label
     }()
     
@@ -175,34 +241,43 @@ class ProductView: UIView {
         
         addSubview(scrollView)
         scrollView.addSubview(contentView)
-        
-        
-        
-        addSubview(titleLabel)
-        //arrange bookStackView
-        bookInfoStackView.addArrangedSubview(authorLabel)
-        bookInfoView.addSubview(bookInfoStackView)
+        // title
+        contentView.addSubview(titleLabel)
+        // cover and book info section
+        // arrange bookInfo
+        // author
+        bookInfoView.addSubview(authorLabel)
+        bookInfoView.addSubview(authorTextLabel)
+        // category
+        bookInfoView.addSubview(categotyLabel)
+        bookInfoView.addSubview(categoryTextLabel)
+        // rating
+        bookInfoView.addSubview(ratingLabel)
+        bookInfoView.addSubview(ratingTextLabel)
+        bookInfoStackView.addArrangedSubview(bookInfoView)
         // arrange common detailsStackView
-        detailsStackView.addArrangedSubview(coverImageView)
-        detailsStackView.addArrangedSubview(bookInfoView)
-        // continue arrange self view
-        addSubview(detailsStackView)
-        addSubview(descriptionLabel)
-        addSubview(descriptionTextLabel)
-        
+        coverView.addSubview(coverImageView)
+        detailsStackView.addArrangedSubview(coverView)
+        //detailsStackView.addArrangedSubview(coverImageView)
+        //detailsStackView.addArrangedSubview(bookInfoView)
+        detailsStackView.addArrangedSubview(bookInfoStackView)
+        contentView.addSubview(detailsStackView)
+        // bottom section
+        contentView.addSubview(descriptionLabel)
+        contentView.addSubview(descriptionTextLabel)
     }
     
     private func setConstraints() {
         // scroll
         scrollView.snp.makeConstraints { make in
-            make.top.bottom.leading.trailing.width.height.equalTo(safeAreaLayoutGuide)
+            make.edges.equalTo(safeAreaLayoutGuide)
         }
         contentView.snp.makeConstraints { make in
-            make.top.bottom.leading.trailing.width.height.equalTo(scrollView)
+            make.top.bottom.leading.trailing.width.equalToSuperview()
         }
         // title
         titleLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(TitleLabel.Constraints.topOffset)
+            make.top.equalToSuperview().offset(CommonConstraints.topOffset)
             make.leading.trailing.equalToSuperview().inset(CommonConstraints.sideInset)
         }
         // book details
@@ -210,26 +285,62 @@ class ProductView: UIView {
             make.top.equalTo(titleLabel.snp.bottom).offset(CommonConstraints.topOffset)
             make.leading.trailing.equalToSuperview().inset(CommonConstraints.sideInset)
         }
-        
-        coverImageView.snp.makeConstraints { make in
+        // cover
+        coverView.snp.makeConstraints { make in
             make.width.equalTo(detailsStackView.snp.width).multipliedBy(CoverImageView.Constraints.widthMultiplier)
-            make.height.equalTo(CoverImageView.Constraints.height)
         }
         
-        bookInfoStackView.snp.makeConstraints { make in
-            make.top.equalToSuperview().inset(CommonConstraints.topOffset)
+        coverImageView.snp.makeConstraints { make in
+            //make.width.equalTo(detailsStackView.snp.width).multipliedBy(CoverImageView.Constraints.widthMultiplier)
+            make.width.equalToSuperview()
+            make.height.equalTo(CoverImageView.Constraints.height)
+        }
+        // author
+        authorLabel.snp.contentCompressionResistanceHorizontalPriority = 751.0
+        authorLabel.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(CommonConstraints.topOffset)
             make.leading.equalToSuperview()
+        }
+        authorTextLabel.snp.makeConstraints { make in
+            make.top.equalTo(authorLabel)
+            make.leading.equalTo(authorLabel.snp.trailing).offset(CommonSettings.bookInfoSpacing)
+            make.trailing.equalToSuperview()
+        }
+        // category
+        categotyLabel.snp.contentCompressionResistanceHorizontalPriority = 751.0
+        categotyLabel.snp.makeConstraints { make in
+            make.top.equalTo(authorTextLabel.snp.bottom).offset(CommonConstraints.topOffset)
+            make.leading.equalToSuperview()
+        }
+        categoryTextLabel.snp.makeConstraints { make in
+            make.top.equalTo(categotyLabel)
+            make.leading.equalTo(categotyLabel.snp.trailing).offset(CommonSettings.bookInfoSpacing)
+            make.trailing.equalToSuperview()
+        }
+        // rating
+        ratingLabel.snp.contentCompressionResistanceHorizontalPriority = 751.0
+        ratingLabel.snp.makeConstraints { make in
+            make.top.equalTo(categoryTextLabel.snp.bottom).offset(CommonConstraints.topOffset)
+            make.leading.equalToSuperview()
+        }
+        ratingTextLabel.snp.makeConstraints { make in
+            make.top.equalTo(ratingLabel)
+            make.leading.equalTo(ratingLabel.snp.trailing).offset(CommonSettings.bookInfoSpacing)
+            make.trailing.equalToSuperview()
+        }
+        bookInfoView.snp.makeConstraints { make in
+            make.bottom.equalTo(ratingLabel.snp.bottom)
+            
         }
         // desctiption
         descriptionLabel.snp.makeConstraints { make in
             make.top.equalTo(detailsStackView.snp.bottom).offset(CommonConstraints.topOffset)
             make.leading.trailing.equalToSuperview().inset(CommonConstraints.sideInset)
         }
-        
         descriptionTextLabel.snp.makeConstraints { make in
             make.top.equalTo(descriptionLabel.snp.bottom).offset(CommonConstraints.topOffset)
             make.leading.trailing.equalToSuperview().inset(CommonConstraints.sideInset)
-            //make.bottom.equalToSuperview().inset(DesctiptionTextLabel.Constraints.bottomInset)
+            make.bottom.equalTo(scrollView.snp.bottom)
         }
     }
     
