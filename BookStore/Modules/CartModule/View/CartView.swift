@@ -9,7 +9,7 @@ class CartView: UIView {
     // MARK: - Parameters
     private lazy var tableView:UITableView={
         let element = UITableView()
-        element.register(CartViewCell.self, forCellReuseIdentifier: "CartViewCell")
+        element.register(CartViewCell.self, forCellReuseIdentifier: CartViewCell.reuseID)
         element.separatorStyle = .none
         element.estimatedRowHeight = 148
         element.allowsSelection = false
