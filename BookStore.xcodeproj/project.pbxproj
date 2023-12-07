@@ -32,6 +32,7 @@
 		0AD9EF272B1C42370099F0A2 /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD9EF222B1C42370099F0A2 /* AccountViewController.swift */; };
 		0AD9EF282B1C42370099F0A2 /* AccountModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD9EF242B1C42370099F0A2 /* AccountModel.swift */; };
 		0AD9EF292B1C42370099F0A2 /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD9EF262B1C42370099F0A2 /* AccountView.swift */; };
+		15254F712B1F6B5E006B137F /* CategoryCustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15254F702B1F6B5E006B137F /* CategoryCustomCell.swift */; };
 		ACC0F5542B0569450016C3ED /* CategoriesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC0F5532B0569450016C3ED /* CategoriesModel.swift */; };
 /* End PBXBuildFile section */
 
@@ -62,6 +63,7 @@
 		0AD9EF222B1C42370099F0A2 /* AccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
 		0AD9EF242B1C42370099F0A2 /* AccountModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountModel.swift; sourceTree = "<group>"; };
 		0AD9EF262B1C42370099F0A2 /* AccountView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
+		15254F702B1F6B5E006B137F /* CategoryCustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCustomCell.swift; sourceTree = "<group>"; };
 		ACC0F5532B0569450016C3ED /* CategoriesModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -270,6 +272,7 @@
 			isa = PBXGroup;
 			children = (
 				0A1DF5172B04EAC000A40FC1 /* CategoriesView.swift */,
+				15254F702B1F6B5E006B137F /* CategoryCustomCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -463,6 +466,7 @@
 				ACC0F5542B0569450016C3ED /* CategoriesModel.swift in Sources */,
 				0AD9EF272B1C42370099F0A2 /* AccountViewController.swift in Sources */,
 				0ACD9E8C2B02BF0700FE9DBA /* WelcomeViewController.swift in Sources */,
+				15254F712B1F6B5E006B137F /* CategoryCustomCell.swift in Sources */,
 				0A1DF5182B04EAC000A40FC1 /* CategoriesView.swift in Sources */,
 				0A162A892AFD19AD00DF885A /* AppDelegate.swift in Sources */,
 				0A162AC82AFD20FA00DF885A /* HomeModel.swift in Sources */,
@@ -612,7 +616,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -643,7 +647,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

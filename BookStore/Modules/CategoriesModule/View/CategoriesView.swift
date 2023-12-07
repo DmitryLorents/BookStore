@@ -19,3 +19,5 @@ class CategoriesView: UIView {
     //MARK: - Methods
     
 }
+
+
