@@ -11,114 +11,66 @@ import SnapKit
 class AccountViewController: UIViewController {
     
     //MARK: - Parameters
-    private let cycleView:UIView = {
-       let element = UIView()
-        element.backgroundColor = .black
-        element.layer.cornerRadius = 50
-        element.clipsToBounds = true
-        return element
-    }()
+    private let accountView = AccountView()
     
-    private let userImage:UIImageView = {
-       let element = UIImageView()
-        element.image = UIImage(systemName: "person.fill")
-        element.tintColor = .white
-        return element
-    }()
-    
-    private let substrateView:UIView = {
-       let element = UIView()
-        element.backgroundColor = UIColor(red: 0.87, green: 0.87, blue: 0.87, alpha: 1)
-        element.layer.cornerRadius = 5
-        return element
-    }()
-    
-    private let nameLabel:UILabel = {
-       let element = UILabel()
-        element.text = "Name:"
-        element.font = .systemFont(ofSize: 14, weight: .regular)
-        return element
-    }()
-    
-    private let nameTextField:UITextField = {
-       let element = UITextField()
-        element.placeholder = "Enter Name"
-        element.font = .systemFont(ofSize: 14)
-        return element
-    }()
-    
-    private let switcherBlack:UIButton = {
-       let element = UIButton()
-        element.setImage(UIImage(systemName: "sun.min.fill"), for: .normal)
-        element.tintColor = .black
-        element.clipsToBounds = true
-        return element
-    }()
-    
-    private let listButton:customButton = {
-       let element = customButton(name: "List")
-        return element
-    }()
     
     //MARK: - Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
-        setupView()
+        view.backgroundColor = .systemBackground
+        view = accountView
+        accountView.transferDelegates(delegateTextField: self)
+        setupTargetForButton()
     }
     
-    private func setupView(){
-        view.addSubview(cycleView)
-        cycleView.addSubview(userImage)
-        view.addSubview(substrateView)
-        substrateView.addSubview(nameLabel)
-        substrateView.addSubview(nameTextField)
-        view.addSubview(listButton)
-        view.addSubview(switcherBlack)
-        configureConstrains()
+    //MARK: - Private Methods
+    private func setupTargetForButton(){
+        let tapChangeImage = UITapGestureRecognizer(target: self, action: #selector(changeProfileImage))
+        let tapChangeTheme = UITapGestureRecognizer(target: self, action: #selector(changeTheme))
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
+        
+        accountView.userImage.addGestureRecognizer(tapChangeImage)
+        accountView.listButton.addTarget(self, action: #selector(listTupped), for: .touchUpInside)
+        accountView.switcherBlack.addGestureRecognizer(tapChangeTheme)
+        view.addGestureRecognizer(tapGesture)
     }
     
-    private func configureConstrains(){
-        
-        cycleView.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide).offset(20)
-            make.centerX.equalToSuperview()
-            make.height.width.equalTo(100)
-        }
-        
-        userImage.snp.makeConstraints { make in
-            make.center.equalTo(cycleView)
-            make.height.width.equalTo(75)
-        }
-        
-        substrateView.snp.makeConstraints { make in
-            make.top.equalTo(cycleView.snp.bottom).offset(16)
-            make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(20)
-            make.height.equalTo(56)
-        }
-        
-        nameLabel.snp.makeConstraints { make in
-            make.centerY.equalTo(substrateView)
-            make.leading.equalTo(substrateView.snp.leading).offset(20)
-        }
-        
-        nameTextField.snp.makeConstraints { make in
-            make.centerY.equalTo(substrateView)
-            make.trailing.equalTo(substrateView.snp.trailing).inset(10)
-            make.leading.equalTo(nameLabel.snp.trailing).offset(57)
-        }
-        
-        listButton.snp.makeConstraints { make in
-            make.top.equalTo(substrateView.snp.bottom).offset(20)
-            make.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(20)
-        }
-        
-        switcherBlack.snp.makeConstraints { make in
-            make.width.height.equalTo(50)
-            make.bottom.equalTo(view.safeAreaLayoutGuide).inset(16)
-            make.trailing.equalTo(view.safeAreaLayoutGuide).inset(15)
-        }
-        
+    //MARK: - Actions
+    @objc func changeProfileImage() {
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.delegate = self
+        imagePickerController.sourceType = .photoLibrary
+        present(imagePickerController, animated: true, completion: nil)
     }
     
+    @objc func changeTheme() {
+        print("change")
+    }
+    
+    @objc func listTupped(){
+        print("List open")
+    }
+    
+    @objc func hideKeyboard(){
+        view.endEditing(true)
+    }
+    
+}
+
+// MARK: - imagePickerController
+extension AccountViewController: UIImagePickerControllerDelegate & UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let selectedImage = info[.originalImage] as? UIImage {
+            accountView.userImage.image = selectedImage
+        }
+        picker.dismiss(animated: true, completion: nil)
+    }
+}
+
+//MARK: - Text Field Delegate
+extension AccountViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
 }
