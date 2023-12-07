@@ -19,11 +19,7 @@ class ProductView: UIView {
         return scrollView
     }()
     
-    private lazy var contentView = {
-        let contentView = UIView()
-        return contentView
-    }()
-    
+    private lazy var contentView = UIView()
     // title
     private lazy var titleLabel = {
         let label = UILabel()
@@ -40,10 +36,7 @@ class ProductView: UIView {
         return stackView
     }()
     // cover
-    private lazy var coverView = {
-        let view = UIView()
-        return view
-    }()
+    private lazy var coverView = UIView()
     private lazy var coverImageView = {
         let imageView = UIImageView(image: UIImage(systemName: ProductModel.CoverImageView.imageName))
         imageView.contentMode = .scaleAspectFit
@@ -105,6 +98,23 @@ class ProductView: UIView {
         label.numberOfLines = ProductModel.CommonSettings.numberOfLines
         return label
     }()
+    //MARK: - BookInfoButtons
+    private lazy var addToListButton = {
+        let button = UIButton()
+        button.setTitle(ProductModel.AddToListButton.text, for: .normal)
+        button.setTitleColor(ProductModel.AddToListButton.textColor, for: .normal)
+        button.backgroundColor = ProductModel.AddToListButton.backGroundColor
+        button.layer.cornerRadius = ProductModel.AddToListButton.cornerRadius
+        return button
+    }()
+    private lazy var readButton = {
+        let button = UIButton()
+        button.setTitle(ProductModel.ReadButton.text, for: .normal)
+        button.setTitleColor(ProductModel.ReadButton.textColor, for: .normal)
+        button.backgroundColor = ProductModel.ReadButton.backGroundColor
+        button.layer.cornerRadius = ProductModel.ReadButton.cornerRadius
+        return button
+    }()
     //MARK: - DescriptionViews
     private lazy var descriptionLabel = {
         let label = UILabel()
@@ -152,6 +162,9 @@ class ProductView: UIView {
         // rating
         bookInfoView.addSubview(ratingLabel)
         bookInfoView.addSubview(ratingTextLabel)
+        // buttons
+        bookInfoView.addSubview(addToListButton)
+        bookInfoView.addSubview(readButton)
         // arrange common detailsStackView
         coverView.addSubview(coverImageView)
         detailsStackView.addArrangedSubview(coverView)
@@ -184,7 +197,7 @@ class ProductView: UIView {
         coverView.snp.makeConstraints { make in
             make.width.equalTo(detailsStackView.snp.width).multipliedBy(ProductModel.CoverImageView.Constraints.widthMultiplier)
             make.height.greaterThanOrEqualTo(coverImageView)
-            make.bottom.greaterThanOrEqualTo(ratingTextLabel.snp.bottom)
+            make.bottom.greaterThanOrEqualTo(readButton.snp.bottom)
         }
         coverImageView.snp.makeConstraints { make in
             make.leading.trailing.top.equalToSuperview()
@@ -224,10 +237,21 @@ class ProductView: UIView {
             make.leading.equalTo(ratingLabel.snp.trailing).offset(ProductModel.CommonConstraints.bookInfoSpacing)
             make.trailing.equalToSuperview()
         }
+        // buttons
+        addToListButton.snp.makeConstraints { make in
+            make.top.equalTo(ratingTextLabel.snp.bottom).offset(ProductModel.CommonConstraints.topOffset)
+            make.leading.trailing.equalToSuperview().inset(ProductModel.CommonConstraints.sideInset)
+            make.height.equalTo(ProductModel.AddToListButton.height)
+        }
+        readButton.snp.makeConstraints { make in
+            make.top.equalTo(addToListButton.snp.bottom).offset(ProductModel.CommonConstraints.topOffset)
+            make.leading.trailing.equalToSuperview().inset(ProductModel.CommonConstraints.sideInset)
+            make.height.equalTo(ProductModel.ReadButton.height)
+        }
         // bookInfo common view
         bookInfoView.snp.makeConstraints { make in
             make.height.greaterThanOrEqualTo(coverImageView)
-            make.bottom.greaterThanOrEqualTo(ratingLabel.snp.bottom)
+            make.bottom.greaterThanOrEqualTo(readButton.snp.bottom)
         }
         // desctiption
         descriptionLabel.snp.makeConstraints { make in
@@ -243,3 +267,15 @@ class ProductView: UIView {
     
 }
 
+import SwiftUI
+struct MainViewPreviews: PreviewProvider {
+    static var previews: some View {
+        SwiftUIHelloWorldView()
+    }
+}
+struct SwiftUIHelloWorldView: UIViewRepresentable {
+    func makeUIView(context: Context) -> ProductView {
+        return ProductView()
+    }
+    func updateUIView(_ view: ProductView, context: Context) {}
+}
