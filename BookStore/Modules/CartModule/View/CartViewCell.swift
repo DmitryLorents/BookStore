@@ -57,6 +57,8 @@ class CartViewCell: UITableViewCell {
         return element
     }()
     
+    static let reuseID = String(describing: CartViewCell.self)
+    
     //MARK: - Init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier )
@@ -77,7 +79,11 @@ class CartViewCell: UITableViewCell {
         viewForCell.addSubview(authorBookLabel)
         viewForCell.addSubview(imageBookImageView)
         viewForCell.addSubview(crossButtom)
+        setupConstraints()
         
+    }
+    
+    private func setupConstraints(){
         viewForCell.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(8)
             make.bottom.equalToSuperview().inset(8)
@@ -115,7 +121,6 @@ class CartViewCell: UITableViewCell {
             make.trailing.equalToSuperview().inset(13)
             make.width.height.equalTo(20)
         }
-        
     }
     
     func configureCell(likeBook: CartModel){
