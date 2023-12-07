@@ -29,7 +29,7 @@ class CategoriesView: UIView {
         layout.scrollDirection = .vertical
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.translatesAutoresizingMaskIntoConstraints = false
-        cv.register(CategoryCustomCell.self, forCellWithReuseIdentifier: "cell")
+        cv.register(CategoryCustomCell.self, forCellWithReuseIdentifier: CategoryCustomCell.reuseID)
         return cv
     }()
     

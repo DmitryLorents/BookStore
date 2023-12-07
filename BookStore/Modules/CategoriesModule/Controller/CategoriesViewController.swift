@@ -35,11 +35,19 @@ class CategoriesViewController: UIViewController {
         }
         
         func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! CategoryCustomCell
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryCustomCell.reuseID, for: indexPath) as? CategoryCustomCell else { fatalError() }
             cell.data = self.data[indexPath.item]
             return cell
         }
     }
 
 
-//    #Preview { CategoriesViewController() }
+    #Preview { CategoriesViewController() }
+
+
+//func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//    guard let cell = tableView.dequeueReusableCell(withIdentifier: CartViewCell.reuseID, for: indexPath) as? CartViewCell else { fatalError() }
+//
+//    cell.configureCell(likeBook: likeArray[indexPath.row])
+//    return cell
+//}

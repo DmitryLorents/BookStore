@@ -47,6 +47,7 @@ class CategoryCustomCell: UICollectionViewCell {
         return label
     }()
     
+    static let reuseID = String(describing: CategoryCustomCell.self)
     
     //MARK: - Init 
     override init(frame: CGRect) {
