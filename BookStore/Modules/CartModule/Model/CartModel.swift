@@ -14,8 +14,8 @@ struct CartModel{
 struct Source{
     static func getCart() ->[CartModel] {
         [
-            .init(imageBook: UIImage(named: "book_cover")!, nameBook: "Book", authorBook: "Author", genreBook: "Genre"),
-            .init(imageBook: UIImage(named: "book_cover")!, nameBook: "Book", authorBook: "Author", genreBook: "Genre"),
+            .init(imageBook: UIImage(named: "bookСover")!, nameBook: "Book", authorBook: "Author", genreBook: "Genre"),
+            .init(imageBook: UIImage(named: "bookСover")!, nameBook: "Book", authorBook: "Author", genreBook: "Genre"),
         ]
     }
 }
