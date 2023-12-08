@@ -264,18 +264,4 @@ class ProductView: UIView {
             make.bottom.equalTo(scrollView.snp.bottom)
         }
     }
-    
-}
-
-import SwiftUI
-struct MainViewPreviews: PreviewProvider {
-    static var previews: some View {
-        SwiftUIHelloWorldView()
-    }
-}
-struct SwiftUIHelloWorldView: UIViewRepresentable {
-    func makeUIView(context: Context) -> ProductView {
-        return ProductView()
-    }
-    func updateUIView(_ view: ProductView, context: Context) {}
 }
