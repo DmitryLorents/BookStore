@@ -378,8 +378,7 @@
 				0AD9EF4B2B2327310099F0A2 /* Model */,
 				0AD9EF4D2B2327310099F0A2 /* View */,
 			);
-			name = AccountModule;
-			path = ../../../../../AccountModule;
+			path = AccountModule;
 			sourceTree = "<group>";
 		};
 		0AD9EF492B2327310099F0A2 /* Controller */ = {
