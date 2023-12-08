@@ -19,26 +19,17 @@ class CategoryCustomCell: UICollectionViewCell {
            
        }
    }
-    private lazy var gradient: CAGradientLayer = {
-        let gradient = CAGradientLayer()
-        gradient.colors = [
-        UIColor(red: 0, green: 0, blue: 0, alpha: 1).cgColor,
-        UIColor(red: 0, green: 0, blue: 0, alpha: 0.3).cgColor
-        ]
-        gradient.frame = CGRect(x: 0, y: 0, width: 165, height: 100)
-        return gradient
-    }()
+
     
     private lazy var backgroundImageView: UIImageView = {
        let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
-        imageView.layer.addSublayer(gradient)
-        imageView.layer.cornerRadius = 5
-        imageView.clipsToBounds = true
         return imageView
     }()
+    
+    private var backgroundMaskedView = GradientView()
 
     private lazy var categorieNameLabel: UILabel = {
         var label = UILabel()
@@ -53,11 +44,10 @@ class CategoryCustomCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: .zero)
         setupView()
-        setupLayout() 
-        contentView.layer.cornerRadius = 5
-
+        setupLayout()
+        
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -65,7 +55,12 @@ class CategoryCustomCell: UICollectionViewCell {
     //MARK: - Private Methods
     private func setupView() {
         contentView.addSubview(backgroundImageView)
+        contentView.addSubview(backgroundMaskedView)
         contentView.addSubview(categorieNameLabel)
+        contentView.layer.cornerRadius = 5
+        contentView.layer.masksToBounds = true
+        
+        
     }
     
     private func setupLayout() {
@@ -79,5 +74,20 @@ class CategoryCustomCell: UICollectionViewCell {
             make.centerX.equalToSuperview()
             make.centerY.equalToSuperview()
         }
+        backgroundMaskedView.snp.makeConstraints{ make in
+            make.top.equalToSuperview()
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
+            make.bottom.equalToSuperview()
+        }
     }
+//    private func gradient(frame: CGRect) -> CAGradientLayer {
+//        let gradient = CAGradientLayer()
+//        gradient.colors = [
+//        UIColor(red: 0, green: 0, blue: 0, alpha: 1).cgColor,
+//        UIColor(red: 0, green: 0, blue: 0, alpha: 0.3).cgColor
+//        ]
+//        gradient.frame = .bounds]     
+//        return gradient
+//    }
 }

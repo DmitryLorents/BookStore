@@ -16,18 +16,14 @@ class CategoriesView: UIView {
     
     private lazy var categoriesHeaderLabel: UILabel = {
         var label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "Categories"
         label.font = .systemFont(ofSize: 20, weight: .semibold)
         return label
     }()
     
-    private lazy var collectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(width: 165, height: 100)
-        layout.minimumLineSpacing = 20
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 20, bottom: 10, right: 20)
-        layout.scrollDirection = .vertical
-        let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
+    lazy var collectionView: UICollectionView = {
+        let cv = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
         cv.translatesAutoresizingMaskIntoConstraints = false
         cv.register(CategoryCustomCell.self, forCellWithReuseIdentifier: CategoryCustomCell.reuseID)
         return cv
@@ -67,6 +63,10 @@ class CategoriesView: UIView {
     public func transferDelegates(dataSource: UICollectionViewDataSource, delegate: UICollectionViewDelegate) {
         collectionView.dataSource = dataSource
         collectionView.delegate = delegate
+    }
+    
+    public func setupCollectionLayout(layout: UICollectionViewFlowLayout) {
+        collectionView.setCollectionViewLayout(layout, animated: true)
     }
 
 }
