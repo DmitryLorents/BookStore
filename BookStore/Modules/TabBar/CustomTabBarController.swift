@@ -17,11 +17,19 @@ class CustomTabBarController: UITabBarController {
     
    //MARK: Methods
     private func setControllers() {
+        
+        let homeVC = UINavigationController(rootViewController: HomeViewController(sections: BookModel.sections) )
+        let categoriesVC = UINavigationController(rootViewController: CategoriesViewController())
+        let likesVC = CartViewController()
+        let accountVC = AccountViewController()
+        
+        viewControllers = [homeVC, categoriesVC, likesVC, accountVC]
+        
        
     }
     
     private func setAppearance() {
-        
+        view.backgroundColor = .systemBackground
     }
 
 }
