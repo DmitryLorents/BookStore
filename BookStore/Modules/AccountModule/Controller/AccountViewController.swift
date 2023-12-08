@@ -23,6 +23,10 @@ class AccountViewController: UIViewController {
         setupTargetForButton()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        uploadUserDefaults()
+    }
+    
     //MARK: - Private Methods
     private func setupTargetForButton(){
         let tapChangeImage = UITapGestureRecognizer(target: self, action: #selector(changeProfileImage))
@@ -33,6 +37,44 @@ class AccountViewController: UIViewController {
         accountView.listButton.addTarget(self, action: #selector(listTupped), for: .touchUpInside)
         accountView.switcherBlack.addGestureRecognizer(tapChangeTheme)
         view.addGestureRecognizer(tapGesture)
+    }
+    
+    private func uploadUserDefaults() {
+        if let name = UserDefaults.standard.string(forKey: "nameUser") {
+            accountView.nameTextField.text = name
+        }
+        if let imagePath = UserDefaults.standard.string(forKey: "imageUser") {
+            let image = UIImage(contentsOfFile: imagePath)
+            accountView.userImage.image = image
+        }
+    }
+    
+    private func saveNameToUserDefaults() {
+        let name = accountView.nameTextField.text
+        UserDefaults.standard.set(name, forKey: "nameUser")
+    }
+    
+    private func saveImageToUserDefaults() {
+        let image = accountView.userImage.image
+        if let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
+            // Создаем уникальное имя для файла
+            let uniqueFileName = UUID().uuidString + ".png"
+            
+            // Создаем полный путь к файлу
+            let fileURL = documentsDirectory.appendingPathComponent(uniqueFileName)
+            
+            // Преобразуем изображение в данные PNG и записываем в файл
+            if let imageData = image?.pngData() {
+                do {
+                    try imageData.write(to: fileURL)
+                    
+                    // Сохраняем путь к файлу в UserDefaults
+                    UserDefaults.standard.set(fileURL.path, forKey: "imageUser")
+                } catch {
+                    print("Ошибка при записи изображения в файл: \(error.localizedDescription)")
+                }
+            }
+        }
     }
     
     //MARK: - Actions
@@ -52,6 +94,7 @@ class AccountViewController: UIViewController {
     }
     
     @objc func hideKeyboard(){
+        saveNameToUserDefaults()
         view.endEditing(true)
     }
     
@@ -62,6 +105,7 @@ extension AccountViewController: UIImagePickerControllerDelegate & UINavigationC
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let selectedImage = info[.originalImage] as? UIImage {
             accountView.userImage.image = selectedImage
+            saveImageToUserDefaults()
         }
         picker.dismiss(animated: true, completion: nil)
     }
@@ -70,6 +114,7 @@ extension AccountViewController: UIImagePickerControllerDelegate & UINavigationC
 //MARK: - Text Field Delegate
 extension AccountViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        saveNameToUserDefaults()
         textField.resignFirstResponder()
         return true
     }

@@ -35,7 +35,7 @@ class AccountView: UIView {
         return element
     }()
     
-    private lazy var nameTextField:UITextField = {
+    lazy var nameTextField:UITextField = {
        let element = UITextField()
         element.placeholder = "Enter Name"
         element.font = .systemFont(ofSize: 16, weight: .bold)
