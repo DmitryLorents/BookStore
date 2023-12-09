@@ -10,6 +10,8 @@ import UIKit
 final class DataBuilder {
     typealias DataSource = UICollectionViewDiffableDataSource<BookSection, AnyHashable>
     
+    let sections = BookSection.allCases
+    
     func createDataSource(for collectionView: UICollectionView, from topBooks: [Book], and recentBooks: [Book]) -> DataSource {
         let dataSource = UICollectionViewDiffableDataSource<BookSection, AnyHashable>(collectionView: collectionView) { collectionView, indexPath, item in
             switch item {
@@ -34,7 +36,6 @@ final class DataBuilder {
     
     func updateDataSource(_ dataSource: DataSource, topBooks: [Book], recentBooks: [Book]) {
         var snapshot = NSDiffableDataSourceSnapshot<BookSection, AnyHashable>()
-        let sections = BookSection.allCases
         snapshot.appendSections(sections)
         
         sections.forEach { section in
@@ -54,11 +55,10 @@ final class DataBuilder {
     
     
     func updateHeader(for dataSource: DataSource) {
-        let sections = BookSection.allCases
         dataSource.supplementaryViewProvider = { collectionView, kind, indexPath in
             if let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SectionHeader.identifier, for: indexPath) as? SectionHeader {
                 
-                switch sections[indexPath.section] {
+                switch self.sections[indexPath.section] {
                 case .categories:
                     header.configure(with: "Top Books")
                     return header
@@ -70,18 +70,6 @@ final class DataBuilder {
                     return header
                 }
             }
-            return nil
-        }
-    }
-    
-    func supplementary(collectionView: UICollectionView, kind: String, indexPath: IndexPath) -> UICollectionReusableView? {
-        switch kind {
-        case SectionHeader.identifier:
-            let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SectionHeader.identifier, for: indexPath) as? SectionHeader
-            return header
-            
-        default:
-            assertionFailure("Handle new kind")
             return nil
         }
     }

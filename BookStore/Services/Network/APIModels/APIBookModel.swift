@@ -10,8 +10,8 @@ import Foundation
 struct APIBookModel: Codable, Sendable {
     
     struct Description: Codable {
-        let value: String
+        let value: String?
     }
     
-    let description: Description
+    let description: Description?
 }

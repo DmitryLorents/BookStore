@@ -12,6 +12,7 @@ struct Book: Hashable, Identifiable {
     let name: String
     let author: String
     let category: String
+    let imageID: Int
 }
 
 enum HomeCategory: String, Hashable, CaseIterable {

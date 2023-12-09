@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import Kingfisher
+
 
 class CustomCollectionViewCell: UICollectionViewCell {
     static let identifier = "CustomCollectionViewCell"
@@ -35,7 +37,7 @@ class CustomCollectionViewCell: UICollectionViewCell {
     
     lazy var categoryTitle: UILabel = {
         let view = UILabel()
-        view.numberOfLines = 0
+        view.numberOfLines = 1
         view.font = .systemFont(ofSize: 11)
         view.textColor = .white
         view.textAlignment = .left
@@ -104,8 +106,11 @@ class CustomCollectionViewCell: UICollectionViewCell {
     }
     
     func configure(with book: Book) {
+        let imageURL = URL(string: RequestCreator().createRequest(.image(book.imageID)))
+        
         categoryTitle.text = book.category
         mainTitle.text = book.name
         authorTitle.text = book.author
+        imageView.kf.setImage(with: imageURL)
     }
 }

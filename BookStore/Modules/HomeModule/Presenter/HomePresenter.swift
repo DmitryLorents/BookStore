@@ -26,7 +26,7 @@ class HomePresenter: HomePresenterProtocol {
     }
     
     func fetchData() {
-        Task.detached(priority: .userInitiated) { [unowned self] in
+        Task {
             do {
                 let url = RequestCreator().createRequest(.home)
                 print("Data start loaded")
@@ -52,8 +52,8 @@ class HomePresenter: HomePresenterProtocol {
     private func updateTopBooks(with data: APISearchModel) {
         let books = data.docs
         books.forEach {
-            if let name = $0.title, let author = $0.authorName?.first, let category = $0.subjectFacet?.first {
-                let book = Book(name: name, author: author, category: category)
+            if let name = $0.title, let author = $0.authorName?.first, let category = $0.subjectFacet?.first, let imageID = $0.coverI {
+                let book = Book(name: name, author: author, category: category, imageID: imageID)
                 print(book)
                 topBooks.append(book)
             }

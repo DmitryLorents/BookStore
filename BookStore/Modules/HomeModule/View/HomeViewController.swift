@@ -11,7 +11,6 @@ import SwiftUI
 protocol HomeViewProtocol: AnyObject {
     func updateTopBooks(_ books: [Book])
     func updateRecentBooks(_ books: [Book])
-    func reloadData()
 }
 
 final class HomeViewController: UIViewController {
@@ -57,15 +56,11 @@ extension HomeViewController: UICollectionViewDelegate {
 extension HomeViewController: HomeViewProtocol {
     func updateTopBooks(_ books: [Book]) {
         topBooks = books
-        reloadData()
+        DataBuilder().updateDataSource(dataSource, topBooks: topBooks, recentBooks: recentBooks)
     }
     
     func updateRecentBooks(_ books: [Book]) {
         recentBooks = books
-        reloadData()
-    }
-    
-    func reloadData() {
         DataBuilder().updateDataSource(dataSource, topBooks: topBooks, recentBooks: recentBooks)
     }
 }

@@ -22,7 +22,7 @@ class SectionHeader: UICollectionReusableView {
     lazy var button: UIButton = {
         let view = UIButton()
         view.titleLabel?.font = .systemFont(ofSize: 14)
-        view.setTitle("see all", for: .normal)
+        view.setTitle("see more", for: .normal)
         view.setTitleColor(.black, for: .normal)
         view.titleLabel?.textAlignment = .right
         view.translatesAutoresizingMaskIntoConstraints = false

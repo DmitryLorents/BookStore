@@ -43,27 +43,37 @@ class NetworkManager {
     
     func fetchAsyncData<T: Codable>(from url: String) async throws -> Result<T, NetworkError> {
         guard let url = URL(string: url) else { return .failure(NetworkError.badURL) }
-        do {
-            let (data, _) = try await URLSession.shared.data(from: url)
-            let decoder = JSONDecoder()
-            decoder.keyDecodingStrategy = .convertFromSnakeCase
-            let decodeData = try decoder.decode(T.self, from: data)
-            return .success(decodeData)
-        } catch {
-            return .failure(NetworkError.invalidData)
+        if let data = getDataFromCache(from: url) {
+            do {
+                let decoder = JSONDecoder()
+                decoder.keyDecodingStrategy = .convertFromSnakeCase
+                let decodeData = try decoder.decode(T.self, from: data)
+                return .success(decodeData)
+            }
+        } else {
+            do {
+                let (data, response) = try await URLSession.shared.data(from: url)
+                saveDataToCache(with: data, and: response)
+                let decoder = JSONDecoder()
+                decoder.keyDecodingStrategy = .convertFromSnakeCase
+                let decodeData = try decoder.decode(T.self, from: data)
+                return .success(decodeData)
+            } catch {
+                return .failure(NetworkError.invalidData)
+            }
         }
     }
     
     // MARK: - Section Of Adding Images to Stash or donwload it from Stash
     
-    func saveDataToCache(with data: Data, and responce: URLResponse) {
+    private func saveDataToCache(with data: Data, and responce: URLResponse) {
         guard let url = responce.url else { return }
         let request = URLRequest(url: url)
         let cachedResponce = CachedURLResponse(response: responce, data: data)
         URLCache.shared.storeCachedResponse(cachedResponce, for: request)
     }
     
-    func getDataFromCache(from url: URL) -> Data? {
+    private func getDataFromCache(from url: URL) -> Data? {
         let request = URLRequest(url: url)
         if let cachedResponce = URLCache.shared.cachedResponse(for: request) {
             return cachedResponce.data
