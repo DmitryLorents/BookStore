@@ -9,9 +9,9 @@ import Foundation
 
 enum APIRequest {
     case home
-    case search
-    case image
-    case bookInfo
+    case search(String)
+    case image(Int)
+    case bookInfo(String)
 }
 
 struct RequestCreator {
@@ -28,20 +28,33 @@ struct RequestCreator {
         case bookInfo = "https://openlibrary.org/works/"
     }
     
-    func createSearchRequest(with body: String) -> String {
-        RequestType.search.rawValue + body.trimmingCharacters(in: .symbols)
+    func createRequest(_ request: APIRequest) -> String {
+        switch request {
+        case .home:
+            RequestType.home.rawValue
+        case .search(let text):
+            RequestType.search.rawValue + text.trimmingCharacters(in: .symbols)
+        case .image(let idetifier):
+            RequestType.image.rawValue + String(idetifier) + ImageSize.medium.rawValue
+        case .bookInfo(let bookID):
+            RequestType.bookInfo.rawValue + bookID + ".json"
+        }
     }
     
-    func createImageRequest(with body: String) -> String {
-        RequestType.image.rawValue + body + ImageSize.medium.rawValue
-    }
-    
-    func createBookRequest(with body: String) -> String {
-        RequestType.bookInfo.rawValue + body + ".json"
-    }
-    
-    func createMainBooksRequest(_ : String = "") -> String {
-        RequestType.home.rawValue
-    }
+//    func createSearchRequest(with body: String) -> String {
+//        RequestType.search.rawValue + body.trimmingCharacters(in: .symbols)
+//    }
+//    
+//    func createImageRequest(with body: String) -> String {
+//        RequestType.image.rawValue + body + ImageSize.medium.rawValue
+//    }
+//    
+//    func createBookRequest(with body: String) -> String {
+//        RequestType.bookInfo.rawValue + body + ".json"
+//    }
+//    
+//    func createMainBooksRequest(_ : String = "") -> String {
+//        RequestType.home.rawValue
+//    }
 
 }

@@ -7,18 +7,18 @@
 
 import UIKit
 
+
 final class HomeView: UIView {
     
     //MARK: - Properties
-    
-    private let sections: [BookSection]
-    private lazy var mainCollectionView = CollectionViewFactory().createCollectionView(with: LayoutBuilder().createLayout(for: sections))
-    private lazy var dataSource = DataBuilder().createDataSource(for: mainCollectionView, from: sections)
+    var topBooks = [Book(name: "123", author: "123", category: "123")]
+    var recentBook = [Book(name: "123", author: "123", category: "123")]
+    private lazy var mainCollectionView = CollectionViewFactory().createCollectionView(with: LayoutBuilder().createLayout())
+    private lazy var dataSource = DataBuilder().createDataSource(for: mainCollectionView, from: topBooks, and: recentBook)
     
     //MARK: - Initialization
     
-    init(sections: [BookSection]) {
-        self.sections = sections
+    init() {
         super.init(frame: .zero)
         addSubview(mainCollectionView)
         mainCollectionView.dataSource = dataSource
@@ -44,7 +44,7 @@ final class HomeView: UIView {
     func registerCells() {
         mainCollectionView.register(CustomCollectionViewCell.self, forCellWithReuseIdentifier: CustomCollectionViewCell.identifier)
         mainCollectionView.register(CategoryCollectionViewCell.self, forCellWithReuseIdentifier: CategoryCollectionViewCell.identifier)
-        mainCollectionView.register(SectionHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SectionHeader.identifier)
+//        mainCollectionView.register(SectionHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SectionHeader.identifier)
     }
     
 }

@@ -32,7 +32,7 @@ class CategoryCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure(with categoty: Categorie) {
+    func configure(with categoty: HomeCategory) {
         categoryButton.setTitle(categoty.rawValue, for: .normal)
     }
 }
