@@ -7,11 +7,7 @@
 
 import UIKit.UICollectionView
 
-protocol CollectionViewFactoryProtocol {
-    func createCollectionView(with layout: UICollectionViewLayout) -> UICollectionView
-}
-
-final class CollectionViewFactory: CollectionViewFactoryProtocol {
+final class CollectionViewFactory {
     func createCollectionView(with layout: UICollectionViewLayout) -> UICollectionView {
         lazy var mainCollectionView: UICollectionView = {
             let view = UICollectionView(frame: .zero, collectionViewLayout: layout)

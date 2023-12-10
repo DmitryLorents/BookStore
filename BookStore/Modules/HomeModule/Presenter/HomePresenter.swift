@@ -15,13 +15,17 @@ protocol HomePresenterProtocol {
     func presentAllBooks()
 }
 
-class HomePresenter: HomePresenterProtocol {
+final class HomePresenter: HomePresenterProtocol {
     var topBooks: [Book] = []
     var recentBooks: [Book] = []
     weak var view: HomeViewProtocol!
     
     init() {
         fetchData()
+    }
+    
+    func presentAllBooks() {
+        
     }
     
     func fetchData() {
@@ -44,9 +48,6 @@ class HomePresenter: HomePresenterProtocol {
         }
     }
     
-    func presentAllBooks() {
-        
-    }
     
     private func updateTopBooks(with data: APISearchModel) {
          let books = data.docs

@@ -16,7 +16,8 @@ final class HomeViewController: UIViewController {
     
     // MARK: - Parameters
     var presenter: HomePresenterProtocol
-    private lazy var mainCollectionView = CollectionViewFactory().createCollectionView(with: LayoutBuilder().createLayout())
+    private lazy var layout = LayoutBuilder().createLayout()
+    private lazy var mainCollectionView = CollectionViewFactory().createCollectionView(with: layout)
     private lazy var dataSource = DataBuilder().createDataSource(for: mainCollectionView)
     
     // MARK: - Initialization

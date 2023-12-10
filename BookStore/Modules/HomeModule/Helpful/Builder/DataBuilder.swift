@@ -10,7 +10,7 @@ import UIKit
 final class DataBuilder {
     typealias DataSource = UICollectionViewDiffableDataSource<BookSection, AnyHashable>
     
-    let sections = BookSection.allCases
+    private let sections = BookSection.allCases
     
     func createDataSource(for collectionView: UICollectionView) -> DataSource {
         let dataSource = UICollectionViewDiffableDataSource<BookSection, AnyHashable>(collectionView: collectionView) { collectionView, indexPath, item in
@@ -53,8 +53,7 @@ final class DataBuilder {
         
     }
     
-    
-    func updateHeader(for dataSource: DataSource) {
+    private func updateHeader(for dataSource: DataSource) {
         dataSource.supplementaryViewProvider = { collectionView, kind, indexPath in
             if let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SectionHeader.identifier, for: indexPath) as? SectionHeader {
                 
