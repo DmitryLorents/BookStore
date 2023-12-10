@@ -40,7 +40,8 @@ final class LayoutBuilder {
         section.boundarySupplementaryItems = [header]
         return section
     }
-    func createLayout(for sections: [BookSection]) -> UICollectionViewLayout {
+    func createLayout() -> UICollectionViewLayout {
+        let sections = BookSection.allCases
         let layout = UICollectionViewCompositionalLayout { sectionIndex, _ in
             switch sections[sectionIndex] {
             case .categories:

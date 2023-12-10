@@ -19,18 +19,21 @@ class SectionHeader: UICollectionReusableView {
         return view
     }()
     
-    lazy var subtitle: UILabel = {
-        let view = UILabel()
-        view.font = .systemFont(ofSize: 14)
-        view.textAlignment = .right
+    lazy var button: UIButton = {
+        let view = UIButton()
+        view.titleLabel?.font = .systemFont(ofSize: 14)
+        view.setTitle("see more", for: .normal)
+        view.setTitleColor(.black, for: .normal)
+        view.titleLabel?.textAlignment = .right
         view.translatesAutoresizingMaskIntoConstraints = false
+        view.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
         return view
     }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         addSubview(maintitle)
-        addSubview(subtitle)
+        addSubview(button)
         setupConstraints()
     }
     
@@ -43,19 +46,21 @@ class SectionHeader: UICollectionReusableView {
             maintitle.topAnchor.constraint(equalTo: topAnchor),
             maintitle.leadingAnchor.constraint(equalTo: leadingAnchor),
             maintitle.bottomAnchor.constraint(equalTo: bottomAnchor),
-            maintitle.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.5),
             
-            subtitle.trailingAnchor.constraint(equalTo: trailingAnchor),
-            subtitle.bottomAnchor.constraint(equalTo: bottomAnchor),
-            subtitle.topAnchor.constraint(equalTo: topAnchor),
-            subtitle.leadingAnchor.constraint(equalTo: maintitle.trailingAnchor)
+            button.trailingAnchor.constraint(equalTo: trailingAnchor),
+            button.bottomAnchor.constraint(equalTo: bottomAnchor),
+            button.topAnchor.constraint(equalTo: topAnchor),
+            button.leadingAnchor.constraint(equalTo: maintitle.trailingAnchor)
         ])
         
     }
     
-    func configure(with title: String, subtitle: String) {
+    func configure(with title: String) {
         self.maintitle.text = title
-        self.subtitle.text = subtitle
+    }
+    
+    @objc func buttonTapped() {
+        print("Button was tapped")
     }
     
 }
