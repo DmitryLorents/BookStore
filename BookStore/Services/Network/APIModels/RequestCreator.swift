@@ -22,7 +22,7 @@ struct RequestCreator {
     }
     
     private enum RequestType: String {
-        case home = "https://openlibrary.org/search.json?/mode=everything&q=top&sort=rating"
+        case home = "https://openlibrary.org/search.json?/mode=everything&q=top&sort=rating&limit=10"
         case search = "https://openlibrary.org/search.json?"
         case image = "https://covers.openlibrary.org/b/id/"
         case bookInfo = "https://openlibrary.org/works/"
@@ -39,6 +39,23 @@ struct RequestCreator {
         case .bookInfo(let bookID):
             RequestType.bookInfo.rawValue + bookID + ".json"
         }
+    }
+    
+    func createRequest() -> String {
+        var urlComponents: URLComponents {
+            var components = URLComponents()
+            components.scheme = "https"
+            components.host = "openlibrary.org"
+            components.path = "/search.json"
+            components.queryItems = [
+                URLQueryItem(name: "mode", value: "everything"),
+                URLQueryItem(name: "q", value: "top"),
+                URLQueryItem(name: "sort", value: "rating"),
+                URLQueryItem(name: "limit", value: "70")
+            ]
+            return components
+        }
+        return urlComponents.string ?? ""
     }
     
 //    func createSearchRequest(with body: String) -> String {

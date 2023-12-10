@@ -21,23 +21,22 @@ class HomePresenter: HomePresenterProtocol {
     weak var view: HomeViewProtocol!
     
     init() {
-        print("Presenter init")
         fetchData()
     }
     
     func fetchData() {
-        Task {
+        Task.detached(priority: .background) { [unowned self] in
             do {
-                let url = RequestCreator().createRequest(.home)
+                let url = RequestCreator().createRequest()
                 print("Data start loaded")
                 let result: Result<APISearchModel, NetworkError> = try await NetworkManager.shared.fetchAsyncData(from: url)
                 switch result {
                 case .failure( _):
                     print("Can't parce data")
                 case .success(let data):
-                    updateTopBooks(with: data)
+                    self.updateTopBooks(with: data)
                     print("Data loaded")
-                    await updateTopBooks(topBooks: topBooks)
+                    await self.updateBooksCells(topBooks: self.topBooks, recentBooks: self.recentBooks)
                 }
             } catch {
                 print(error.localizedDescription)
@@ -50,7 +49,7 @@ class HomePresenter: HomePresenterProtocol {
     }
     
     private func updateTopBooks(with data: APISearchModel) {
-        let books = data.docs
+         let books = data.docs
         books.forEach {
             if let name = $0.title, let author = $0.authorName?.first, let category = $0.subjectFacet?.first, let imageID = $0.coverI {
                 let book = Book(name: name, author: author, category: category, imageID: imageID)
@@ -61,7 +60,7 @@ class HomePresenter: HomePresenterProtocol {
     }
     
     @MainActor
-    private func updateTopBooks(topBooks: [Book]) {
-        view.updateTopBooks(topBooks)
+    private func updateBooksCells(topBooks: [Book], recentBooks: [Book]) {
+        view.reloadData(topBooks, recentBooks)
     }
 }

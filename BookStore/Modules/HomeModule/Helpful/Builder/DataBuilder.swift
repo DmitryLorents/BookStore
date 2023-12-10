@@ -12,7 +12,7 @@ final class DataBuilder {
     
     let sections = BookSection.allCases
     
-    func createDataSource(for collectionView: UICollectionView, from topBooks: [Book], and recentBooks: [Book]) -> DataSource {
+    func createDataSource(for collectionView: UICollectionView) -> DataSource {
         let dataSource = UICollectionViewDiffableDataSource<BookSection, AnyHashable>(collectionView: collectionView) { collectionView, indexPath, item in
             switch item {
             case let model as Book:
@@ -28,13 +28,13 @@ final class DataBuilder {
             }
         }
         
-        updateDataSource(dataSource, topBooks: topBooks, recentBooks: recentBooks)
+        updateDataSource(dataSource)
         updateHeader(for: dataSource)
         
         return dataSource
     }
     
-    func updateDataSource(_ dataSource: DataSource, topBooks: [Book], recentBooks: [Book]) {
+    func updateDataSource(_ dataSource: DataSource, topBooks: [Book] = [], recentBooks: [Book] = []) {
         var snapshot = NSDiffableDataSourceSnapshot<BookSection, AnyHashable>()
         snapshot.appendSections(sections)
         

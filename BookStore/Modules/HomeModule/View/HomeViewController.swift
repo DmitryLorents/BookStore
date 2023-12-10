@@ -9,29 +9,21 @@ import UIKit
 import SwiftUI
 
 protocol HomeViewProtocol: AnyObject {
-    func updateTopBooks(_ books: [Book])
-    func updateRecentBooks(_ books: [Book])
+    func reloadData(_ topBooks: [Book], _ recentBooks: [Book])
 }
 
 final class HomeViewController: UIViewController {
     
     // MARK: - Parameters
-    var topBooks = [Book]()
-    var recentBooks = [Book]()
-    private lazy var mainCollectionView = CollectionViewFactory().createCollectionView(with: LayoutBuilder().createLayout())
-    private lazy var dataSource = DataBuilder().createDataSource(for: mainCollectionView, from: topBooks, and: recentBooks)
     var presenter: HomePresenterProtocol
+    private lazy var mainCollectionView = CollectionViewFactory().createCollectionView(with: LayoutBuilder().createLayout())
+    private lazy var dataSource = DataBuilder().createDataSource(for: mainCollectionView)
     
     // MARK: - Initialization
     init(presenter: HomePresenterProtocol) {
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
-        self.view = view
-        self.view.addSubview(mainCollectionView)
         self.presenter.view = self
-        mainCollectionView.frame = self.view.bounds
-        mainCollectionView.dataSource = dataSource
-        registerCells()
     }
     
     required init?(coder: NSCoder) {
@@ -40,6 +32,10 @@ final class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.addSubview(mainCollectionView)
+        mainCollectionView.frame = view.bounds
+        mainCollectionView.dataSource = dataSource
+        registerCells()
     }
     
     private func registerCells() {
@@ -54,13 +50,7 @@ extension HomeViewController: UICollectionViewDelegate {
 }
 
 extension HomeViewController: HomeViewProtocol {
-    func updateTopBooks(_ books: [Book]) {
-        topBooks = books
-        DataBuilder().updateDataSource(dataSource, topBooks: topBooks, recentBooks: recentBooks)
-    }
-    
-    func updateRecentBooks(_ books: [Book]) {
-        recentBooks = books
+    func reloadData(_ topBooks: [Book], _ recentBooks: [Book]) {
         DataBuilder().updateDataSource(dataSource, topBooks: topBooks, recentBooks: recentBooks)
     }
 }
