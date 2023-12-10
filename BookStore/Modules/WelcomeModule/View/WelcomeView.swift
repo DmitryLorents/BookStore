@@ -10,19 +10,10 @@ import UIKit
 class WelcomeView: UIView {
     
     //MARK: - Parameters
-    
-    private lazy var paragraphStyle: NSMutableParagraphStyle = {
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.lineHeightMultiple = 1.29
-        return paragraphStyle
-    }()
-        
-     
     private lazy var fullStack: UIStackView = {
         let stack = UIStackView()
         stack.axis = .vertical
         stack.distribution = .fillEqually
-        //        fullStack.translatesAutoresizingMaskIntoConstraints = false
         stack.spacing = 20
         stack.alignment = .fill
         [stackView1,stackView2,stackView3].forEach {
@@ -64,35 +55,27 @@ class WelcomeView: UIView {
         return imageView
     }()
     
+    private lazy var paragraphStyle: NSMutableParagraphStyle = {
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineHeightMultiple = 1.29
+        return paragraphStyle
+    }()
+    
     private lazy var labelWithText: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
         label.font = .systemFont(ofSize: 14)
         label.lineBreakMode = .byWordWrapping
-        
         label.attributedText = NSMutableAttributedString(string: "Read more and stress less with our online book \nshopping app. Shop from anywhere you are and \ndiscover titles that you love. Happy reading!", attributes: [NSAttributedString.Key.kern: -0.41, NSAttributedString.Key.paragraphStyle: paragraphStyle])
         label.textAlignment = .center
         return label
     }()
-    
-//    private lazy var getStartedButton: UIButton = {
-//        let button = UIButton()
-//        button.setTitle("Get Started", for: .normal)
-//        button.backgroundColor = UIColor(named: "welcomeButtonColor")
-//        button.titleLabel?.font = .systemFont(ofSize: 14, weight: .semibold)
-//        button.titleLabel?.textColor = UIColor(named: "welcomeBackgroundColor")
-//        button.layer.cornerRadius = 5
-//        button.clipsToBounds = true
-//        return button
-//    }()
     
     //MARK: - Init
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
-//        backgroundColor = UIColor(named: "welcomeBackgroundColor")
-//        fullStack.rotate(angle: 345)
         setupConstraints()
         
     }
@@ -136,56 +119,22 @@ class WelcomeView: UIView {
         }
         
         labelWithText.snp.makeConstraints{ make in
-//            make.height.equalTo(56)
             make.top.equalTo(logoImage.snp.bottom).offset(10)
             make.centerX.equalToSuperview()
-//            make.trailing.equalToSuperview().offset(-20)
         }
-        
-//        getStartedButton.snp.makeConstraints{ make in
-//            make.height.equalTo(56)
-//            make.bottom.equalToSuperview().offset(-80)
-//            make.leading.equalToSuperview().offset(20)
-//            make.trailing.equalToSuperview().offset(-20)
-//        }
-        
-        
        
     }
     
     private func setupView() {
         addSubview(fullStack)
         addSubview(logoImage)
-//        addSubview(getStartedButton)
         addSubview(labelWithText)
     }
     
     public func setupViewWithTextAndImage(text: String, image: UIImage, isCoversHiden: Bool = true) {
-//        fullStack.isHidden = isCoversHiden
-        isCoversHiden ? fullStack.removeFromSuperview() : print("its ok")
+        isCoversHiden ? fullStack.removeFromSuperview() : print("its covers!!!!")
         logoImage.image = image
         labelWithText.attributedText = NSMutableAttributedString(string: text, attributes: [NSAttributedString.Key.kern: -0.41, NSAttributedString.Key.paragraphStyle: paragraphStyle])
         labelWithText.textAlignment = .center
     }
-    
-    
-    
-    
-}
-
-
-
-extension UIView {
-
-    /**
-       Rotate a view by specified degrees
-       parameter angle: angle in degrees
-     */
-
-    func rotate(angle: CGFloat) {
-        let radians = angle / 180.0 * CGFloat.pi
-        let rotation = CGAffineTransformRotate(self.transform, radians);
-        self.transform = rotation
-    }
-
 }

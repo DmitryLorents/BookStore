@@ -11,7 +11,6 @@ import SnapKit
 class WelcomeViewController: UIViewController, UIScrollViewDelegate {
     
     //    //MARK: - Parameters
-    var welcomeView = WelcomeView()
     var firstScreen = WelcomeView()
     var secondScreen = WelcomeView()
     var thirdScreen = WelcomeView()
@@ -67,13 +66,7 @@ class WelcomeViewController: UIViewController, UIScrollViewDelegate {
         
     }
     
-    
-    @objc private func pageControlIndicatorTapped(sender: UIPageControl) {
-        let offsetX = view.bounds.width * CGFloat(pageControl.currentPage)
-        scrollView.setContentOffset(CGPoint(x: offsetX, y: 0), animated: true)
-    }
-    
-    func setupView() {
+    private func setupView() {
         view.addSubview(scrollView)
         view.addSubview(pageControl)
         view.addSubview(getStartedButton)
@@ -121,13 +114,20 @@ class WelcomeViewController: UIViewController, UIScrollViewDelegate {
         return [firstScreen,secondScreen,thirdScreen]
     }
     
-    @objc func getStartedButtonTapped(sender: UIButton) {
-        print("Button tapped")
-    }
-    
     private func setDelegates() {
         scrollView.delegate = self
     }
+    
+    
+    @objc private func getStartedButtonTapped(sender: UIButton) {
+        print("Button tapped")
+    }
+    
+    @objc private func pageControlIndicatorTapped(sender: UIPageControl) {
+        let offsetX = view.bounds.width * CGFloat(pageControl.currentPage)
+        scrollView.setContentOffset(CGPoint(x: offsetX, y: 0), animated: true)
+    }
+    
 }
 
-#Preview{ WelcomeViewController()}
+//#Preview{ WelcomeViewController()}
