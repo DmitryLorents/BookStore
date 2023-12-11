@@ -30,7 +30,7 @@ class CustomTabBarController: UITabBarController {
    //MARK: Methods
     private func setControllers() {
         let homeVC = generateVC(
-            viewController: HomeViewController(sections: BookModel.sections),
+            viewController: HomeViewController(presenter: HomePresenter()),
             image: UIImage(named: "homeUnselected"),
             selectedImage: UIImage(named: "homeSelected"))
         
@@ -52,17 +52,18 @@ class CustomTabBarController: UITabBarController {
         viewControllers = [
             UINavigationController(rootViewController: homeVC),
             UINavigationController(rootViewController: categoriesVC),
-            likesVC,
-            accountVC
+            UINavigationController(rootViewController: likesVC),
+            UINavigationController(rootViewController: accountVC)
         ]
     }
-    
+    // generate View Controller
     private func generateVC(viewController: UIViewController, image: UIImage?, selectedImage: UIImage?) -> UIViewController {
         viewController.tabBarItem = UITabBarItem(
             title: nil,
             image: image?.withRenderingMode(.alwaysOriginal),
             selectedImage: selectedImage?.withRenderingMode(.alwaysOriginal))
-            viewController.tabBarItem.imageInsets = UIEdgeInsets(top: 10, left: 0, bottom: -10, right: 0)
+        
+        viewController.tabBarItem.imageInsets = UIEdgeInsets(top: 10, left: 0, bottom: -10, right: 0)
         return viewController
     }
     
