@@ -46,9 +46,10 @@
 		89430C772B1F0E0A00C0084A /* SectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89430C762B1F0E0A00C0084A /* SectionHeader.swift */; };
 		89430C792B1F42A600C0084A /* DataBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89430C782B1F42A600C0084A /* DataBuilder.swift */; };
 		89430C7B2B1F576300C0084A /* CategoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89430C7A2B1F576300C0084A /* CategoryCollectionViewCell.swift */; };
-		8956F7572B1DF351006D786E /* CollectionViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8956F7562B1DF351006D786E /* CollectionViewFactory.swift */; };
+		8956F7572B1DF351006D786E /* ViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8956F7562B1DF351006D786E /* ViewFactory.swift */; };
 		8956F75F2B1E00D7006D786E /* UIView + ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8956F75E2B1E00D7006D786E /* UIView + ext.swift */; };
 		8956F7622B1E1902006D786E /* CustonCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8956F7612B1E1902006D786E /* CustonCollectionViewCell.swift */; };
+		8971EDDE2B27377D00A6AD2B /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8971EDDD2B27377D00A6AD2B /* SearchViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -91,9 +92,10 @@
 		89430C762B1F0E0A00C0084A /* SectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeader.swift; sourceTree = "<group>"; };
 		89430C782B1F42A600C0084A /* DataBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataBuilder.swift; sourceTree = "<group>"; };
 		89430C7A2B1F576300C0084A /* CategoryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCollectionViewCell.swift; sourceTree = "<group>"; };
-		8956F7562B1DF351006D786E /* CollectionViewFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewFactory.swift; sourceTree = "<group>"; };
+		8956F7562B1DF351006D786E /* ViewFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewFactory.swift; sourceTree = "<group>"; };
 		8956F75E2B1E00D7006D786E /* UIView + ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView + ext.swift"; sourceTree = "<group>"; };
 		8956F7612B1E1902006D786E /* CustonCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustonCollectionViewCell.swift; sourceTree = "<group>"; };
+		8971EDDD2B27377D00A6AD2B /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -452,7 +454,7 @@
 		8956F7592B1DF53E006D786E /* Factories */ = {
 			isa = PBXGroup;
 			children = (
-				8956F7562B1DF351006D786E /* CollectionViewFactory.swift */,
+				8956F7562B1DF351006D786E /* ViewFactory.swift */,
 			);
 			path = Factories;
 			sourceTree = "<group>";
@@ -467,9 +469,18 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
+		8971EDDC2B27376C00A6AD2B /* SearchController */ = {
+			isa = PBXGroup;
+			children = (
+				8971EDDD2B27377D00A6AD2B /* SearchViewController.swift */,
+			);
+			path = SearchController;
+			sourceTree = "<group>";
+		};
 		8980DC372B207FC300312916 /* Helpful */ = {
 			isa = PBXGroup;
 			children = (
+				8971EDDC2B27376C00A6AD2B /* SearchController */,
 				8956F7602B1E18ED006D786E /* Cell */,
 				8956F7592B1DF53E006D786E /* Factories */,
 				893DC1962B1E422D0055054C /* Builder */,
@@ -577,12 +588,13 @@
 				0AD9EF372B2245640099F0A2 /* ProductViewController.swift in Sources */,
 				0AD9EF342B2244990099F0A2 /* CartViewCell.swift in Sources */,
 				0AD9EF422B23090F0099F0A2 /* CategoriesModel.swift in Sources */,
+				8971EDDE2B27377D00A6AD2B /* SearchViewController.swift in Sources */,
 				8920C96A2B249FA60034513A /* APIBookModel.swift in Sources */,
 				0AD9EF442B23090F0099F0A2 /* CategoriesView.swift in Sources */,
 				8956F7622B1E1902006D786E /* CustonCollectionViewCell.swift in Sources */,
 				0AD9EF532B2327310099F0A2 /* AccountView.swift in Sources */,
 				0ACD9E8C2B02BF0700FE9DBA /* WelcomeViewController.swift in Sources */,
-				8956F7572B1DF351006D786E /* CollectionViewFactory.swift in Sources */,
+				8956F7572B1DF351006D786E /* ViewFactory.swift in Sources */,
 				0AD9EF322B2244990099F0A2 /* CartViewController.swift in Sources */,
 				0A162A892AFD19AD00DF885A /* AppDelegate.swift in Sources */,
 				0A162AC82AFD20FA00DF885A /* HomeModel.swift in Sources */,
