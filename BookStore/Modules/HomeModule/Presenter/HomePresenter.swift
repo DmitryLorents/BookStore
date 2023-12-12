@@ -110,7 +110,7 @@ final class HomePresenter: HomePresenterProtocol {
             key: doc.key,
             name: doc.title,
             author: doc.authorName.first ?? .init(),
-            category: doc.subjectFacet.first ?? .init(),
+            category: doc.subjectFacet?.first ?? .init(),
             imageID: doc.coverI
         )
     }

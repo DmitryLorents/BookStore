@@ -22,7 +22,7 @@ final class NetworkManager: NetworkManagerProtocol {
         try await fetchAsyncData(from: endpoint.request())
     }
     
-    func fetchAsyncData<T: Decodable>(from request: URLRequest) async throws -> T {
+    private func fetchAsyncData<T: Decodable>(from request: URLRequest) async throws -> T {
         let data: Data
         
         switch getDataFromCache(from: request) {
