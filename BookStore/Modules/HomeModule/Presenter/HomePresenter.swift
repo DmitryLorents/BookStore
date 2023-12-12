@@ -7,72 +7,111 @@
 
 import Foundation
 
+protocol NetworkManagerProtocol {
+    func fetchAsyncData(from: OpenLibraryEndpoints) async throws -> APISearchModel
+}
+
 // MARK: - HomePresenterProtocol
 
 protocol HomePresenterProtocol {
-    var topBooks: [Book] { get }
-    var recentBooks: [Book] { get }
-    var view: HomeViewProtocol! { get set }
-    func fetchData()
-    func presentAllBooks()
+    func viewDidLoad()
+    func viewDidAppear()
+    func viewDidDisappear()
+    func didSelectCategory(at index: Int)
+    func didSelectTopBook(at index: Int)
+    func didSelectRecentBook(at index: Int)
 }
 
 // MARK: - HomePresenter
 
 final class HomePresenter: HomePresenterProtocol {
-    
     // MARK: - Properties
-    
-    var topBooks: [Book] = []
-    var recentBooks: [Book] = []
-    weak var view: HomeViewProtocol!
+    private var topBooks = [Book]()
+    private var recentBooks = [Book]()
+    private let networking: NetworkManagerProtocol
+    weak var view: HomeViewProtocol?
     
     // MARK: - Initialization
     
-    init() {
+    init(networking: NetworkManagerProtocol = NetworkManager.shared) {
+        self.networking = networking
+    }
+    
+    // MARK: - Public methods
+
+    func viewDidLoad() {
+        print("Data start loaded")
         fetchData()
     }
     
-    // MARK: - Publick methods
-    
-    func presentAllBooks() {
+    func viewDidAppear() {
         
     }
     
-    func fetchData() {
-        Task.detached(priority: .background) { [unowned self] in
-            do {
-                let url = RequestCreator().createRequest()
-                print("Data start loaded")
-                let result: Result<APISearchModel, NetworkError> = try await NetworkManager.shared.fetchAsyncData(from: url)
-                switch result {
-                case .failure( _):
-                    print("Can't parce data")
-                case .success(let data):
-                    self.updateTopBooks(with: data)
-                    print("Data loaded")
-                    await self.updateBooksCells(topBooks: self.topBooks, recentBooks: self.recentBooks)
-                }
-            } catch {
-                print(error.localizedDescription)
-            }
-        }
+    func viewDidDisappear() {
+        
+    }
+    
+    func didSelectCategory(at index: Int) {
+        print(topBooks[index])
+    }
+    
+    func didSelectTopBook(at index: Int) {
+        print(topBooks[index])
+    }
+    
+    func didSelectRecentBook(at index: Int) {
+        print(topBooks[index])
     }
     
     // MARK: - Private methods
     
-    private func updateTopBooks(with data: APISearchModel) {
-         let books = data.docs
-        books.forEach {
-            if let name = $0.title, let author = $0.authorName?.first, let category = $0.subjectFacet?.first, let imageID = $0.coverI {
-                let book = Book(name: name, author: author, category: category, imageID: imageID)
-                topBooks.append(book)
+    private func fetchData() {
+        Task.detached(priority: .background) { [unowned self] in
+            do {
+                async let model: APISearchModel = try networking.fetchAsyncData(from: .home())
+                let books: [Book] = try await model.docs.map(toBook(_:))
+                self.topBooks = books
+                await MainActor.run {
+                    view?.render(
+                        .init(
+                            seeAllTopBooksButton: .init(
+                                title: "see more",
+                                action: seeAllTopBooksButtonTap
+                            ),
+                            topBooks: books,
+                            categories: HomeCategory.allCases,
+                            seeAllRecentBooksButton: .init(
+                                title: "see more",
+                                action: seeAllRecentBooksButtonTap
+                            ),
+                            recentBooks: []
+                        )
+                    )
+                }
+            } catch {
+                await MainActor.run {
+                    self.view?.showError(error.localizedDescription)
+                }
             }
         }
     }
     
-    @MainActor
-    private func updateBooksCells(topBooks: [Book], recentBooks: [Book]) {
-        view.reloadData(topBooks, recentBooks)
+    private func seeAllTopBooksButtonTap() {
+        print("See more Top Books")
+    }
+    
+    private func seeAllRecentBooksButtonTap() {
+        print("See more Recent Books")
+    }
+    
+    private func toBook(_ doc: Doc) -> Book {
+        .init(
+            key: doc.key,
+            name: doc.title,
+            author: doc.authorName.first ?? .init(),
+            category: doc.subjectFacet.first ?? .init(),
+            imageID: doc.coverI
+        )
     }
 }

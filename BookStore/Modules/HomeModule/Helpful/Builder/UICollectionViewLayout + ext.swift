@@ -1,5 +1,5 @@
 //
-//  LayoutBuilder.swift
+//  UICollectionViewLayout + ext.swift
 //  BookStore
 //
 //  Created by Максим Горячкин on 04.12.2023.
@@ -7,23 +7,24 @@
 
 import UIKit
 
-final class LayoutBuilder {
-    func createLayout() -> UICollectionViewLayout {
-        let sections = BookSection.allCases
+extension UICollectionViewLayout {
+    static func bookLayout() -> UICollectionViewLayout {
         let layout = UICollectionViewCompositionalLayout { sectionIndex, _ in
-            switch sections[sectionIndex] {
+            switch BookSection(rawValue: sectionIndex) {
             case .categories:
-                return LayoutBuilder().createCategorySection()
+                return createCategorySection()
             case .top:
-                return LayoutBuilder().createTopBooksSection(header: true)
+                return createTopBooksSection(header: true)
             case .recent:
-                return LayoutBuilder().createTopBooksSection(header: false)
+                return createTopBooksSection(header: false)
+            default:
+                return nil
             }
         }
         return layout
     }
 
-    private func createTopBooksSection(header isHidden: Bool) -> NSCollectionLayoutSection {
+    private static func createTopBooksSection(header isHidden: Bool) -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 12)
@@ -38,7 +39,7 @@ final class LayoutBuilder {
         return section
     }
     
-    private func createCategorySection() -> NSCollectionLayoutSection {
+    private static func createCategorySection() -> NSCollectionLayoutSection {
         let estimatedHeight: CGFloat = 32
         let estimatedWidth: CGFloat = 86
         let size = NSCollectionLayoutSize(widthDimension: .estimated(estimatedWidth),
@@ -56,7 +57,7 @@ final class LayoutBuilder {
         return section
     }
     
-    private func createHeader() -> NSCollectionLayoutBoundarySupplementaryItem {
+    private static func createHeader() -> NSCollectionLayoutBoundarySupplementaryItem {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(40))
         let layout = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: itemSize,
                                                                  elementKind: UICollectionView.elementKindSectionHeader,

@@ -7,13 +7,14 @@
 
 import UIKit
 
-class CategoryCollectionViewCell: UICollectionViewCell {
+class CategoryCell: UICollectionViewCell {
     static let identifier = "CategoryCollectionViewCell"
     
-    lazy var categoryButton: UIButton = {
-        let view = UIButton()
-        view.titleLabel?.font = .systemFont(ofSize: 14, weight: .bold)
-        view.setTitleColor(.black, for: .normal)
+    lazy var categoryButton: UILabel = {
+        let view = UILabel()
+        view.font = .systemFont(ofSize: 14, weight: .bold)
+        view.textColor = .black
+        view.textAlignment = .center
         view.layer.borderColor = CGColor(red: 13/255, green: 13/255, blue: 13/255, alpha: 1)
         view.layer.borderWidth = 1
         view.frame = contentView.bounds
@@ -33,6 +34,6 @@ class CategoryCollectionViewCell: UICollectionViewCell {
     }
     
     func configure(with categoty: HomeCategory) {
-        categoryButton.setTitle(categoty.rawValue, for: .normal)
+        categoryButton.text = categoty.rawValue
     }
 }

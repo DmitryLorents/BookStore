@@ -7,34 +7,21 @@
 
 import UIKit.UICollectionView
 
-final class ViewFactory {
-    func createCollectionView(with layout: UICollectionViewLayout) -> UICollectionView {
-        lazy var mainCollectionView: UICollectionView = {
-            let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
-            view.backgroundColor = .systemBackground
-            view.showsVerticalScrollIndicator = false
-            view.translatesAutoresizingMaskIntoConstraints = false
-            return view
-        }()
-        
-        return mainCollectionView
+extension UICollectionView {
+    static func createCollectionView(with layout: UICollectionViewLayout) -> UICollectionView {
+        let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        view.backgroundColor = .systemBackground
+        view.showsVerticalScrollIndicator = false
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
     }
-    
-    func createSearchBarView() -> UISearchBar {
-        let searchBar: UISearchBar = {
-            let view = UISearchBar()
-            view.tintColor = UIColor.black.withAlphaComponent(1.0)
-            view.placeholder = "Enter book title..."
-            view.backgroundColor = UIColor.clear
-            view.barTintColor = UIColor.clear
-            view.searchBarStyle = .minimal
-            view.returnKeyType = .search
-            view.showsCancelButton = true
-            view.showsBookmarkButton = true
-            view.sizeToFit()
-            return view
-        }()
-        
-        return searchBar
+}
+
+extension UIBarButtonItem {
+    static func createGlassItem(_ selector: Selector) -> UIBarButtonItem {
+        UIBarButtonItem(image: UIImage(systemName: "magnifyingglass"),
+                                             style: .done,
+                                             target: self,
+                                             action: selector)
     }
 }

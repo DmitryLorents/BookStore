@@ -9,6 +9,7 @@ import UIKit
 
 struct Book: Hashable, Identifiable {
     let id = UUID()
+    let key: String
     let name: String
     let author: String
     let category: String
@@ -21,7 +22,7 @@ enum HomeCategory: String, Hashable, CaseIterable {
     case year = "This Year"
 }
 
-enum BookSection: Hashable, CaseIterable {
+enum BookSection: Int, Hashable, CaseIterable {
     case categories
     case top
     case recent

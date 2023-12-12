@@ -18,7 +18,7 @@ class CustomTabBarController: UITabBarController {
    //MARK: Methods
     private func setControllers() {
         
-        let homeVC = UINavigationController(rootViewController: HomeViewController(presenter: HomePresenter()))
+        let homeVC = UINavigationController(rootViewController: .homeBuilder)
         let categoriesVC = UINavigationController(rootViewController: CategoriesViewController())
         let likesVC = CartViewController()
         let accountVC = AccountViewController()

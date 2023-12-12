@@ -8,42 +8,53 @@
 import UIKit
 import SwiftUI
 
+// MARK: - HomeViewModel
+
+struct HomeViewModel {
+    let seeAllTopBooksButton: Button
+    let topBooks: [Book]
+    let categories: [HomeCategory]
+    let seeAllRecentBooksButton: Button
+    let recentBooks: [Book]
+    
+    struct Button {
+        let title: String
+        let action: () -> Void
+    }
+}
+
 // MARK: - HomeViewProtocol
 
 protocol HomeViewProtocol: AnyObject {
-    func reloadData(_ topBooks: [Book], _ recentBooks: [Book])
+    func render(_ viewModel: HomeViewModel)
+    func showError(_ message: String)
 }
 
 // MARK: - HomeViewController
 
 final class HomeViewController: UIViewController {
+    private let searchController: UISearchController
+    private let mainCollectionView: UICollectionView = .createCollectionView(with: .bookLayout())
+    private lazy var dataSource = BookSectionDataSource(mainCollectionView)
+    private lazy var collectionDelegate = BooksCollectionDelegate(mainCollectionView)
+    private lazy var searchDelegeate = HomeSearchControllerDelegate(searchController: searchController, navigationController: self.navigationController)
     
     // MARK: - Properties
-    
-    var presenter: HomePresenterProtocol
-    var searchIsActive = false
-    private lazy var layout = LayoutBuilder().createLayout()
-    private lazy var mainCollectionView = ViewFactory().createCollectionView(with: layout)
-    private lazy var dataSource = DataBuilder().createDataSource(for: mainCollectionView)
-    private lazy var searchController: UISearchController = {
-        var controller = UISearchController(searchResultsController: SearchViewController())
-        controller.showsSearchResultsController = true
-        controller.delegate = self
-        controller.searchBar.delegate = self
-        return controller
-    }()
-    
-    lazy var glassItem = UIBarButtonItem(image: UIImage(systemName: "magnifyingglass"),
-                                         style: .done,
-                                         target: self,
-                                         action: #selector(toggleSearchBar))
+    let presenter: HomePresenterProtocol
+    let glassItem = UIBarButtonItem(image: UIImage(systemName: "magnifyingglass"),
+                                                     style: .done,
+                                                     target: HomeViewController.self,
+                                                     action: #selector(toggleSearchBar))
     
     // MARK: - Initialization
     
-    init(presenter: HomePresenterProtocol) {
+    init(
+        presenter: HomePresenterProtocol,
+        searchController: UISearchController
+    ) {
         self.presenter = presenter
+        self.searchController = searchController
         super.init(nibName: nil, bundle: nil)
-        self.presenter.view = self
     }
     
     required init?(coder: NSCoder) {
@@ -56,72 +67,59 @@ final class HomeViewController: UIViewController {
         super.loadView()
         view.addSubview(mainCollectionView)
         mainCollectionView.frame = view.bounds
-        mainCollectionView.dataSource = dataSource
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        registerCells()
+        presenter.viewDidLoad()
+        
+        collectionDelegate.didSelectCategoryAt = presenter.didSelectCategory(at:)
+        collectionDelegate.didSelectTopAt = presenter.didSelectTopBook(at:)
+        collectionDelegate.didSelectRecentAt = presenter.didSelectRecentBook(at:)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupNavigationItem()
+        presenter.viewDidAppear()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        presenter.viewDidDisappear()
     }
     
     // MARK: - Private methods
-    
     private func setupNavigationItem() {
         navigationItem.title = "Happy Reading!"
         navigationItem.rightBarButtonItem = glassItem
         navigationItem.searchController = searchController
     }
     
-    private func registerCells() {
-        mainCollectionView.register(CustomCollectionViewCell.self, forCellWithReuseIdentifier: CustomCollectionViewCell.identifier)
-        mainCollectionView.register(CategoryCollectionViewCell.self, forCellWithReuseIdentifier: CategoryCollectionViewCell.identifier)
-        mainCollectionView.register(SectionHeader.self, 
-                                    forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-                                    withReuseIdentifier: SectionHeader.identifier)
-    }
-    
     // MARK: - Objective-C private methods
     
     @objc private func toggleSearchBar() {
-        navigationItem.searchController = searchController
-        navigationController?.view.layoutIfNeeded()
-        searchController.searchBar.becomeFirstResponder()
+        searchDelegeate.check()
+//        navigationItem.searchController = searchController
+//        navigationController?.view.layoutIfNeeded()
+//        searchController.searchBar.becomeFirstResponder()
     }
-}
-
-// MARK: - UICollectionViewDelegate methods
-
-extension HomeViewController: UICollectionViewDelegate {
-    
 }
 
 // MARK: - HomeViewProtocol methods
 
 extension HomeViewController: HomeViewProtocol {
-    func reloadData(_ topBooks: [Book], _ recentBooks: [Book]) {
-        DataBuilder().updateDataSource(dataSource, topBooks: topBooks, recentBooks: recentBooks)
-    }
-}
-
-// MARK: - UISearchController and UISearchBarDelegate methods
-
-extension HomeViewController: UISearchControllerDelegate, UISearchBarDelegate {
-    func willDismissSearchController(_ searchController: UISearchController) {
-        navigationItem.searchController = nil
-        navigationController?.view.layoutIfNeeded()
+    func render(_ viewModel: HomeViewModel) {
+        dataSource.updateHeader(with: viewModel)
+        dataSource.update(topBooks: viewModel.topBooks)
     }
     
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        searchController.searchBar.text = ""
-        searchController.searchBar.resignFirstResponder()
-        searchController.dismiss(animated: true, completion: nil)
+    func showError(_ message: String) {
+        
     }
 }
+
+
 
 //
 //struct ListProvider: PreviewProvider {
