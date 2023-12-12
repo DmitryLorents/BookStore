@@ -114,8 +114,8 @@ class AccountView: UIView {
         
         switcherBlack.snp.makeConstraints { make in
             make.width.height.equalTo(35)
-            make.bottom.equalTo(self.safeAreaLayoutGuide).inset(16)
-            make.trailing.equalTo(self.safeAreaLayoutGuide).inset(15)
+            make.bottom.equalTo(self.safeAreaLayoutGuide).inset(30)
+            make.trailing.equalTo(self.safeAreaLayoutGuide).inset(10)
         }
         
     }

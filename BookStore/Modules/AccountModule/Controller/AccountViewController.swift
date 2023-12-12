@@ -45,7 +45,13 @@ class AccountViewController: UIViewController {
         }
         if let imagePath = UserDefaults.standard.string(forKey: "imageUser") {
             let image = UIImage(contentsOfFile: imagePath)
-            accountView.userImage.image = image
+            
+            if image != nil {
+                accountView.userImage.image = image
+            }
+            else{
+                accountView.userImage.image = UIImage(named: "avatarAccount")
+            }
         }
     }
     
@@ -57,18 +63,12 @@ class AccountViewController: UIViewController {
     private func saveImageToUserDefaults() {
         let image = accountView.userImage.image
         if let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
-            // Создаем уникальное имя для файла
             let uniqueFileName = UUID().uuidString + ".png"
-            
-            // Создаем полный путь к файлу
             let fileURL = documentsDirectory.appendingPathComponent(uniqueFileName)
             
-            // Преобразуем изображение в данные PNG и записываем в файл
             if let imageData = image?.pngData() {
                 do {
                     try imageData.write(to: fileURL)
-                    
-                    // Сохраняем путь к файлу в UserDefaults
                     UserDefaults.standard.set(fileURL.path, forKey: "imageUser")
                 } catch {
                     print("Ошибка при записи изображения в файл: \(error.localizedDescription)")
