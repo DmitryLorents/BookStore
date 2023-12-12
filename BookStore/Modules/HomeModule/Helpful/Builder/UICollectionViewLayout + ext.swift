@@ -1,5 +1,5 @@
 //
-//  LayoutBuilder.swift
+//  UICollectionViewLayout + ext.swift
 //  BookStore
 //
 //  Created by Максим Горячкин on 04.12.2023.
@@ -7,8 +7,24 @@
 
 import UIKit
 
-final class LayoutBuilder {
-    func createTopBooksSection(header isHidden: Bool) -> NSCollectionLayoutSection {
+extension UICollectionViewLayout {
+    static func bookLayout() -> UICollectionViewLayout {
+        let layout = UICollectionViewCompositionalLayout { sectionIndex, _ in
+            switch BookSection(rawValue: sectionIndex) {
+            case .categories:
+                return createCategorySection()
+            case .top:
+                return createTopBooksSection(header: true)
+            case .recent:
+                return createTopBooksSection(header: false)
+            default:
+                return nil
+            }
+        }
+        return layout
+    }
+
+    private static func createTopBooksSection(header isHidden: Bool) -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 12)
@@ -23,7 +39,7 @@ final class LayoutBuilder {
         return section
     }
     
-    func createCategorySection() -> NSCollectionLayoutSection {
+    private static func createCategorySection() -> NSCollectionLayoutSection {
         let estimatedHeight: CGFloat = 32
         let estimatedWidth: CGFloat = 86
         let size = NSCollectionLayoutSize(widthDimension: .estimated(estimatedWidth),
@@ -40,22 +56,8 @@ final class LayoutBuilder {
         section.boundarySupplementaryItems = [header]
         return section
     }
-    func createLayout() -> UICollectionViewLayout {
-        let sections = BookSection.allCases
-        let layout = UICollectionViewCompositionalLayout { sectionIndex, _ in
-            switch sections[sectionIndex] {
-            case .categories:
-                return LayoutBuilder().createCategorySection()
-            case .top:
-                return LayoutBuilder().createTopBooksSection(header: true)
-            case .recent:
-                return LayoutBuilder().createTopBooksSection(header: false)
-            }
-        }
-        return layout
-    }
     
-    func createHeader() -> NSCollectionLayoutBoundarySupplementaryItem {
+    private static func createHeader() -> NSCollectionLayoutBoundarySupplementaryItem {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(40))
         let layout = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: itemSize,
                                                                  elementKind: UICollectionView.elementKindSectionHeader,

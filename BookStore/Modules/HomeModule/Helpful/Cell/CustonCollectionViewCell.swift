@@ -8,62 +8,58 @@
 import UIKit
 import Kingfisher
 
+extension UILabel {
+    static func common(_ font: UIFont, numberOfLines: Int = 0) -> UILabel {
+        let view = UILabel()
+        view.numberOfLines = numberOfLines
+        view.font = font
+        view.textColor = .white
+        view.textAlignment = .left
+        return view
+    }
+}
 
-class CustomCollectionViewCell: UICollectionViewCell {
-    static let identifier = "CustomCollectionViewCell"
+extension UIView {
+    func disableChildrenTAMIC() {
+        subviews.forEach {
+            $0.translatesAutoresizingMaskIntoConstraints = false
+        }
+    }
+}
+
+
+class BookCell: UICollectionViewCell {
+    static let identifier = "BookCell"
     
     lazy var mainView: UIView = {
         let view = UIView()
         view.backgroundColor = .lightGray
         view.layer.cornerRadius = 8
         view.clipsToBounds = true
-        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
     lazy var imageView: UIImageView = {
         let view = UIImageView()
         view.backgroundColor = .cyan
-        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
     lazy var subView: UIView = {
         let view = UIView()
         view.backgroundColor = .black
-        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
-    lazy var categoryTitle: UILabel = {
-        let view = UILabel()
-        view.numberOfLines = 1
-        view.font = .systemFont(ofSize: 11)
-        view.textColor = .white
-        view.textAlignment = .left
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
-    lazy var mainTitle: UILabel = {
-        let view = UILabel()
-        view.numberOfLines = 2
-        view.font = .systemFont(ofSize: 16, weight: .bold)
-        view.textColor = .white
-        view.textAlignment = .left
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
-    lazy var authorTitle: UILabel = {
-        let view = UILabel()
-        view.numberOfLines = 0
-        view.font = .systemFont(ofSize: 11, weight: .heavy)
-        view.textColor = .white
-        view.textAlignment = .left
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
+    let categoryTitle: UILabel = .common(
+        .systemFont(ofSize: 11),
+        numberOfLines: 1
+    )
+    let mainTitle: UILabel = .common(
+        .systemFont(ofSize: 16, weight: .bold),
+        numberOfLines: 2
+    )
+    let authorTitle: UILabel = .common(.systemFont(ofSize: 11, weight: .heavy))
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -72,7 +68,9 @@ class CustomCollectionViewCell: UICollectionViewCell {
         contentView.clipsToBounds = true
         contentView.layer.cornerRadius = 8
         contentView.addSomeSubviews(views: imageView, subView)
+        contentView.disableChildrenTAMIC()
         subView.addSomeSubviews(views: categoryTitle, mainTitle, authorTitle)
+        subView.disableChildrenTAMIC()
         
         NSLayoutConstraint.activate([
             imageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 11),
@@ -83,10 +81,8 @@ class CustomCollectionViewCell: UICollectionViewCell {
             subView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
             subView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             subView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            subView.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.4)
-        ])
+            subView.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.4),
         
-        NSLayoutConstraint.activate([
             categoryTitle.topAnchor.constraint(equalTo: subView.topAnchor, constant: 12),
             categoryTitle.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12),
             categoryTitle.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 12),
@@ -106,11 +102,9 @@ class CustomCollectionViewCell: UICollectionViewCell {
     }
     
     func configure(with book: Book) {
-        let imageURL = URL(string: RequestCreator().createRequest(.image(book.imageID)))
-        
         categoryTitle.text = book.category
         mainTitle.text = book.name
         authorTitle.text = book.author
-        imageView.kf.setImage(with: imageURL)
+        imageView.kf.setImage(with: OpenLibraryEndpoints.image(book.imageID))
     }
 }
