@@ -129,6 +129,7 @@ class WelcomeView: UIView {
         addSubview(fullStack)
         addSubview(logoImage)
         addSubview(labelWithText)
+        backgroundColor = .welcomeBackground
     }
     
     public func setupViewWithTextAndImage(text: String, image: UIImage, isCoversHiden: Bool = true) {
