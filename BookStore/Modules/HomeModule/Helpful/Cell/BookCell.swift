@@ -8,14 +8,10 @@
 import UIKit
 import Kingfisher
 
-
-
-
-
 class BookCell: UICollectionViewCell {
     static let identifier = String(describing: BookCell.self)
     
-    lazy var mainView: UIView = {
+    private lazy var mainView: UIView = {
         let view = UIView()
         view.backgroundColor = .lightGray
         view.layer.cornerRadius = 8
@@ -23,27 +19,34 @@ class BookCell: UICollectionViewCell {
         return view
     }()
     
-    lazy var imageView: UIImageView = {
+    private lazy var imageView: UIImageView = {
         let view = UIImageView()
-        view.backgroundColor = .cyan
+        view.backgroundColor = .gray
         return view
     }()
     
-    lazy var subView: UIView = {
+    private lazy var subView: UIView = {
         let view = UIView()
         view.backgroundColor = .black
         return view
     }()
     
-    let categoryTitle: UILabel = .common(
+    private let categoryTitle: UILabel = .common(
         .systemFont(ofSize: 11),
         numberOfLines: 1
     )
-    let mainTitle: UILabel = .common(
+    
+    private let mainTitle: UILabel = .common(
         .systemFont(ofSize: 16, weight: .bold),
         numberOfLines: 2
     )
-    let authorTitle: UILabel = .common(.systemFont(ofSize: 11, weight: .heavy))
+    
+    private let authorTitle: UILabel = .common(
+        .systemFont(ofSize: 11, weight: .heavy),
+        numberOfLines: 1
+    )
+    
+    private let indicator = UIActivityIndicatorView(style: .large)
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -54,7 +57,9 @@ class BookCell: UICollectionViewCell {
         contentView.addSomeSubviews(views: imageView, subView)
         contentView.disableChildrenTAMIC()
         subView.addSomeSubviews(views: categoryTitle, mainTitle, authorTitle)
+        imageView.addSubview(indicator)
         subView.disableChildrenTAMIC()
+        indicator.startAnimating()
         
         NSLayoutConstraint.activate([
             imageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 11),
@@ -77,7 +82,10 @@ class BookCell: UICollectionViewCell {
             
             authorTitle.bottomAnchor.constraint(equalTo: subView.bottomAnchor, constant: -12),
             authorTitle.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12),
-            authorTitle.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 12)
+            authorTitle.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 12),
+            
+            indicator.centerYAnchor.constraint(equalTo: imageView.centerYAnchor),
+            indicator.centerXAnchor.constraint(equalTo: imageView.centerXAnchor)
         ])
     }
     
@@ -90,5 +98,8 @@ class BookCell: UICollectionViewCell {
         mainTitle.text = book.name
         authorTitle.text = book.author
         imageView.kf.setImage(with: OpenLibraryEndpoints.image(book.imageID))
+//        DispatchQueue.main.async {
+//        }
     }
+
 }

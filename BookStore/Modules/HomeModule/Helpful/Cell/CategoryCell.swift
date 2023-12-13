@@ -9,6 +9,7 @@ import UIKit
 
 class CategoryCell: UICollectionViewCell {
     static let identifier = String(describing: CategoryCell.self)
+    private var isChange = true
     
     lazy var categoryButton: UILabel = {
         let view = UILabel()
@@ -19,6 +20,7 @@ class CategoryCell: UICollectionViewCell {
         view.layer.borderWidth = 1
         view.layer.cornerRadius = 6
         view.frame = contentView.bounds
+        view.clipsToBounds = true
         return view
     }()
     
@@ -33,5 +35,24 @@ class CategoryCell: UICollectionViewCell {
     
     func configure(with categoty: HomeCategory) {
         categoryButton.text = categoty.rawValue
+    }
+    
+    func resetCell() {
+        categoryButton.backgroundColor = .white
+        categoryButton.textColor = .black
+        isChange = true
+    }
+    
+    func checkCell() {
+        isChange.toggle()
+        if isChange {
+            categoryButton.backgroundColor = .white
+            categoryButton.textColor = .black
+        } else {
+            categoryButton.backgroundColor = .black
+            categoryButton.textColor = .white
+        }
+        
+        
     }
 }

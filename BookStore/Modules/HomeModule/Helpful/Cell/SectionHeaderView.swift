@@ -56,7 +56,7 @@ class SectionHeaderView: UICollectionReusableView {
     }
     
     func configure(with title: String, 
-                   buttonTitle: String = "see more",
+                   buttonTitle: String,
                    tapAction: @escaping () -> Void) {
         maintitle.text = title
         button.setTitle(buttonTitle, for: .normal)

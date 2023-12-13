@@ -18,7 +18,7 @@ final class NetworkManager: NetworkManagerProtocol {
         decoder.keyDecodingStrategy = .convertFromSnakeCase
     }
     
-    func fetchAsyncData(from endpoint: OpenLibraryEndpoints) async throws -> APISearchModel {
+    func fetchAsyncData<T: Decodable>(from endpoint: OpenLibraryEndpoints) async throws -> T {
         try await fetchAsyncData(from: endpoint.request())
     }
     

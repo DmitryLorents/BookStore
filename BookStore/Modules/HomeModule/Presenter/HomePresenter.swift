@@ -8,7 +8,7 @@
 import Foundation
 
 protocol NetworkManagerProtocol {
-    func fetchAsyncData(from: OpenLibraryEndpoints) async throws -> APISearchModel
+    func fetchAsyncData<T: Decodable>(from: OpenLibraryEndpoints) async throws -> T
 }
 
 // MARK: - HomePresenterProtocol
@@ -27,7 +27,36 @@ protocol HomePresenterProtocol {
 final class HomePresenter: HomePresenterProtocol {
     // MARK: - Properties
     private var topBooks = [Book]()
-    private var recentBooks = [Book]()
+    private var recentBooks: [Book] {
+        get {
+            [Book]()
+        }
+        set {
+            view?.render(
+                .init(topBooksHeader: topBooksHeader,
+                      topBooks: topBooks,
+                      categories: HomeCategory.allCases,
+                      recentBooksHeader: recentBooksHeader,
+                      recentBooks: newValue)
+            )
+        }
+    }
+    private var topBooksHeader: HomeViewModel.Header {
+        .init(title: "Top Books",
+                  button: .init(title: "see more",
+                                action: seeAllTopBooksButtonTap))
+    }
+    
+    private var recentBooksHeader: HomeViewModel.Header {
+        recentBooks.isEmpty ?
+            .init(title: "No books watched yet",
+                                    button: .init(title: "",
+                                                  action: {})) :
+            .init(title: "Recent Books",
+                  button: .init(title: "see more",
+                                action: seeAllRecentBooksButtonTap))
+    }
+    
     private let networking: NetworkManagerProtocol
     weak var view: HomeViewProtocol?
     
@@ -41,12 +70,11 @@ final class HomePresenter: HomePresenterProtocol {
 
     func viewDidLoad() {
         print("Data start loaded")
-        fetchData()
     }
     
     // MARK: - TODO
     func viewDidAppear() {
-        
+        fetchData()
     }
     
     // MARK: - TODO
@@ -55,11 +83,12 @@ final class HomePresenter: HomePresenterProtocol {
     }
     
     func didSelectCategory(at index: Int) {
-        print(topBooks[index])
+        print(index)
     }
     
     func didSelectTopBook(at index: Int) {
-        print(topBooks[index])
+//        print(topBooks[index])
+        
     }
     
     func didSelectRecentBook(at index: Int) {
@@ -84,20 +113,13 @@ final class HomePresenter: HomePresenterProtocol {
                 self.topBooks = books
                 await MainActor.run {
                     view?.render(
-                        .init(
-                            seeAllTopBooksButton: .init(
-                                title: "see more",
-                                action: seeAllTopBooksButtonTap
-                            ),
-                            topBooks: books,
-                            categories: HomeCategory.allCases,
-                            seeAllRecentBooksButton: .init(
-                                title: "see more",
-                                action: seeAllRecentBooksButtonTap
-                            ),
-                            recentBooks: []
-                        )
+                        .init(topBooksHeader: topBooksHeader,
+                              topBooks: topBooks,
+                              categories: HomeCategory.allCases,
+                              recentBooksHeader: recentBooksHeader,
+                              recentBooks: recentBooks)
                     )
+                    print(topBooksHeader.title)
                 }
             } catch {
                 await MainActor.run {
@@ -113,7 +135,8 @@ final class HomePresenter: HomePresenterProtocol {
             name: doc.title,
             author: doc.authorName.first ?? .init(),
             category: doc.subjectFacet?.first ?? .init(),
-            imageID: doc.coverI
+            imageID: doc.coverI,
+            rating: doc.ratingsAverage
         )
     }
 }

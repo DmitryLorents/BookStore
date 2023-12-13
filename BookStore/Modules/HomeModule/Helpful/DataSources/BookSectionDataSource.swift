@@ -39,6 +39,9 @@ final class BookSectionDataSource {
             case .categories(let category):
                 let cell = cell as? CategoryCell
                 cell?.configure(with: category)
+                if indexPath.item == 0 {
+                    cell?.checkCell()
+                }
             case .top(let book):
                 let cell = cell as? BookCell
                 cell?.configure(with: book)
@@ -84,11 +87,15 @@ final class BookSectionDataSource {
             
             switch BookSection(rawValue: indexPath.section) {
             case .categories:
-                header?.configure(with: "Top Books", tapAction: model.seeAllTopBooksButton.action)
+                header?.configure(with: model.topBooksHeader.title,
+                                  buttonTitle: model.topBooksHeader.button.title,
+                                  tapAction: model.topBooksHeader.button.action)
             case .top:
-                header?.configure(with: "", tapAction: {})
+                header?.configure(with: "", buttonTitle: "", tapAction: {})
             case .recent:
-                header?.configure(with: "Recent Books", tapAction: model.seeAllRecentBooksButton.action)
+                header?.configure(with: model.recentBooksHeader.title, 
+                                  buttonTitle: model.recentBooksHeader.button.title,
+                                  tapAction: model.recentBooksHeader.button.action)
             default:
                 assertionFailure("Unknown header type!")
             }

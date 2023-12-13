@@ -16,6 +16,7 @@ struct Book: Hashable, Identifiable {
     let author: String
     let category: String
     let imageID: Int
+    let rating: Double
 }
 
 // MARK: - Categories
@@ -37,11 +38,16 @@ enum BookSection: Int, Hashable, CaseIterable {
 // MARK: - HomeViewModel
 
 struct HomeViewModel {
-    let seeAllTopBooksButton: Button
+    let topBooksHeader: Header
     let topBooks: [Book]
     let categories: [HomeCategory]
-    let seeAllRecentBooksButton: Button
+    let recentBooksHeader: Header
     let recentBooks: [Book]
+    
+    struct Header {
+        let title: String
+        let button: Button
+    }
     
     struct Button {
         let title: String
