@@ -16,6 +16,7 @@ struct Book: Hashable, Identifiable {
     let author: String
     let category: String
     let imageID: Int
+    let rating: Double
 }
 
 // MARK: - Categories

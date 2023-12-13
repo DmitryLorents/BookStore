@@ -15,6 +15,7 @@ import SwiftUI
 protocol HomeViewProtocol: AnyObject {
     func render(_ viewModel: HomeViewModel)
     func showError(_ message: String)
+    func presentCartVC(_ books: [Book])
 }
 
 // MARK: - HomeViewController
@@ -110,6 +111,10 @@ extension HomeViewController: HomeViewProtocol {
     }
     
     func showError(_ message: String) {
+        
+    }
+    
+    func presentCartVC(_ books: [Book]) {
         
     }
 }

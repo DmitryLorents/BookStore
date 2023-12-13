@@ -8,7 +8,7 @@
 import Foundation
 
 protocol NetworkManagerProtocol {
-    func fetchAsyncData(from: OpenLibraryEndpoints) async throws -> APISearchModel
+    func fetchAsyncData<T: Decodable>(from: OpenLibraryEndpoints) async throws -> T
 }
 
 // MARK: - HomePresenterProtocol
@@ -83,15 +83,16 @@ final class HomePresenter: HomePresenterProtocol {
     }
     
     func didSelectCategory(at index: Int) {
-//        print(topBooks[index])
+        print(index)
     }
     
     func didSelectTopBook(at index: Int) {
 //        print(topBooks[index])
+        
     }
     
     func didSelectRecentBook(at index: Int) {
-//        print(topBooks[index])
+        print(topBooks[index])
     }
     
     // MARK: - Private methods
@@ -134,7 +135,8 @@ final class HomePresenter: HomePresenterProtocol {
             name: doc.title,
             author: doc.authorName.first ?? .init(),
             category: doc.subjectFacet?.first ?? .init(),
-            imageID: doc.coverI
+            imageID: doc.coverI,
+            rating: doc.ratingsAverage
         )
     }
 }
