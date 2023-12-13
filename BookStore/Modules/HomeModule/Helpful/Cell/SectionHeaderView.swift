@@ -1,5 +1,5 @@
 //
-//  SectionHeader.swift
+//  SectionHeaderView.swift
 //  BookStore
 //
 //  Created by Максим Горячкин on 05.12.2023.
@@ -7,26 +7,25 @@
 
 import UIKit
 
-class SectionHeader: UICollectionReusableView {
+class SectionHeaderView: UICollectionReusableView {
     
-    static let identifier = "CustomCollectionViewCell"
+    static let identifier = String(describing: SectionHeaderView.self)
+    
+    var buttonEvent: (() -> Void)?
     
     lazy var maintitle: UILabel = {
         let view = UILabel()
         view.font = .systemFont(ofSize: 20, weight: .bold)
         view.textAlignment = .left
-        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
     lazy var button: UIButton = {
         let view = UIButton()
         view.titleLabel?.font = .systemFont(ofSize: 14)
-        view.setTitle("see more", for: .normal)
         view.setTitleColor(.black, for: .normal)
         view.titleLabel?.textAlignment = .right
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
+        view.addTarget(self, action: #selector(Self.buttonTapped), for: .touchUpInside)
         return view
     }()
     
@@ -34,6 +33,7 @@ class SectionHeader: UICollectionReusableView {
         super.init(frame: frame)
         addSubview(maintitle)
         addSubview(button)
+        disableChildrenTAMIC()
         setupConstraints()
     }
     
@@ -55,12 +55,16 @@ class SectionHeader: UICollectionReusableView {
         
     }
     
-    func configure(with title: String) {
-        self.maintitle.text = title
+    func configure(with title: String, 
+                   buttonTitle: String = "see more",
+                   tapAction: @escaping () -> Void) {
+        maintitle.text = title
+        button.setTitle(buttonTitle, for: .normal)
+        buttonEvent = tapAction
     }
     
     @objc func buttonTapped() {
-        print("Button was tapped")
+        buttonEvent?()
     }
     
 }

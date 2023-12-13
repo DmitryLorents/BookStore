@@ -14,64 +14,64 @@ enum APIRequest {
     case bookInfo(String)
 }
 
-struct RequestCreator {
-    enum ImageSize: String {
-        case small = "-S.jpg"
-        case medium = "-M.jpg"
-        case large = "-L.jpg"
-    }
-    
-    private enum RequestType: String {
-        case home = "https://openlibrary.org/search.json?/mode=everything&q=top&sort=rating&limit=10"
-        case search = "https://openlibrary.org/search.json?"
-        case image = "https://covers.openlibrary.org/b/id/"
-        case bookInfo = "https://openlibrary.org/works/"
-    }
-    
-    func createRequest(_ request: APIRequest) -> String {
-        switch request {
-        case .home:
-            RequestType.home.rawValue
-        case .search(let text):
-            RequestType.search.rawValue + text.trimmingCharacters(in: .symbols)
-        case .image(let idetifier):
-            RequestType.image.rawValue + String(idetifier) + ImageSize.medium.rawValue
-        case .bookInfo(let bookID):
-            RequestType.bookInfo.rawValue + bookID + ".json"
+struct OpenLibraryEndpoints {
+    private let host: String
+    private let path: String
+    private let queryItems: [URLQueryItem]
+    private var url: URL {
+        var components = URLComponents()
+        components.scheme = "https"
+        components.host = host
+        components.path = ["/",path].joined()
+        
+        if !queryItems.isEmpty {
+            components.queryItems = queryItems
         }
-    }
-    
-    func createRequest() -> String {
-        var urlComponents: URLComponents {
-            var components = URLComponents()
-            components.scheme = "https"
-            components.host = "openlibrary.org"
-            components.path = "/search.json"
-            components.queryItems = [
-                URLQueryItem(name: "mode", value: "everything"),
-                URLQueryItem(name: "q", value: "top"),
-                URLQueryItem(name: "sort", value: "rating"),
-                URLQueryItem(name: "limit", value: "70")
-            ]
-            return components
+        
+        guard let url = components.url else {
+            preconditionFailure("Unable to create url from: \(components)")
         }
-        return urlComponents.string ?? ""
+        return url
     }
     
-//    func createSearchRequest(with body: String) -> String {
-//        RequestType.search.rawValue + body.trimmingCharacters(in: .symbols)
-//    }
-//    
-//    func createImageRequest(with body: String) -> String {
-//        RequestType.image.rawValue + body + ImageSize.medium.rawValue
-//    }
-//    
-//    func createBookRequest(with body: String) -> String {
-//        RequestType.bookInfo.rawValue + body + ".json"
-//    }
-//    
-//    func createMainBooksRequest(_ : String = "") -> String {
-//        RequestType.home.rawValue
-//    }
-
+    private init(host: String = "openlibrary.org",
+                 path: String,
+                 queryItems: [URLQueryItem] = .init()
+    ) {
+        self.host = host
+        self.path = path
+        self.queryItems = queryItems
+    }
+    
+    func request(_ payload: Data? = nil) -> URLRequest {
+        var request = URLRequest(url: url)
+        request.httpBody = payload
+        return request
+    }
+    
+    static func home(limit: Int = 20) -> Self {
+        .init(path: "search.json",
+              queryItems: [
+                .init(name: "/mode", value: "everything"),
+                .init(name: "q", value: "top"),
+                .init(name: "sort", value: "rating"),
+                .init(name: "limit", value: limit.description)
+              ])
+    }
+    
+    static func search(_ query: String, limit: Int = 10) -> Self {
+        .init(path: "search.json",
+              queryItems: [
+                .init(name: "q", value: query),
+                .init(name: "limit", value: limit.description)
+              ])
+    }
+    
+    static func info(bookId: String) -> Self {
+        .init(path: "\(bookId).json")
+    }
+    
+    static func image(_ bookID: Int) -> URL {
+        self.init(host: "covers.openlibrary.org", path: "b/id/\(bookID)-M.jpg").url
+    }
 }

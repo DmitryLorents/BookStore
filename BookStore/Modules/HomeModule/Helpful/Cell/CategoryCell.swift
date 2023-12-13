@@ -1,5 +1,5 @@
 //
-//  CategoryCollectionViewCell.swift
+//  CategoryCell.swift
 //  BookStore
 //
 //  Created by Максим Горячкин on 05.12.2023.
@@ -7,24 +7,23 @@
 
 import UIKit
 
-class CategoryCollectionViewCell: UICollectionViewCell {
-    static let identifier = "CategoryCollectionViewCell"
+class CategoryCell: UICollectionViewCell {
+    static let identifier = String(describing: CategoryCell.self)
     
-    lazy var categoryButton: UIButton = {
-        let view = UIButton()
-        view.titleLabel?.font = .systemFont(ofSize: 14, weight: .bold)
-        view.setTitleColor(.black, for: .normal)
+    lazy var categoryButton: UILabel = {
+        let view = UILabel()
+        view.font = .systemFont(ofSize: 14, weight: .bold)
+        view.textColor = .black
+        view.textAlignment = .center
         view.layer.borderColor = CGColor(red: 13/255, green: 13/255, blue: 13/255, alpha: 1)
         view.layer.borderWidth = 1
+        view.layer.cornerRadius = 6
         view.frame = contentView.bounds
         return view
     }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
-//        contentView.clipsToBounds = true
-        contentView.layer.cornerRadius = 8
         contentView.addSubview(categoryButton)
     }
     
@@ -33,6 +32,6 @@ class CategoryCollectionViewCell: UICollectionViewCell {
     }
     
     func configure(with categoty: HomeCategory) {
-        categoryButton.setTitle(categoty.rawValue, for: .normal)
+        categoryButton.text = categoty.rawValue
     }
 }

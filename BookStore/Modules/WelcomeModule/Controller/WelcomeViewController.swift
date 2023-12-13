@@ -51,19 +51,16 @@ class WelcomeViewController: UIViewController, UIScrollViewDelegate {
     }()
     
     //MARK: - Life cycle
-    override func viewDidAppear(_ animated: Bool) {
-        screens = createScreens()
-        setupSlidesScrollView(slides: screens)
-    }
-    
     override func viewDidLoad() {
-//        view = welcomeView
         super.viewDidLoad()
         setupView()
         setupConstraints()
         setDelegates()
-        
-        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        screens = createScreens()
+        setupSlidesScrollView(slides: screens)
     }
     
     private func setupView() {
@@ -120,7 +117,9 @@ class WelcomeViewController: UIViewController, UIScrollViewDelegate {
     
     
     @objc private func getStartedButtonTapped(sender: UIButton) {
-        print("Button tapped")
+        let vc = CustomTabBarController()
+        vc.modalPresentationStyle = .fullScreen //or .overFullScreen for transparency
+        self.present(vc, animated: true, completion: nil)
     }
     
     @objc private func pageControlIndicatorTapped(sender: UIPageControl) {

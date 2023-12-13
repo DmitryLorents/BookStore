@@ -8,67 +8,124 @@
 import UIKit
 import SwiftUI
 
+
+
+// MARK: - HomeViewProtocol
+
 protocol HomeViewProtocol: AnyObject {
-    func reloadData(_ topBooks: [Book], _ recentBooks: [Book])
+    func render(_ viewModel: HomeViewModel)
+    func showError(_ message: String)
 }
 
+// MARK: - HomeViewController
+
 final class HomeViewController: UIViewController {
+    private let searchController: UISearchController
+    private let mainCollectionView: UICollectionView = .createCollectionView(with: .bookLayout())
+    private lazy var dataSource = BookSectionDataSource(mainCollectionView)
+    private lazy var collectionDelegate = BooksCollectionDelegate(mainCollectionView)
+    private lazy var searchDelegeate = HomeSearchControllerDelegate(searchController: searchController, navigationController: self.navigationController)
     
-    // MARK: - Parameters
-    var presenter: HomePresenterProtocol
-    private lazy var mainCollectionView = CollectionViewFactory().createCollectionView(with: LayoutBuilder().createLayout())
-    private lazy var dataSource = DataBuilder().createDataSource(for: mainCollectionView)
+    // MARK: - Properties
+    let presenter: HomePresenterProtocol
+    let glassItem = UIBarButtonItem(image: UIImage(systemName: "magnifyingglass"),
+                                                     style: .done,
+                                                     target: HomeViewController.self,
+                                                     action: #selector(toggleSearchBar))
     
     // MARK: - Initialization
-    init(presenter: HomePresenterProtocol) {
+    
+    init(
+        presenter: HomePresenterProtocol,
+        searchController: UISearchController
+    ) {
         self.presenter = presenter
+        self.searchController = searchController
         super.init(nibName: nil, bundle: nil)
-        self.presenter.view = self
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    // MARK: - Life cycle methods
+    
+    override func loadView() {
+        super.loadView()
         view.addSubview(mainCollectionView)
         mainCollectionView.frame = view.bounds
-        mainCollectionView.dataSource = dataSource
-        registerCells()
     }
     
-    private func registerCells() {
-        mainCollectionView.register(CustomCollectionViewCell.self, forCellWithReuseIdentifier: CustomCollectionViewCell.identifier)
-        mainCollectionView.register(CategoryCollectionViewCell.self, forCellWithReuseIdentifier: CategoryCollectionViewCell.identifier)
-        mainCollectionView.register(SectionHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SectionHeader.identifier)
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        presenter.viewDidLoad()
+        colectionDelegateSetup()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setupNavigationItem()
+        presenter.viewDidAppear()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        presenter.viewDidDisappear()
+    }
+    
+    // MARK: - Private methods
+    private func setupNavigationItem() {
+        navigationItem.title = "Happy Reading!"
+        navigationItem.rightBarButtonItem = glassItem
+        navigationItem.searchController = searchController
+    }
+    
+    private func colectionDelegateSetup() {
+        collectionDelegate.didSelectCategoryAt = presenter.didSelectCategory(at:)
+        collectionDelegate.didSelectTopAt = presenter.didSelectTopBook(at:)
+        collectionDelegate.didSelectRecentAt = presenter.didSelectRecentBook(at:)
+    }
+    
+    // MARK: - Objective-C private methods
+    
+    @objc private func toggleSearchBar() {
+        searchDelegeate.check()
+//        navigationItem.searchController = searchController
+//        navigationController?.view.layoutIfNeeded()
+//        searchController.searchBar.becomeFirstResponder()
     }
 }
 
-extension HomeViewController: UICollectionViewDelegate {
-    
-}
+// MARK: - HomeViewProtocol methods
 
 extension HomeViewController: HomeViewProtocol {
-    func reloadData(_ topBooks: [Book], _ recentBooks: [Book]) {
-        DataBuilder().updateDataSource(dataSource, topBooks: topBooks, recentBooks: recentBooks)
+    func render(_ viewModel: HomeViewModel) {
+        dataSource.updateHeader(with: viewModel)
+        dataSource.update(topBooks: viewModel.topBooks)
+    }
+    
+    func showError(_ message: String) {
+        
     }
 }
 
-struct ListProvider: PreviewProvider {
-    static var previews: some View {
-        ConteinerView().ignoresSafeArea()
-    }
-    
-    struct ConteinerView: UIViewControllerRepresentable {
-        let homeVC = HomeViewController(presenter: HomePresenter())
-        
-        func makeUIViewController(context: Context) -> some UIViewController {
-            homeVC
-        }
-        
-        func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
-            
-        }
-    }
-}
+
+
+//
+//struct ListProvider: PreviewProvider {
+//    static var previews: some View {
+//        ConteinerView().ignoresSafeArea()
+//    }
+//
+//    struct ConteinerView: UIViewControllerRepresentable {
+//        let homeVC = HomeViewController(presenter: HomePresenter())
+//
+//        func makeUIViewController(context: Context) -> some UIViewController {
+//            homeVC
+//        }
+//
+//        func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
+//
+//        }
+//    }
+//}
