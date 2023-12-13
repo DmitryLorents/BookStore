@@ -2,7 +2,7 @@
 //  BooksCollectionDelegate.swift
 //  BookStore
 //
-//  Created by Шаповалов Илья on 11.12.2023.
+//  Created by Максим Горячкин on 12.12.2023.
 //
 
 import UIKit

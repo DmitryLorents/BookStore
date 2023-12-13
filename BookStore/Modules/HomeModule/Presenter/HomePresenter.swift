@@ -1,5 +1,5 @@
 //
-//  Presenter.swift
+//  HomePresenter.swift
 //  BookStore
 //
 //  Created by Максим Горячкин on 09.12.2023.
@@ -44,10 +44,12 @@ final class HomePresenter: HomePresenterProtocol {
         fetchData()
     }
     
+    // MARK: - TODO
     func viewDidAppear() {
         
     }
     
+    // MARK: - TODO
     func viewDidDisappear() {
         
     }
@@ -65,6 +67,14 @@ final class HomePresenter: HomePresenterProtocol {
     }
     
     // MARK: - Private methods
+    
+    private func seeAllTopBooksButtonTap() {
+        print("See more Top Books")
+    }
+    
+    private func seeAllRecentBooksButtonTap() {
+        print("See more Recent Books")
+    }
     
     private func fetchData() {
         Task.detached(priority: .background) { [unowned self] in
@@ -95,14 +105,6 @@ final class HomePresenter: HomePresenterProtocol {
                 }
             }
         }
-    }
-    
-    private func seeAllTopBooksButtonTap() {
-        print("See more Top Books")
-    }
-    
-    private func seeAllRecentBooksButtonTap() {
-        print("See more Recent Books")
     }
     
     private func toBook(_ doc: Doc) -> Book {
