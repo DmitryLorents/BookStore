@@ -92,4 +92,5 @@ class BookCell: UICollectionViewCell {
         authorTitle.text = book.author
         imageView.kf.setImage(with: OpenLibraryEndpoints.image(book.imageID))
     }
+
 }

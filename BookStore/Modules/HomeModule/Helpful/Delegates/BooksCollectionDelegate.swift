@@ -26,6 +26,11 @@ final class BooksCollectionDelegate: NSObject, UICollectionViewDelegate {
     ) {
         switch BookSection(rawValue: indexPath.section) {
         case .categories:
+            let cells = collectionView.visibleCells.compactMap { $0 as? CategoryCell }
+            cells.forEach {
+                $0.resetCell()
+            }
+            cells[indexPath.item].checkCell()
             didSelectCategoryAt?(indexPath.item)
         case .top:
             didSelectTopAt?(indexPath.item)

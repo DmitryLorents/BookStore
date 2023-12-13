@@ -83,15 +83,15 @@ final class HomePresenter: HomePresenterProtocol {
     }
     
     func didSelectCategory(at index: Int) {
-        print(topBooks[index])
+//        print(topBooks[index])
     }
     
     func didSelectTopBook(at index: Int) {
-        print(topBooks[index])
+//        print(topBooks[index])
     }
     
     func didSelectRecentBook(at index: Int) {
-        print(topBooks[index])
+//        print(topBooks[index])
     }
     
     // MARK: - Private methods

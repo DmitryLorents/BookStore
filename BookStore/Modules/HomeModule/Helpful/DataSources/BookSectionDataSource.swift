@@ -39,6 +39,9 @@ final class BookSectionDataSource {
             case .categories(let category):
                 let cell = cell as? CategoryCell
                 cell?.configure(with: category)
+                if indexPath.item == 0 {
+                    cell?.checkCell()
+                }
             case .top(let book):
                 let cell = cell as? BookCell
                 cell?.configure(with: book)
