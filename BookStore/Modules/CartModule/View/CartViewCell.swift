@@ -123,11 +123,11 @@ class CartViewCell: UITableViewCell {
         }
     }
     
-    func configureCell(likeBook: CartModel){
-        imageBookImageView.image = likeBook.imageBook
-        nameBookLabel.text = likeBook.nameBook
-        authorBookLabel.text = likeBook.authorBook
-        genreBookLabel.text = likeBook.genreBook
+    func configureCell(likeBook: Book){
+        imageBookImageView.image = UIImage(named: "bookСover")
+        nameBookLabel.text = likeBook.name
+        authorBookLabel.text = likeBook.author
+        genreBookLabel.text = likeBook.category
     }
     
     private func setupTargetForButtons(){

@@ -12,10 +12,10 @@ struct CartModel{
 }
 
 struct Source{
-    static func getCart() ->[CartModel] {
+    static func getCart() ->[Book] {
         [
-            .init(imageBook: UIImage(named: "bookСover")!, nameBook: "Book", authorBook: "Author", genreBook: "Genre"),
-            .init(imageBook: UIImage(named: "bookСover")!, nameBook: "Book", authorBook: "Author", genreBook: "Genre"),
+            Book(key: "key1", name: "name1", author: "author1", category: "category1", imageID: 1),
+            Book(key: "key2", name: "name2", author: "author2", category: "category2", imageID: 2),
         ]
     }
 }
