@@ -8,20 +8,7 @@
 import UIKit
 import SwiftUI
 
-// MARK: - HomeViewModel
 
-struct HomeViewModel {
-    let seeAllTopBooksButton: Button
-    let topBooks: [Book]
-    let categories: [HomeCategory]
-    let seeAllRecentBooksButton: Button
-    let recentBooks: [Book]
-    
-    struct Button {
-        let title: String
-        let action: () -> Void
-    }
-}
 
 // MARK: - HomeViewProtocol
 
@@ -72,10 +59,7 @@ final class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         presenter.viewDidLoad()
-        
-        collectionDelegate.didSelectCategoryAt = presenter.didSelectCategory(at:)
-        collectionDelegate.didSelectTopAt = presenter.didSelectTopBook(at:)
-        collectionDelegate.didSelectRecentAt = presenter.didSelectRecentBook(at:)
+        colectionDelegateSetup()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -94,6 +78,12 @@ final class HomeViewController: UIViewController {
         navigationItem.title = "Happy Reading!"
         navigationItem.rightBarButtonItem = glassItem
         navigationItem.searchController = searchController
+    }
+    
+    private func colectionDelegateSetup() {
+        collectionDelegate.didSelectCategoryAt = presenter.didSelectCategory(at:)
+        collectionDelegate.didSelectTopAt = presenter.didSelectTopBook(at:)
+        collectionDelegate.didSelectRecentAt = presenter.didSelectRecentBook(at:)
     }
     
     // MARK: - Objective-C private methods

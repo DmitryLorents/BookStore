@@ -1,5 +1,5 @@
 //
-//  SectionHeader.swift
+//  SectionHeaderView.swift
 //  BookStore
 //
 //  Created by Максим Горячкин on 05.12.2023.
@@ -9,7 +9,7 @@ import UIKit
 
 class SectionHeaderView: UICollectionReusableView {
     
-    static let identifier = "SectionHeader"
+    static let identifier = String(describing: SectionHeaderView.self)
     
     var buttonEvent: (() -> Void)?
     
