@@ -11,11 +11,11 @@ class CartViewController: UIViewController {
     
     private let viewCart = CartView()
     private var likeArray = Source.getCart()
-    private var book: [Book?]
+    private var books: [Book?]
     
     // MARK: - Init
-    init (book: [Book?]){
-        self.book = book
+    init (books: [Book]?){
+        self.books = books ?? likeArray
         super.init(nibName: nil, bundle: nil)
     }
     
