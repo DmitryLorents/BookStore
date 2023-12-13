@@ -27,18 +27,8 @@ class StorageManagerRealm{
         }
     }
     
-//    func deleteBook(_ book: Book) { // удалении книги для сердечка на ProductVC и для CartVC
-//        let bookModel = transferBookToBookModel(book)
-//        guard let existingBookModel = realm.object(ofType: BookModelData.self, forPrimaryKey: bookModel.name) else {
-//            return
-//        }
-//        
-//        try! realm.write {
-//            realm.delete(existingBookModel)
-//        }
-//    }
     
-    func deleteBook(withBook book: Book) {
+    func deleteBook(withBook book: Book) { // удалении книги для сердечка на ProductVC и для CartVC
         let bookModel = transferBookToBookModel(book)
         do {
             let realm = try Realm()
