@@ -49,7 +49,7 @@ struct OpenLibraryEndpoints {
         return request
     }
     
-    static func home(limit: Int = 100) -> Self {
+    static func home(limit: Int = 8) -> Self {
         .init(path: "search.json",
               queryItems: [
                 .init(name: "/mode", value: "everything"),
