@@ -9,11 +9,15 @@ import UIKit
 
 class CustomTabBarController: UITabBarController {
 
+    let storageManager = StorageManagerRealm.shared
+    
     //MARK: Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setControllers()
         setAppearance()
+        storageManager.allDelete()
+        storageManager.saveBook(Book(key: "bb", name: "name", author: "author", category: "category", imageID: 1, rating: 2.3))
     }
     
     override func viewDidLayoutSubviews() {
@@ -41,7 +45,7 @@ class CustomTabBarController: UITabBarController {
         
         let likesVC = generateVC(
             //TODO: - в бук другую модель поставить
-            viewController: CartViewController(books: Source.getCart()),
+            viewController: CartViewController(books: storageManager.getBooks()),
             image: UIImage(named: "likesUnselected"),
             selectedImage: UIImage(named: "likesSelected"))
         
