@@ -21,6 +21,7 @@ protocol HomeViewProtocol: AnyObject {
 
 final class HomeViewController: UIViewController {
     private let searchController: UISearchController
+    private let indicator = UIActivityIndicatorView(style: .large)
     private let mainCollectionView: UICollectionView = .createCollectionView(with: .bookLayout())
     private lazy var dataSource = BookSectionDataSource(mainCollectionView)
     private lazy var collectionDelegate = BooksCollectionDelegate(mainCollectionView)
@@ -53,12 +54,15 @@ final class HomeViewController: UIViewController {
     override func loadView() {
         super.loadView()
         view.addSubview(mainCollectionView)
+        view.addSubview(indicator)
         mainCollectionView.frame = view.bounds
+        indicator.frame = view.bounds
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         presenter.viewDidLoad()
+        indicator.startAnimating()
         colectionDelegateSetup()
     }
     
@@ -100,8 +104,9 @@ final class HomeViewController: UIViewController {
 
 extension HomeViewController: HomeViewProtocol {
     func render(_ viewModel: HomeViewModel) {
+        indicator.stopAnimating()
         dataSource.updateHeader(with: viewModel)
-        dataSource.update(topBooks: viewModel.topBooks)
+        dataSource.update(topBooks: viewModel.topBooks, recentBooks: viewModel.recentBooks)
     }
     
     func showError(_ message: String) {
