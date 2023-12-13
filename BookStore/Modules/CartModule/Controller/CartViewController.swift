@@ -42,7 +42,7 @@ extension CartViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: CartViewCell.reuseID, for: indexPath) as? CartViewCell else { fatalError() }
 
-        cell.configureCell(likeBook: book[indexPath.row]!)
+        cell.configureCell(likeBook: books[indexPath.row]!)
         return cell
     }
 }
