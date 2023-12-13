@@ -10,6 +10,7 @@ import SnapKit
 
 class ProductView: UIView {
     //MARK: - Parameters
+    private var book: Book?
     // views design
     // scroll
     private lazy var scrollView = {
@@ -21,7 +22,7 @@ class ProductView: UIView {
     
     private lazy var contentView = UIView()
     // title
-    private lazy var titleLabel = {
+    lazy var titleLabel = {
         let label = UILabel()
         label.text = ProductModel.TitleLabel.text
         label.font = ProductModel.TitleLabel.font
@@ -61,7 +62,7 @@ class ProductView: UIView {
         return label
     }()
     
-    private lazy var authorTextLabel = {
+    lazy var authorTextLabel = {
         let label = UILabel()
         label.numberOfLines = ProductModel.CommonSettings.numberOfLines
         label.text = ProductModel.AuthorTextLabel.text
@@ -76,7 +77,7 @@ class ProductView: UIView {
         return label
     }()
     
-    private lazy var categoryTextLabel = {
+    lazy var categoryTextLabel = {
         let label = UILabel()
         label.text = ProductModel.CategoryTextLabel.text
         label.font = ProductModel.CommonSettings.bookInfoTextFont
@@ -91,7 +92,7 @@ class ProductView: UIView {
         return label
     }()
     
-    private lazy var ratingTextLabel = {
+    lazy var ratingTextLabel = {
         let label = UILabel()
         label.text = ProductModel.RatingTextLabel.text
         label.font = ProductModel.CommonSettings.bookInfoTextFont
@@ -123,7 +124,7 @@ class ProductView: UIView {
         return label
     }()
     
-    private lazy var descriptionTextLabel = {
+    lazy var descriptionTextLabel = {
         let label = UILabel()
         label.text = ProductModel.DesctiptionTextLabel.text
         label.font = ProductModel.DesctiptionTextLabel.font

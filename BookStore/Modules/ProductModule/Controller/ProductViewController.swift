@@ -9,6 +9,7 @@ import UIKit
 
 class ProductViewController: UIViewController {
     //MARK: - Parameters
+    private var book: Book?
     private let productView = ProductView()
     
     //MARK: - Life cycle
@@ -18,9 +19,32 @@ class ProductViewController: UIViewController {
         self.view = productView
         
         setupNavigationBar()
+        
+        updateBookInfo()
+    }
+    
+    init(book: Book? = nil) {
+        self.book = book
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     //MARK: - Methods
+    func updateBookInfo() {
+        guard let unwrapedBook = book else { return }
+        
+        productView.titleLabel.text = unwrapedBook.name
+        productView.authorTextLabel.text = unwrapedBook.author
+        productView.categoryTextLabel.text = unwrapedBook.category
+        // TODO: - Create ProductVC Model
+        //ratingTextLabel.text = unwrapedBook.rating
+        //descriptionTextLabel.description = unwrapedBook.description
+        //update image
+    }
+    
     private func setupNavigationBar() {
         let navBar = navigationController?.navigationBar
         navBar?.tintColor = .black
