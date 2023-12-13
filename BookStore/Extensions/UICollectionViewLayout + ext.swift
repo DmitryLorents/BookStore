@@ -5,7 +5,7 @@
 //  Created by Максим Горячкин on 04.12.2023.
 //
 
-import UIKit
+import UIKit.UICollectionViewLayout
 
 extension UICollectionViewLayout {
     static func bookLayout() -> UICollectionViewLayout {

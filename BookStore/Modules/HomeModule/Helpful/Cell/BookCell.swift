@@ -1,5 +1,5 @@
 //
-//  CustomCollectionViewCell.swift
+//  BookCell.swift
 //  BookStore
 //
 //  Created by Максим Горячкин on 04.12.2023.
@@ -8,28 +8,12 @@
 import UIKit
 import Kingfisher
 
-extension UILabel {
-    static func common(_ font: UIFont, numberOfLines: Int = 0) -> UILabel {
-        let view = UILabel()
-        view.numberOfLines = numberOfLines
-        view.font = font
-        view.textColor = .white
-        view.textAlignment = .left
-        return view
-    }
-}
 
-extension UIView {
-    func disableChildrenTAMIC() {
-        subviews.forEach {
-            $0.translatesAutoresizingMaskIntoConstraints = false
-        }
-    }
-}
+
 
 
 class BookCell: UICollectionViewCell {
-    static let identifier = "BookCell"
+    static let identifier = String(describing: BookCell.self)
     
     lazy var mainView: UIView = {
         let view = UIView()

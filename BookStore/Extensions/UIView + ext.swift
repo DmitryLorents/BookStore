@@ -19,4 +19,10 @@ extension UIView {
         let rotation = CGAffineTransformRotate(self.transform, radians);
         self.transform = rotation
     }
+    
+    func disableChildrenTAMIC() {
+        subviews.forEach {
+            $0.translatesAutoresizingMaskIntoConstraints = false
+        }
+    }
 }

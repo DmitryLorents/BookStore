@@ -30,7 +30,7 @@ class CustomTabBarController: UITabBarController {
    //MARK: Methods
     private func setControllers() {
         let homeVC = generateVC(
-            viewController: HomeViewController(presenter: .homeBuilder),
+            viewController: .homeBuilder,
             image: UIImage(named: "homeUnselected"),
             selectedImage: UIImage(named: "homeSelected"))
         

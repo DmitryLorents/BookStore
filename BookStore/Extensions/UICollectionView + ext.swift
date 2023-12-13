@@ -1,5 +1,5 @@
 //
-//  CollectionViewFactory.swift
+//  UICollectionView + ext.swift
 //  BookStore
 //
 //  Created by Максим Горячкин on 04.12.2023.
@@ -14,14 +14,5 @@ extension UICollectionView {
         view.showsVerticalScrollIndicator = false
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
-    }
-}
-
-extension UIBarButtonItem {
-    static func createGlassItem(_ selector: Selector) -> UIBarButtonItem {
-        UIBarButtonItem(image: UIImage(systemName: "magnifyingglass"),
-                                             style: .done,
-                                             target: self,
-                                             action: selector)
     }
 }
