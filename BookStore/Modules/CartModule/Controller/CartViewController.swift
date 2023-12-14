@@ -12,10 +12,12 @@ class CartViewController: UIViewController {
     private let viewCart = CartView()
     private var books: [Book]?
     private let storageManager = StorageManagerRealm.shared
+    private let titleCart:String
     
     // MARK: - Init
-    init (books: [Book]?){
+    init (books: [Book]?, titleCart: String) {
         self.books = books!
+        self.titleCart = titleCart
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -28,11 +30,23 @@ class CartViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         view = viewCart
+        setupNavigationBar()
         viewCart.transferDelegates(dataSource: self, delegate: self)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        title = titleCart
+        print(storageManager.getBooks())
+    }
+    
+    //MARK: - PrivateMethods
+    private func setupNavigationBar(){
+        let navBar = navigationController?.navigationBar
+        navBar?.tintColor = .black
+        navBar?.backIndicatorImage = UIImage(systemName: "arrow.left")
+        navBar?.backIndicatorTransitionMaskImage = UIImage(systemName: "arrow.left")
+        navBar?.topItem?.backButtonTitle = ""
     }
 }
 
