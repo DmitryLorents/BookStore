@@ -15,18 +15,14 @@ class StorageManagerRealm{
     
     private init() {}
     
-    func saveBook(_ book: Book){// сохранение Книги
+    func saveBook(_ book: Book) {
         let bookModel = transferBookToBookModel(book)
-        if checkDublicateBook(book) != true {
+        if !checkDublicateBook(book) {
             try! realm.write {
                 realm.add(bookModel)
             }
         }
-        else {
-            fatalError()
-        }
     }
-    
     
     func deleteBook(withBook book: Book) { // удалении книги для сердечка на ProductVC и для CartVC
         let bookModel = transferBookToBookModel(book)

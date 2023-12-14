@@ -16,8 +16,9 @@ class CustomTabBarController: UITabBarController {
         super.viewDidLoad()
         setControllers()
         setAppearance()
-        storageManager.allDelete()
-        storageManager.saveBook(Book(key: "bb", name: "name", author: "author", category: "category", imageID: 1, rating: 2.3))
+        //TODO: - Mock data have to be deleted later
+        //storageManager.allDelete()
+        storageManager.saveBook(Book(key: "ky", name: "nme153", author: "autor3465", category: "tcayteory", imageID: 3, rating: 1.3))
     }
     
     override func viewDidLayoutSubviews() {
@@ -45,7 +46,7 @@ class CustomTabBarController: UITabBarController {
         
         let likesVC = generateVC(
             //TODO: - в бук другую модель поставить
-            viewController: CartViewController(books: storageManager.getBooks(), titleCart: "See more"),
+            viewController: CartViewController(books: storageManager.getBooks(), titleCart: nil),
             image: UIImage(named: "likesUnselected"),
             selectedImage: UIImage(named: "likesSelected"))
         

@@ -9,13 +9,13 @@ class CartViewController: UIViewController {
     
     // MARK: - Parameters
     
-    private let viewCart = CartView()
+    private let cartView = CartView()
     private var books: [Book]?
     private let storageManager = StorageManagerRealm.shared
-    private let titleCart:String
+    private let titleCart:String?
     
     // MARK: - Init
-    init (books: [Book]?, titleCart: String) {
+    init (books: [Book]?, titleCart: String?) {
         self.books = books!
         self.titleCart = titleCart
         super.init(nibName: nil, bundle: nil)
@@ -26,21 +26,28 @@ class CartViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     // MARK: - Life cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemBackground
-        view = viewCart
+        setViews()
         setupNavigationBar()
-        viewCart.transferDelegates(dataSource: self, delegate: self)
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        title = titleCart
+        
         print(storageManager.getBooks())
     }
     
     //MARK: - PrivateMethods
+    fileprivate func setViews() {
+        view.backgroundColor = .systemBackground
+        cartView.transferDelegates(dataSource: self, delegate: self)
+        view = cartView
+        title = titleCart
+    }
+    
     private func setupNavigationBar(){
         let navBar = navigationController?.navigationBar
         navBar?.tintColor = .black
@@ -54,13 +61,12 @@ class CartViewController: UIViewController {
 extension CartViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        books!.count
+        books?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: CartViewCell.reuseID, for: indexPath) as? CartViewCell else { fatalError() }
-
-        cell.configureCell(likeBook: unwrappedBook(booksWrp: books)[indexPath.row])
+        guard let books, let cell = tableView.dequeueReusableCell(withIdentifier: CartViewCell.reuseID, for: indexPath) as? CartViewCell else { return .init() }
+        cell.configureCell(with: books[indexPath.row])
         return cell
     }
 }
