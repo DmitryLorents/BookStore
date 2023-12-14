@@ -10,12 +10,12 @@ class CartViewController: UIViewController {
     // MARK: - Parameters
     
     private let viewCart = CartView()
-    private var likeArray = Source.getCart()
-    private var books: [Book?]
+    private var books: [Book]?
+    private let storageManager = StorageManagerRealm.shared
     
     // MARK: - Init
     init (books: [Book]?){
-        self.books = books ?? likeArray
+        self.books = books!
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -30,19 +30,23 @@ class CartViewController: UIViewController {
         view = viewCart
         viewCart.transferDelegates(dataSource: self, delegate: self)
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    }
 }
 
 //MARK: - Extensions
 extension CartViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        likeArray.count
+        books!.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: CartViewCell.reuseID, for: indexPath) as? CartViewCell else { fatalError() }
 
-        cell.configureCell(likeBook: books[indexPath.row]!)
+        cell.configureCell(likeBook: books![indexPath.row])
         return cell
     }
 }
