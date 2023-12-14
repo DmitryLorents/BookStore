@@ -52,5 +52,11 @@ extension CartViewController: UITableViewDataSource {
 }
 
 extension CartViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let book = books?[indexPath.row] else { return }
+        navigationController?.pushViewController(ProductViewController(book: book), animated: true)
+        
+    }
 
 }

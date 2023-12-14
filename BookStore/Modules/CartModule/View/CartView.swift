@@ -12,7 +12,6 @@ class CartView: UIView {
         element.register(CartViewCell.self, forCellReuseIdentifier: CartViewCell.reuseID)
         element.separatorStyle = .none
         element.estimatedRowHeight = 148
-        element.allowsSelection = false
         element.showsVerticalScrollIndicator = false
         element.backgroundColor = .clear
         return element
