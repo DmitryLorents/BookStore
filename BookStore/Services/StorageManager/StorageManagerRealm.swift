@@ -31,7 +31,6 @@ class StorageManagerRealm{
     func deleteBook(withBook book: Book) { // удалении книги для сердечка на ProductVC и для CartVC
         let bookModel = transferBookToBookModel(book)
         do {
-            let realm = try Realm()
             if let bookToDelete = realm.objects(BookModelData.self).filter("keyForServer == %@", bookModel.keyForServer).first {
                 try realm.write {
                     realm.delete(bookToDelete)
