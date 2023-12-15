@@ -10,13 +10,17 @@ class CartViewController: UIViewController {
     // MARK: - Parameters
     
     private let cartView = CartView()
-    private var books: [Book]?
+    private var books: [Book]? {
+        didSet {
+            cartView.reloadTableView()
+        }
+    }
     private let storageManager = StorageManagerRealm.shared
     private let titleCart:String?
     
     // MARK: - Init
     init (books: [Book]?, titleCart: String?) {
-        self.books = books!
+        self.books = books
         self.titleCart = titleCart
         super.init(nibName: nil, bundle: nil)
     }
@@ -36,8 +40,7 @@ class CartViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        print(storageManager.getBooks())
+        //books = storageManager.getBooks()
     }
     
     //MARK: - PrivateMethods
