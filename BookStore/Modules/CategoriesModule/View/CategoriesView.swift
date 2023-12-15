@@ -73,7 +73,7 @@ class CategoriesView: UIView {
     
     lazy var collectionView: UICollectionView = {
         let cv = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
-        cv.backgroundColor = .welcomeBackground
+        cv.backgroundColor = .systemBackground
         cv.translatesAutoresizingMaskIntoConstraints = false
         cv.register(CategoryCustomCell.self, forCellWithReuseIdentifier: CategoryCustomCell.reuseID)
         return cv
@@ -82,7 +82,7 @@ class CategoriesView: UIView {
     //MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = .welcomeBackground
+        backgroundColor = .systemBackground
         setupView()
         setupLayout()
     }
