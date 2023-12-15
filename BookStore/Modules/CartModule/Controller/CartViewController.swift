@@ -43,7 +43,8 @@ class CartViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        //books = storageManager.getBooks()
+        //Favorites case
+        if title == nil { books = storageManager.getBooks() }
     }
     
     //MARK: - PrivateMethods

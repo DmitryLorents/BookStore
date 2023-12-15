@@ -13,8 +13,9 @@ import SwiftUI
 protocol HomeViewProtocol: AnyObject {
     func render(_ viewModel: HomeViewModel)
     func showError(_ message: String)
-    func presentCartVC(_ books: [Book])
     func renderNavigationItem()
+    func presentCartVC(_ books: [Book], title: String?)
+    func presentProductVC(_ book: Book)
 }
 
 // MARK: - HomeViewController
@@ -119,8 +120,14 @@ extension HomeViewController: HomeViewProtocol {
         
     }
     
-    func presentCartVC(_ books: [Book]) {
-        
+    func presentCartVC(_ books: [Book], title: String?) {
+        print(#function)
+        navigationController?.pushViewController(CartViewController(books: books, titleCart: title), animated: true)
+    }
+    
+    func presentProductVC(_ book: Book) {
+        print(#function)
+        navigationController?.pushViewController(ProductViewController(book: book), animated: true)
     }
     
 
