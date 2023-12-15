@@ -28,6 +28,10 @@ class CartView: UIView {
     }
     
     //MARK: - Methods
+    func reloadTableView() {
+        tableView.reloadData()
+    }
+    
     private func setupViews(){
         self.addSubview(tableView)
         setupConstraints()

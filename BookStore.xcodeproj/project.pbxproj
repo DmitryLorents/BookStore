@@ -417,6 +417,7 @@
 			children = (
 				89209CB42B286ABE00FCF147 /* Model */,
 				89209CB62B286ABE00FCF147 /* View */,
+				89209CA62B286ABE00FCF147 /* Cell */,
 				89209CB22B286ABE00FCF147 /* Presenter */,
 				89209CA52B286ABE00FCF147 /* Helpful */,
 			);
@@ -428,7 +429,6 @@
 			children = (
 				89209CC82B286BFA00FCF147 /* DataSources */,
 				89209CC72B286BC500FCF147 /* Delegates */,
-				89209CA62B286ABE00FCF147 /* Cell */,
 				89209CAC2B286ABE00FCF147 /* SearchController */,
 			);
 			path = Helpful;
