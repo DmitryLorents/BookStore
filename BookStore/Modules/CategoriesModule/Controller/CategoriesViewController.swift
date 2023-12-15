@@ -44,6 +44,19 @@ class CategoriesViewController: UIViewController {
         layout.itemSize = CGSize(width: widthPerItem, height: widthPerItem * 0.66)
         return layout
     }
+    
+    
+    private func toBook(_ doc: Doc) -> Book {
+        .init(
+            key: doc.key,
+            name: doc.title,
+            author: doc.authorName.first ?? .init(),
+            category: doc.subjectFacet?.first ?? .init(),
+            imageID: doc.coverI,
+            rating: doc.ratingsAverage
+        )
+    }
+
 }
     //MARK: - Extencion for ViewCollection Protocols
     
