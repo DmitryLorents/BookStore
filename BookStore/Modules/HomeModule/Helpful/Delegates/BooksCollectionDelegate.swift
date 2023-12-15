@@ -20,10 +20,7 @@ final class BooksCollectionDelegate: NSObject, UICollectionViewDelegate {
         collectionView.delegate = self
     }
     
-    func collectionView(
-        _ collectionView: UICollectionView,
-        didSelectItemAt indexPath: IndexPath
-    ) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         switch BookSection(rawValue: indexPath.section) {
         case .categories:
             let cells = collectionView.visibleCells.compactMap { $0 as? CategoryCell }
@@ -33,8 +30,10 @@ final class BooksCollectionDelegate: NSObject, UICollectionViewDelegate {
             cells[indexPath.item].checkCell()
             didSelectCategoryAt?(indexPath.item)
         case .top:
+            print("didSelectTopAt?\(indexPath.item)")
             didSelectTopAt?(indexPath.item)
         case .recent:
+            print("didSelectRecentAt?\(indexPath.item)")
             didSelectRecentAt?(indexPath.item)
         case .none:
             print("error")
@@ -42,10 +41,7 @@ final class BooksCollectionDelegate: NSObject, UICollectionViewDelegate {
         }
     }
     
-    func collectionView(
-        _ collectionView: UICollectionView,
-        willDisplay cell: UICollectionViewCell,
-        forItemAt indexPath: IndexPath
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath
     ) {
         
     }

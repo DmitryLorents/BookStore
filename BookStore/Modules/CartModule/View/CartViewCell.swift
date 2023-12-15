@@ -124,7 +124,7 @@ class CartViewCell: UITableViewCell {
     }
     
     func configureCell(with book: Book){
-        imageBookImageView.image = UIImage(named: "bookСover")
+        imageBookImageView.kf.setImage(with: OpenLibraryEndpoints.image(book.imageID))
         nameBookLabel.text = book.name
         authorBookLabel.text = book.author
         genreBookLabel.text = book.category
