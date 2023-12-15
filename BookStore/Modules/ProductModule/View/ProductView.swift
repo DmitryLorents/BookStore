@@ -126,11 +126,14 @@ class ProductView: UIView {
         return label
     }()
     
+    private let indicator = UIActivityIndicatorView(style: .large)
+    
     private lazy var descriptionTextLabel = {
         let label = UILabel()
-        label.text = ProductModel.DesctiptionTextLabel.text
+        //label.text = ProductModel.DesctiptionTextLabel.text
         label.font = ProductModel.DesctiptionTextLabel.font
         label.numberOfLines = ProductModel.CommonSettings.numberOfLines
+        label.addSubview(indicator)
         return label
     }()
     
@@ -156,8 +159,30 @@ class ProductView: UIView {
         coverImageView.kf.setImage(with: OpenLibraryEndpoints.image(book.imageID))
         print(OpenLibraryEndpoints.image(book.imageID))
         ratingTextLabel.text = String(format: "%0.2f", book.rating) + "/5"
-        // TODO: - Set description
-        //descriptionTextLabel.description = unwrapedBook.description
+        fetchData(book: book)
+    }
+    
+    private func fetchData(book: Book?) {
+        
+        Task.detached(priority: .background) {
+            await self.indicator.startAnimating()
+            do {
+                
+                async let model: APIBookModel = try NetworkManager.shared.fetchAsyncData(from:
+                        .info(key:
+                                book?.key ?? ProductModel.DesctiptionTextLabel.text))
+                let bookDetail = try await model.description
+                await MainActor.run {
+                    self.descriptionTextLabel.text = bookDetail
+                }
+            } catch {
+                await MainActor.run {
+                    self.descriptionTextLabel.text = "Invalid description"
+                }
+            }
+            await self.indicator.stopAnimating()
+        }
+        
     }
     
     private func setHierarchy() {
@@ -278,6 +303,9 @@ class ProductView: UIView {
             make.top.equalTo(descriptionLabel.snp.bottom).offset(ProductModel.CommonConstraints.topOffset)
             make.leading.trailing.equalToSuperview().inset(ProductModel.CommonConstraints.sideInset)
             make.bottom.equalTo(scrollView.snp.bottom)
+        }
+        indicator.snp.makeConstraints{ make in
+            make.centerX.centerY.equalToSuperview()
         }
     }
 }
