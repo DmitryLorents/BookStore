@@ -16,9 +16,6 @@ class CustomTabBarController: UITabBarController {
         super.viewDidLoad()
         setControllers()
         setAppearance()
-        //TODO: - Mock data have to be deleted later
-        //storageManager.allDelete()
-        storageManager.saveBook(Book(key: "ky", name: "nme153", author: "autor3465", category: "tcayteory", imageID: 3, rating: 1.3))
     }
     
     override func viewDidLayoutSubviews() {

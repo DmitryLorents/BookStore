@@ -17,12 +17,8 @@ class ProductViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view = productView
-        setupNavigationBar()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
         productView.setVIewsData(book: book)
+        setupNavigationBar()
     }
     
     //MARK: - Init
