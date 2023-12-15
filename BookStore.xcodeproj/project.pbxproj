@@ -132,8 +132,8 @@
 		0A162A7C2AFD19AD00DF885A = {
 			isa = PBXGroup;
 			children = (
-				0A162A872AFD19AD00DF885A /* BookStore */,
 				0A162AD52AFD239500DF885A /* README.md */,
+				0A162A872AFD19AD00DF885A /* BookStore */,
 				0A162A862AFD19AD00DF885A /* Products */,
 			);
 			sourceTree = "<group>";
@@ -149,10 +149,10 @@
 		0A162A872AFD19AD00DF885A /* BookStore */ = {
 			isa = PBXGroup;
 			children = (
-				8920C9622B249EBD0034513A /* Services */,
 				0A162A9C2AFD1A0600DF885A /* App */,
 				0A162A9D2AFD1A6900DF885A /* Modules */,
 				0ACD9E912B02BF5200FE9DBA /* Extensions */,
+				8920C9622B249EBD0034513A /* Services */,
 				0A162AAA2AFD201200DF885A /* SupportingFiles */,
 			);
 			path = BookStore;

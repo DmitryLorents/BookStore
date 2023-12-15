@@ -33,7 +33,7 @@ final class HomePresenter: HomePresenterProtocol {
     private var recentBooks: [Book] {
         //TODO: - delete later
         get {
-            StorageManagerRealm.shared.getBooks()
+            StorageManagerRealm.shared.getRecentBooks()
         }
         set {
             view?.render(
