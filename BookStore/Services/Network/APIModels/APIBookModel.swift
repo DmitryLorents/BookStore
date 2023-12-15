@@ -13,5 +13,5 @@ struct APIBookModel: Codable, Sendable {
         let value: String?
     }
     
-    let description: Description?
+    let description: String?
 }
