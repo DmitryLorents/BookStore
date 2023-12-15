@@ -10,6 +10,7 @@ import UIKit
 class ProductViewController: UIViewController {
     //MARK: - Parameters
     private var book: Book?
+    private let storageManager = StorageManagerRealm.shared
     private let productView = ProductView()
     
     //MARK: - Life cycle
@@ -73,16 +74,16 @@ class ProductViewController: UIViewController {
     }
     
     private func checkFavoriteStatus() -> Bool {
-        return false
+        storageManager.checkDublicateBook(book!)
     }
     
     @objc private func addToFavourite() {
-        // add to favourites logic
+        storageManager.saveBook(book!)
         updateFavouriteBarButton(true)
     }
     
     @objc private func revomeFromFavourite() {
-        // remove from favourites logic
+        storageManager.deleteBook(withBook: book!)
         updateFavouriteBarButton(false)
     }
 }
