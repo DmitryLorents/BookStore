@@ -40,8 +40,8 @@ class StorageManagerRealm{
         }
     }
     
-    func getBooks() -> [Book] { // получения всех сохранёных данных
-        let bookModels = realm.objects(BookModelData.self)
+    func getFavoritesBooks() -> [Book] { // получения всех сохранёных данных
+        let bookModels = realm.objects(BookModelData.self).filter({$0.isRecent == false})
         var books = [Book]()
         for bookModel in bookModels {
             let book = transferBookModelToBook(bookModel)
@@ -64,6 +64,24 @@ class StorageManagerRealm{
         try! realm.write {
             realm.deleteAll()
         }
+    }
+    
+    func addToRecent(_ book: Book) {
+        let bookModel = transferBookToBookModel(book)
+        bookModel.isRecent = true
+        try! realm.write {
+            realm.add(bookModel)
+        }
+    }
+    
+    func getRecentBooks() -> [Book] {
+        let bookModels = realm.objects(BookModelData.self).filter({$0.isRecent==true})
+        var books = [Book]()
+        for bookModel in bookModels {
+            let book = transferBookModelToBook(bookModel)
+            books.append(book)
+        }
+        return books
     }
     
     func transferBookToBookModel(_ book: Book) -> BookModelData {

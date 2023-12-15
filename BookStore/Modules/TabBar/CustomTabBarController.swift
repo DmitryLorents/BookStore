@@ -43,7 +43,7 @@ class CustomTabBarController: UITabBarController {
         
         let likesVC = generateVC(
             //TODO: - в бук другую модель поставить
-            viewController: CartViewController(books: storageManager.getBooks(), titleCart: nil),
+            viewController: CartViewController(books: storageManager.getFavoritesBooks(), titleCart: nil),
             image: UIImage(named: "likesUnselected"),
             selectedImage: UIImage(named: "likesSelected"))
         
