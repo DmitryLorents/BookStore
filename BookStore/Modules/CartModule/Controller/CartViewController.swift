@@ -5,10 +5,14 @@
 import UIKit
 import SnapKit
 
+protocol CartViewProtocol: AnyObject {
+    func startAnimateIndicator()
+    func render(_ books: [Book])
+}
+
 class CartViewController: UIViewController {
     
     // MARK: - Parameters
-    
     private let cartView = CartView()
     private var books: [Book]? {
         didSet {
@@ -35,7 +39,6 @@ class CartViewController: UIViewController {
         super.viewDidLoad()
         setViews()
         setupNavigationBar()
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -83,4 +86,15 @@ extension CartViewController: UITableViewDelegate {
         
     }
 
+}
+
+extension CartViewController: CartViewProtocol {
+    func startAnimateIndicator() {
+        cartView.startAnimating()
+    }
+    
+    func render(_ books: [Book]) {
+        cartView.stopAnimating()
+        self.books = books
+    }
 }

@@ -8,13 +8,12 @@
 import UIKit
 import SwiftUI
 
-
-
 // MARK: - HomeViewProtocol
 
 protocol HomeViewProtocol: AnyObject {
     func render(_ viewModel: HomeViewModel)
     func showError(_ message: String)
+    func renderNavigationItem()
     func presentCartVC(_ books: [Book], title: String?)
     func presentProductVC(_ book: Book)
 }
@@ -22,19 +21,20 @@ protocol HomeViewProtocol: AnyObject {
 // MARK: - HomeViewController
 
 final class HomeViewController: UIViewController {
+    
+    // MARK: - Properties
+    
+    let presenter: HomePresenterProtocol
     private let searchController: UISearchController
     private let indicator = UIActivityIndicatorView(style: .large)
     private let mainCollectionView: UICollectionView = .createCollectionView(with: .bookLayout())
     private lazy var dataSource = BookSectionDataSource(mainCollectionView)
     private lazy var collectionDelegate = BooksCollectionDelegate(mainCollectionView)
-    private lazy var searchDelegeate = HomeSearchControllerDelegate(searchController: searchController, navigationController: self.navigationController)
-    
-    // MARK: - Properties
-    let presenter: HomePresenterProtocol
-    let glassItem = UIBarButtonItem(image: UIImage(systemName: "magnifyingglass"),
-                                                     style: .done,
-                                                     target: HomeViewController.self,
-                                                     action: #selector(toggleSearchBar))
+    private lazy var searchDelegeate = HomeSearchControllerDelegate(searchController: searchController, presenter: presenter)
+    private lazy var glassItem = UIBarButtonItem(image: UIImage(systemName: "magnifyingglass"),
+                                                 style: .done,
+                                                 target: self,
+                                                 action: #selector(toggleSearchBar))
     
     // MARK: - Initialization
     
@@ -66,6 +66,7 @@ final class HomeViewController: UIViewController {
         presenter.viewDidLoad()
         indicator.startAnimating()
         colectionDelegateSetup()
+        searchDelegateSetup()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -83,7 +84,6 @@ final class HomeViewController: UIViewController {
     private func setupNavigationItem() {
         navigationItem.title = "Happy Reading!"
         navigationItem.rightBarButtonItem = glassItem
-        navigationItem.searchController = searchController
     }
     
     private func colectionDelegateSetup() {
@@ -92,13 +92,18 @@ final class HomeViewController: UIViewController {
         collectionDelegate.didSelectRecentAt = presenter.didSelectRecentBook(at:)
     }
     
+    private func searchDelegateSetup() {
+        searchDelegeate.check()
+    }
+    
     // MARK: - Objective-C private methods
     
     @objc private func toggleSearchBar() {
-        searchDelegeate.check()
-//        navigationItem.searchController = searchController
-//        navigationController?.view.layoutIfNeeded()
-//        searchController.searchBar.becomeFirstResponder()
+        navigationItem.searchController = searchController
+        navigationController?.view.layoutIfNeeded()
+        tabBarController?.tabBar.isHidden = true
+        presenter.willAppearSearchController()
+        searchController.searchBar.becomeFirstResponder()
     }
 }
 
@@ -123,6 +128,13 @@ extension HomeViewController: HomeViewProtocol {
     func presentProductVC(_ book: Book) {
         print(#function)
         navigationController?.pushViewController(ProductViewController(book: book), animated: true)
+    }
+    
+
+    func renderNavigationItem() {
+        navigationItem.searchController = nil
+        navigationController?.view.layoutIfNeeded()
+        tabBarController?.tabBar.isHidden = false
     }
 }
 

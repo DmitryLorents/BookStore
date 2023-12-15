@@ -7,27 +7,26 @@
 
 import UIKit
 
-class HomeSearchControllerDelegate: NSObject, UISearchControllerDelegate {
+class HomeSearchControllerDelegate: NSObject, UISearchControllerDelegate, UISearchBarDelegate {
     private let searchController: UISearchController
-    private let navigationController: UINavigationController?
+    private let presenter: HomePresenterProtocol
     
-    var didTapGlass: ((Int) -> Void)?
     var didTapCancel: ((Int) -> Void)?
     
-    init(searchController: UISearchController, navigationController: UINavigationController?) {
+    init(searchController: UISearchController, presenter: HomePresenterProtocol) {
         self.searchController = searchController
-        self.navigationController = navigationController
+        self.presenter = presenter
         super.init()
         searchController.delegate = self
+        searchController.searchBar.delegate = self
     }
     
     func check() {
-        print("test")
+        print("TEST")
     }
     
     func willDismissSearchController(_ searchController: UISearchController) {
-        navigationController?.navigationItem.searchController = nil
-        navigationController?.view.layoutIfNeeded()
+        presenter.willDismissSearchController()
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
@@ -35,5 +34,11 @@ class HomeSearchControllerDelegate: NSObject, UISearchControllerDelegate {
         searchController.searchBar.resignFirstResponder()
         searchController.dismiss(animated: true, completion: nil)
     }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let text = searchBar.text else { return }
+        presenter.searchBarSearchButtonClicked(text)
+    }
+
 }
 

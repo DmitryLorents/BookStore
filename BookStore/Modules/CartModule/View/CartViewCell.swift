@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import Kingfisher
 
 class CartViewCell: UITableViewCell {
     
@@ -46,6 +47,7 @@ class CartViewCell: UITableViewCell {
     private let imageBookImageView:UIImageView = {
         let element = UIImageView()
         element.contentMode = .scaleAspectFill
+        element.backgroundColor = .systemBackground
         element.clipsToBounds = true
         return element
     }()
@@ -124,6 +126,7 @@ class CartViewCell: UITableViewCell {
     }
     
     func configureCell(with book: Book){
+        imageBookImageView.kf.indicatorType = .activity
         imageBookImageView.kf.setImage(with: OpenLibraryEndpoints.image(book.imageID))
         nameBookLabel.text = book.name
         authorBookLabel.text = book.author
