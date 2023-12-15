@@ -148,12 +148,14 @@ class ProductView: UIView {
     
     //MARK: - Methods
     func setVIewsData(book: Book?) {
+        print(#function)
         guard let book else {return}
         titleLabel.text = book.name
         authorTextLabel.text = book.author
         categoryTextLabel.text = book.category
         coverImageView.kf.setImage(with: OpenLibraryEndpoints.image(book.imageID))
-        ratingTextLabel.text = "\(book.rating)"
+        print(OpenLibraryEndpoints.image(book.imageID))
+        ratingTextLabel.text = String(format: "%0.2f", book.rating) + "/5"
         // TODO: - Set description
         //descriptionTextLabel.description = unwrapedBook.description
     }

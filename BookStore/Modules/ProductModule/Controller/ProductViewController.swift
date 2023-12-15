@@ -9,11 +9,7 @@ import UIKit
 
 class ProductViewController: UIViewController {
     //MARK: - Parameters
-    private var book: Book? {
-        didSet {
-            productView.setVIewsData(book: book)
-        }
-    }
+    private var book: Book?
     private let storageManager = StorageManagerRealm.shared
     private let productView = ProductView()
     
@@ -21,6 +17,7 @@ class ProductViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view = productView
+        productView.setVIewsData(book: book)
         setupNavigationBar()
     }
     
