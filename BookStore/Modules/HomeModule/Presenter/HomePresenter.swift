@@ -29,7 +29,7 @@ final class HomePresenter: HomePresenterProtocol {
     private var topBooks = [Book]()
     private var recentBooks: [Book] {
         get {
-            [Book]()
+            StorageManagerRealm.shared.getBooks()
         }
         set {
             view?.render(
