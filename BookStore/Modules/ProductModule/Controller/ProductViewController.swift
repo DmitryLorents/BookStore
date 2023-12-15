@@ -16,13 +16,16 @@ class ProductViewController: UIViewController {
     //MARK: - Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         self.view = productView
-        
         setupNavigationBar()
-        
-        updateBookInfo()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        productView.setVIewsData(book: book)
+    }
+    
+    //MARK: - Init
     
     init(book: Book? = nil) {
         self.book = book
@@ -34,17 +37,6 @@ class ProductViewController: UIViewController {
     }
     
     //MARK: - Methods
-    func updateBookInfo() {
-        guard let unwrapedBook = book else { return }
-        
-        productView.titleLabel.text = unwrapedBook.name
-        productView.authorTextLabel.text = unwrapedBook.author
-        productView.categoryTextLabel.text = unwrapedBook.category
-        // TODO: - Create ProductVC Model
-        //ratingTextLabel.text = unwrapedBook.rating
-        //descriptionTextLabel.description = unwrapedBook.description
-        //update image
-    }
     
     private func setupNavigationBar() {
         let navBar = navigationController?.navigationBar
@@ -74,16 +66,19 @@ class ProductViewController: UIViewController {
     }
     
     private func checkFavoriteStatus() -> Bool {
-        storageManager.checkDublicateBook(book!)
+        guard let book else {return false}
+        return storageManager.checkDublicateBook(book)
     }
     
     @objc private func addToFavourite() {
-        storageManager.saveBook(book!)
+        guard let book else {return}
+        storageManager.saveBook(book)
         updateFavouriteBarButton(true)
     }
     
     @objc private func revomeFromFavourite() {
-        storageManager.deleteBook(withBook: book!)
+        guard let book else {return}
+        storageManager.deleteBook(withBook: book)
         updateFavouriteBarButton(false)
     }
 }

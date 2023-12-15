@@ -48,6 +48,7 @@ class BookCell: UICollectionViewCell {
     
     private let indicator = UIActivityIndicatorView(style: .large)
     
+    //MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -60,7 +61,22 @@ class BookCell: UICollectionViewCell {
         imageView.addSubview(indicator)
         subView.disableChildrenTAMIC()
         indicator.startAnimating()
-        
+        setConstraints()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    //MARK: - Methods
+    func configure(with book: Book) {
+        categoryTitle.text = book.category
+        mainTitle.text = book.name
+        authorTitle.text = book.author
+        imageView.kf.setImage(with: OpenLibraryEndpoints.image(book.imageID))
+    }
+    
+    private func setConstraints() {
         NSLayoutConstraint.activate([
             imageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 11),
             imageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -43),
@@ -71,7 +87,7 @@ class BookCell: UICollectionViewCell {
             subView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             subView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             subView.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.4),
-        
+            
             categoryTitle.topAnchor.constraint(equalTo: subView.topAnchor, constant: 12),
             categoryTitle.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12),
             categoryTitle.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 12),
@@ -87,19 +103,6 @@ class BookCell: UICollectionViewCell {
             indicator.centerYAnchor.constraint(equalTo: imageView.centerYAnchor),
             indicator.centerXAnchor.constraint(equalTo: imageView.centerXAnchor)
         ])
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    func configure(with book: Book) {
-        categoryTitle.text = book.category
-        mainTitle.text = book.name
-        authorTitle.text = book.author
-        imageView.kf.setImage(with: OpenLibraryEndpoints.image(book.imageID))
-//        DispatchQueue.main.async {
-//        }
     }
 
 }

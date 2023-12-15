@@ -10,7 +10,7 @@ import SnapKit
 
 class ProductView: UIView {
     //MARK: - Parameters
-    private var book: Book?
+    //private var book: Book?
     // views design
     // scroll
     private lazy var scrollView = {
@@ -22,7 +22,7 @@ class ProductView: UIView {
     
     private lazy var contentView = UIView()
     // title
-    lazy var titleLabel = {
+    private lazy var titleLabel = {
         let label = UILabel()
         label.text = ProductModel.TitleLabel.text
         label.font = ProductModel.TitleLabel.font
@@ -62,7 +62,7 @@ class ProductView: UIView {
         return label
     }()
     
-    lazy var authorTextLabel = {
+    private lazy var authorTextLabel = {
         let label = UILabel()
         label.numberOfLines = ProductModel.CommonSettings.numberOfLines
         label.text = ProductModel.AuthorTextLabel.text
@@ -77,14 +77,13 @@ class ProductView: UIView {
         return label
     }()
     
-    lazy var categoryTextLabel = {
+    private lazy var categoryTextLabel = {
         let label = UILabel()
         label.text = ProductModel.CategoryTextLabel.text
         label.font = ProductModel.CommonSettings.bookInfoTextFont
         label.numberOfLines = ProductModel.CommonSettings.numberOfLines
         return label
     }()
-    // rating
     private lazy var ratingLabel = {
         let label = UILabel()
         label.text = ProductModel.RatingLabel.text
@@ -92,13 +91,14 @@ class ProductView: UIView {
         return label
     }()
     
-    lazy var ratingTextLabel = {
+    private lazy var ratingTextLabel = {
         let label = UILabel()
         label.text = ProductModel.RatingTextLabel.text
         label.font = ProductModel.CommonSettings.bookInfoTextFont
         label.numberOfLines = ProductModel.CommonSettings.numberOfLines
         return label
     }()
+    
     //MARK: - BookInfoButtons
     private lazy var addToListButton = {
         let button = UIButton()
@@ -124,7 +124,7 @@ class ProductView: UIView {
         return label
     }()
     
-    lazy var descriptionTextLabel = {
+    private lazy var descriptionTextLabel = {
         let label = UILabel()
         label.text = ProductModel.DesctiptionTextLabel.text
         label.font = ProductModel.DesctiptionTextLabel.font
@@ -143,8 +143,19 @@ class ProductView: UIView {
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
-            
+    
     //MARK: - Methods
+    func setVIewsData(book: Book?) {
+        guard let book else {return}
+        titleLabel.text = book.name
+        authorTextLabel.text = book.author
+        categoryTextLabel.text = book.category
+        coverImageView.kf.setImage(with: OpenLibraryEndpoints.image(book.imageID))
+        ratingTextLabel.text = "\(book.rating)"
+        // TODO: - Set description
+        //descriptionTextLabel.description = unwrapedBook.description
+    }
+    
     private func setHierarchy() {
         backgroundColor = #colorLiteral(red: 0.9490135312, green: 0.949013412, blue: 0.9490135312, alpha: 1)
         // scroll
