@@ -43,6 +43,8 @@ class ProductView: UIView {
         imageView.contentMode = .scaleAspectFit
         imageView.layer.borderWidth = ProductModel.CoverImageView.borderWidth
         imageView.layer.cornerRadius = ProductModel.CommonConstraints.cornerRadius
+        imageView.clipsToBounds = true
+        imageView.contentMode = .scaleAspectFill
         return imageView
     }()
     // bookInfoViews
