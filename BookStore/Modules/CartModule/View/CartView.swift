@@ -16,6 +16,9 @@ class CartView: UIView {
         element.backgroundColor = .clear
         return element
     }()
+    
+    private let indicator = UIActivityIndicatorView(style: .large)
+    
     //MARK: - Init
    override init(frame: CGRect) {
         super.init(frame: frame)
@@ -34,6 +37,7 @@ class CartView: UIView {
     
     private func setupViews(){
         self.addSubview(tableView)
+        tableView.addSubview(indicator)
         setupConstraints()
     }
     
@@ -43,6 +47,9 @@ class CartView: UIView {
             make.leading.equalToSuperview().inset(20)
             make.trailing.equalToSuperview().inset(20)
         }
+        indicator.snp.makeConstraints { view in
+            view.center.equalToSuperview()
+        }
     }
 }
 //MARK: - Extensions
@@ -50,5 +57,15 @@ extension CartView{
     func transferDelegates(dataSource: UITableViewDataSource, delegate: UITableViewDelegate){
         tableView.delegate = delegate
         tableView.dataSource = dataSource
+    }
+    
+    func startAnimating() {
+        indicator.startAnimating()
+        print("start animate")
+    }
+    
+    func stopAnimating() {
+        indicator.stopAnimating()
+        print("stop animate")
     }
 }

@@ -20,6 +20,9 @@ protocol HomePresenterProtocol {
     func didSelectCategory(at index: Int)
     func didSelectTopBook(at index: Int)
     func didSelectRecentBook(at index: Int)
+    func willDismissSearchController()
+    func searchBarSearchButtonClicked(_ text: String)
+    func willAppearSearchController()
 }
 
 // MARK: - HomePresenter
@@ -59,6 +62,7 @@ final class HomePresenter: HomePresenterProtocol {
     
     private let networking: NetworkManagerProtocol
     weak var view: HomeViewProtocol?
+    weak var searchView: CartViewProtocol?
     
     // MARK: - Initialization
     
@@ -93,6 +97,31 @@ final class HomePresenter: HomePresenterProtocol {
     
     func didSelectRecentBook(at index: Int) {
         print(topBooks[index])
+    }
+    
+    func willDismissSearchController() {
+        view?.renderNavigationItem()
+    }
+    
+    func searchBarSearchButtonClicked(_ text: String) {
+        searchView?.startAnimateIndicator()
+        Task.detached(priority: .userInitiated) { [unowned self] in
+            do {
+                async let model: APISearchModel = try networking.fetchAsyncData(from: .search(text, limit: 20))
+                let books: [Book] = try await model.docs.map(toBook(_:))
+                await MainActor.run {
+                    searchView?.render(books)
+                }
+            } catch {
+                await MainActor.run {
+                    self.view?.showError(error.localizedDescription)
+                }
+            }
+        }
+    }
+    
+    func willAppearSearchController() {
+        searchView?.render([])
     }
     
     // MARK: - Private methods
