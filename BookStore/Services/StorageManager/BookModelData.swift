@@ -15,6 +15,7 @@ final class BookModelData: Object {
     @Persisted var category: String
     @Persisted var imageID: Int
     @Persisted var rating: Double
+    @Persisted var isRecent: Bool = false
     
     convenience init(key: String, name: String, author: String, category: String, imageID: Int, rating: Double) {
         self.init()
