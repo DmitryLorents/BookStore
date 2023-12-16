@@ -89,7 +89,7 @@ extension CartViewController: UITableViewDataSource {
     
     @objc func crossButtonTapped(sender: UIButton, _ tableView: UITableView) {
         guard let books else { return }
-        storageManager.deleteBook(withBook: books[sender.tag])
+//        storageManager.deleteBook(withBook: books[sender.tag])
         self.books?.remove(at: sender.tag)
     }
     
