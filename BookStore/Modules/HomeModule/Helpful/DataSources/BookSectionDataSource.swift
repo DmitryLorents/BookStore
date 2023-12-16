@@ -39,7 +39,8 @@ final class BookSectionDataSource {
             case .categories(let category):
                 let cell = cell as? CategoryCell
                 cell?.configure(with: category)
-                if indexPath.item == 0 {
+                cell?.resetCell()
+                if (indexPath.section, indexPath.item) == (0, 0) {
                     cell?.checkCell()
                 }
             case .top(let book):
@@ -100,7 +101,6 @@ final class BookSectionDataSource {
                 header?.configure(with: model.recentBooksHeader.title, 
                                   buttonTitle: model.recentBooksHeader.button.title,
                                   tapAction: model.recentBooksHeader.button.action)
-                print("RECENT HEADER IS")
             default:
                 assertionFailure("Unknown header type!")
             }

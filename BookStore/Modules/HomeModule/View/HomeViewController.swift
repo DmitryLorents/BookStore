@@ -16,6 +16,7 @@ protocol HomeViewProtocol: AnyObject {
     func renderNavigationItem()
     func presentCartVC(_ books: [Book], title: String?)
     func presentProductVC(_ book: Book)
+    func stopAnimateIndicator()
 }
 
 // MARK: - HomeViewController
@@ -129,9 +130,12 @@ final class HomeViewController: UIViewController {
 
 extension HomeViewController: HomeViewProtocol {
     func render(_ viewModel: HomeViewModel) {
-        indicator.stopAnimating()
         dataSource.updateHeader(with: viewModel)
         dataSource.update(topBooks: viewModel.topBooks, recentBooks: viewModel.recentBooks)
+    }
+    
+    func stopAnimateIndicator() {
+        indicator.stopAnimating()
     }
     
     func showError(_ message: String) {

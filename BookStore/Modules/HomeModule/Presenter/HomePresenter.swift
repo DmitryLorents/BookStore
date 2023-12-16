@@ -65,12 +65,17 @@ final class HomePresenter: HomePresenterProtocol {
     // MARK: - Public methods
 
     func viewDidLoad() {
-        
+        fetchData()
     }
     
     // MARK: - TODO
     func viewWillAppear() {
-        fetchData()
+        view?.render(
+            .init(topBooks: topBooks,
+                           recentBooks: recentBooks,
+                           topBooksHeader: topBooksHeader,
+                           recentBooksHeader: recentBooksHeader)
+        )
     }
     
     // MARK: - TODO
@@ -133,6 +138,7 @@ final class HomePresenter: HomePresenterProtocol {
                 let books: [Book] = try await model.docs.map(toBook(_:))
                 self.topBooks = books
                 await MainActor.run {
+                    view?.stopAnimateIndicator()
                     view?.render(
                         .init(topBooks: topBooks,
                               recentBooks: recentBooks,

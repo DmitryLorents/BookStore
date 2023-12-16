@@ -52,7 +52,10 @@ class CategoryCell: UICollectionViewCell {
             categoryButton.backgroundColor = .black
             categoryButton.textColor = .white
         }
-        
-        
+    }
+    
+    func selectCell() {
+        categoryButton.backgroundColor = .black
+        categoryButton.textColor = .white
     }
 }
