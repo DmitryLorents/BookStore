@@ -6,3 +6,16 @@
 //
 
 import Foundation
+
+struct ListsModel{
+    let name: String
+}
+
+struct SourceLists{
+    static func getLists() -> [ListsModel] {
+        [
+            ListsModel(name: "Reading List"),
+            ListsModel(name: "Want to read"),
+        ]
+    }
+}

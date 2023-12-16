@@ -35,6 +35,7 @@ class ListViewCell:UITableViewCell{
     
     static let reuseID = String(describing: ListViewCell.self)
     
+    //MARK: - Init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier )
         self.backgroundColor = .clear
@@ -45,10 +46,12 @@ class ListViewCell:UITableViewCell{
         fatalError("init(coder:) has not been implemented")
     }
     
+    //MARK: - private func
     private func setupViews(){
         self.contentView.addSubview(viewForCell)
         viewForCell.addSubview(nameListLabel)
         viewForCell.addSubview(arrowImageView)
+        setupConstrains()
     }
     
     private func setupConstrains(){
@@ -56,6 +59,7 @@ class ListViewCell:UITableViewCell{
             make.top.equalToSuperview().inset(8)
             make.bottom.equalToSuperview().inset(8)
             make.trailing.leading.equalToSuperview().inset(20)
+            make.height.equalTo(56)
         }
         
         nameListLabel.snp.makeConstraints { make in
@@ -69,6 +73,9 @@ class ListViewCell:UITableViewCell{
             make.leading.equalTo(nameListLabel.snp.trailing).offset(10)
             make.trailing.equalTo(viewForCell.snp.trailing).inset(20)
         }
+    }
+    func configureCell(nameList: ListsModel){
+        nameListLabel.text = nameList.name
     }
             
 }
