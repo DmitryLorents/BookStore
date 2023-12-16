@@ -39,7 +39,8 @@ final class BookSectionDataSource {
             case .categories(let category):
                 let cell = cell as? CategoryCell
                 cell?.configure(with: category)
-                if indexPath.item == 0 {
+                cell?.resetCell()
+                if (indexPath.section, indexPath.item) == (0, 0) {
                     cell?.checkCell()
                 }
             case .top(let book):
@@ -74,10 +75,14 @@ final class BookSectionDataSource {
             recentBooks.map(Item.recent),
             toSection: .recent
         )
+        
+        snapshot.reloadSections(sections)
         dataSource.apply(snapshot)
     }
     
     func updateHeader(with model: HomeViewModel) {
+        dataSource.supplementaryViewProvider = nil
+        
         let supplementary: DataSource.SupplementaryViewProvider = { collectionView, kind, indexPath in
             let header = collectionView.dequeueReusableSupplementaryView(
                 ofKind: kind,
@@ -104,6 +109,7 @@ final class BookSectionDataSource {
         }
         
         dataSource.supplementaryViewProvider = supplementary
+        
     }
     
 }

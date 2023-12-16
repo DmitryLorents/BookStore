@@ -15,7 +15,7 @@ protocol NetworkManagerProtocol {
 
 protocol HomePresenterProtocol {
     func viewDidLoad()
-    func viewDidAppear()
+    func viewWillAppear()
     func viewDidDisappear()
     func didSelectCategory(at index: Int)
     func didSelectTopBook(at index: Int)
@@ -31,20 +31,11 @@ final class HomePresenter: HomePresenterProtocol {
     // MARK: - Properties
     private var topBooks = [Book]()
     private var recentBooks: [Book] {
-        //TODO: - delete later
         get {
             StorageManagerRealm.shared.getRecentBooks()
         }
-        set {
-            view?.render(
-                .init(topBooksHeader: topBooksHeader,
-                      topBooks: topBooks,
-                      categories: HomeCategory.allCases,
-                      recentBooksHeader: recentBooksHeader,
-                      recentBooks: newValue)
-            )
-        }
     }
+    
     private var topBooksHeader: HomeViewModel.Header {
         .init(title: "Top Books",
                   button: .init(title: "see more",
@@ -74,33 +65,33 @@ final class HomePresenter: HomePresenterProtocol {
     // MARK: - Public methods
 
     func viewDidLoad() {
-        print("Data start loaded")
-    }
-    
-    // MARK: - TODO
-    func viewDidAppear() {
-        print(#function)
         fetchData()
     }
     
     // MARK: - TODO
+    func viewWillAppear() {
+        view?.render(
+            .init(topBooks: topBooks,
+                           recentBooks: recentBooks,
+                           topBooksHeader: topBooksHeader,
+                           recentBooksHeader: recentBooksHeader)
+        )
+    }
+    
+    // MARK: - TODO
     func viewDidDisappear() {
-        print(#function)
     }
     
     func didSelectCategory(at index: Int) {
-        print(#function)
     }
     
     func didSelectTopBook(at index: Int) {
-        print(#function, index)
         let book = topBooks[index]
         view?.presentProductVC(book)
         
     }
     
     func didSelectRecentBook(at index: Int) {
-        print(#function, index)
         let book = recentBooks[index]
         view?.presentProductVC(book)
     }
@@ -133,12 +124,10 @@ final class HomePresenter: HomePresenterProtocol {
     // MARK: - Private methods
     
     private func seeAllTopBooksButtonTap() {
-        print(#function)
         view?.presentCartVC(topBooks, title: "Top books")
     }
     
     private func seeAllRecentBooksButtonTap() {
-        print(#function)
         view?.presentCartVC(recentBooks, title: "Recent books")
     }
     
@@ -149,14 +138,13 @@ final class HomePresenter: HomePresenterProtocol {
                 let books: [Book] = try await model.docs.map(toBook(_:))
                 self.topBooks = books
                 await MainActor.run {
+                    view?.stopAnimateIndicator()
                     view?.render(
-                        .init(topBooksHeader: topBooksHeader,
-                              topBooks: topBooks,
-                              categories: HomeCategory.allCases,
-                              recentBooksHeader: recentBooksHeader,
-                              recentBooks: recentBooks)
+                        .init(topBooks: topBooks,
+                              recentBooks: recentBooks,
+                              topBooksHeader: topBooksHeader,
+                              recentBooksHeader: recentBooksHeader)
                     )
-                    print(topBooksHeader.title)
                 }
             } catch {
                 await MainActor.run {

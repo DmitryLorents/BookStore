@@ -52,7 +52,7 @@ class CartViewCell: UITableViewCell {
         return element
     }()
     
-    private let crossButtom:UIButton = {
+    let crossButton:UIButton = {
         let element = UIButton()
         element.setImage(UIImage(systemName:"xmark"), for: .normal)
         element.tintColor = .white
@@ -66,7 +66,6 @@ class CartViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier )
         self.backgroundColor = .clear
         setupViews()
-        setupTargetForButtons()
     }
     
     required init?(coder: NSCoder) {
@@ -80,7 +79,7 @@ class CartViewCell: UITableViewCell {
         viewForCell.addSubview(nameBookLabel)
         viewForCell.addSubview(authorBookLabel)
         viewForCell.addSubview(imageBookImageView)
-        viewForCell.addSubview(crossButtom)
+        viewForCell.addSubview(crossButton)
         setupConstraints()
         
     }
@@ -89,7 +88,7 @@ class CartViewCell: UITableViewCell {
         viewForCell.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(8)
             make.bottom.equalToSuperview().inset(8)
-            make.trailing.leading.equalToSuperview()
+            make.trailing.leading.equalToSuperview().inset(20)
             make.height.equalTo(140)
         }
         
@@ -118,7 +117,7 @@ class CartViewCell: UITableViewCell {
             make.trailing.equalToSuperview().inset(54)
         }
         
-        crossButtom.snp.makeConstraints { make in
+        crossButton.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(18)
             make.trailing.equalToSuperview().inset(13)
             make.width.height.equalTo(20)
@@ -131,15 +130,6 @@ class CartViewCell: UITableViewCell {
         nameBookLabel.text = book.name
         authorBookLabel.text = book.author
         genreBookLabel.text = book.category
-    }
-    
-    private func setupTargetForButtons(){
-        crossButtom.addTarget(self, action: #selector(crossButtomTapped), for: .touchUpInside)
-    }
-    
-    //MARK: - Actions
-    @objc private func crossButtomTapped(){
-        print("crossButtomTapped")
     }
 }
 

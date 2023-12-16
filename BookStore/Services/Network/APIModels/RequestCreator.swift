@@ -74,4 +74,9 @@ struct OpenLibraryEndpoints {
     static func image(_ bookID: Int) -> URL {
         self.init(host: "covers.openlibrary.org", path: "b/id/\(bookID)-M.jpg").url
     }
+    
+    static func returnDescriptionURL(key: String) -> URL {
+        return self.init(host: "openlibrary.org", path: key).url
+    }
+    
 }

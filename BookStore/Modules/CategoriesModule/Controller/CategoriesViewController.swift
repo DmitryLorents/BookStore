@@ -14,8 +14,20 @@ class CategoriesViewController: UIViewController {
     
     private let categoriesView = CategoriesView()
     private let data = CategoriesModel.data
+    private var books: [Book] = []
+    private let networking: NetworkManagerProtocol = NetworkManager.shared
+    private var categoryName: String = ""
+    
     
     //MARK: - Life cycle
+    
+//    init(networking: NetworkManagerProtocol = NetworkManager.shared) {
+//        self.networking = networking
+//    }
+//    
+//    required init?(coder: NSCoder) {
+//        fatalError("init(coder:) has not been implemented")
+//    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,6 +56,69 @@ class CategoriesViewController: UIViewController {
         layout.itemSize = CGSize(width: widthPerItem, height: widthPerItem * 0.66)
         return layout
     }
+    
+//    private func fetchData() {
+//        Task.detached(priority: .medium) { [unowned self] in
+//            do {
+//                let model: APISearchModel = try await networking.fetchAsyncData(from: .subject(category: categoryName))
+//                let books: [Book] = try model.docs.map(toBook(_:))
+//                self.books = books
+//                await MainActor.run {
+////                    view?.render(
+////                        .init(topBooksHeader: topBooksHeader,
+////                              topBooks: topBooks,
+////                              categories: HomeCategory.allCases,
+////                              recentBooksHeader: recentBooksHeader,
+////                              recentBooks: recentBooks)
+////                    )
+//                    print("topBooksHeader.title")
+//                }
+//            } catch {
+//                await MainActor.run {
+//                    showError(error.localizedDescription)
+//                }
+//            }
+//        }
+//    }
+    
+    func categoryCellTapped() {
+//        searchView?.startAnimateIndicator()
+//        Task.detached(priority: .userInitiated) { [unowned self] in
+//            do {
+//                async let model: APICategoryModel = try networking.fetchAsyncData(from: .subject(category: categoryName))
+//                let books: [Book] = try await model.cats.map(toBook(_:))
+//                await MainActor.run {
+//                    self.books = books
+//                    print("IGOR, ITS OK!")
+//                    print(self.books)
+//                }
+//            } catch {
+//                await MainActor.run {
+//                    showError(error.localizedDescription)
+//                    print("IGOR, VSE PLOHO!")
+//                }
+//            }
+//        }
+    }
+    
+    func showError(_ message: String) {
+        
+    }
+    
+    private func toBook(_ cat: CategoryCollection.Work) -> Book {
+        .init(key: cat.key,
+              name: cat.title,
+              author: cat.authors.first?.name ?? "",
+              category: categoryName,
+              imageID: cat.cover_id,
+              rating: 4)
+    }
+
+    func presentCartVC(_ books: [Book]) {
+        print(#function)
+        navigationController?.pushViewController(CartViewController(books: books, titleCart: "\(categoryName) books"), animated: true)
+    }
+
 }
     //MARK: - Extencion for ViewCollection Protocols
     
@@ -57,6 +132,12 @@ class CategoriesViewController: UIViewController {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryCustomCell.reuseID, for: indexPath) as? CategoryCustomCell else { fatalError() }
             cell.data = self.data[indexPath.item]
             return cell
+        }
+        
+        func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+            categoryName = data[indexPath.item].title
+            categoryCellTapped()
+            presentCartVC(books)
         }
     }
 
