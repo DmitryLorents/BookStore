@@ -51,13 +51,9 @@ class CartView: UIView {
         tableView.reloadData()
     }
     
-    func checkIsEmptyBooks(_ isEmpty: Bool) {
-        isEmpty ? hidenLabelImage(isEmpty) : hidenLabelImage(isEmpty)
-    }
-    
-    func hidenLabelImage(_ change:Bool){
-        imageView.isHidden = !change
-        imageLabel.isHidden = !change
+    func hideLabelAndImage(_ isHidden:Bool){
+        imageView.isHidden = isHidden
+        imageLabel.isHidden = isHidden
     }
     
     private func setupViews(){
