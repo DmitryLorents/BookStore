@@ -23,6 +23,7 @@ protocol HomePresenterProtocol {
     func willDismissSearchController()
     func searchBarSearchButtonClicked(_ text: String)
     func willAppearSearchController()
+    func searchBarCancelButtonClicked()
 }
 
 // MARK: - HomePresenter
@@ -115,6 +116,15 @@ final class HomePresenter: HomePresenterProtocol {
                 }
             }
         }
+    }
+    
+    func searchBarCancelButtonClicked() {
+        view?.render(
+            .init(topBooks: topBooks,
+                           recentBooks: recentBooks,
+                           topBooksHeader: topBooksHeader,
+                           recentBooksHeader: recentBooksHeader)
+        )
     }
     
     func willAppearSearchController() {
