@@ -45,7 +45,7 @@ class StorageManagerRealm{
         var books = [Book]()
         for bookModel in bookModels {
             let book = transferBookModelToBook(bookModel)
-            books.append(book)
+            books.insert(book, at: 0)
         }
         return books
     }
