@@ -43,7 +43,6 @@ class WelcomeViewController: UIViewController, UIScrollViewDelegate {
     private lazy var pageControl: UIPageControl = {
         let pageControl = UIPageControl()
         pageControl.numberOfPages = 3
-//        pageControl.preferredIndicatorImage = UIImage(named: "pageActiveIndicator")
         pageControl.pageIndicatorTintColor = .gray
         pageControl.currentPageIndicatorTintColor = .black
         pageControl.addTarget(self, action: #selector(pageControlIndicatorTapped), for: .valueChanged)
@@ -103,7 +102,7 @@ class WelcomeViewController: UIViewController, UIScrollViewDelegate {
     }
     private func createScreens() -> [WelcomeView] {
         secondScreen.setupViewWithTextAndImage(
-            text: "Search throu over a million books in our catalog. \nRead the most pupular books rated by other readers. ",
+            text: "Search through over a million books in our catalog. \nRead the most pupular books rated by other readers. ",
             image: UIImage(systemName: "books.vertical", withConfiguration: UIImage.SymbolConfiguration(pointSize: 100, weight: .thin))!.withTintColor(.black, renderingMode: .alwaysOriginal))
         thirdScreen.setupViewWithTextAndImage(
             text: "Save your favorite books to your own lists to read them \nlater and not to lose them. Have fun. \nRead More!",

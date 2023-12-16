@@ -10,6 +10,7 @@ import UIKit
 class WelcomeView: UIView {
     
     //MARK: - Parameters
+    
     private lazy var fullStack: UIStackView = {
         let stack = UIStackView()
         stack.axis = .vertical
@@ -99,7 +100,7 @@ class WelcomeView: UIView {
         let imageView = UIImageView()
         imageView.image = UIImage(named: named)
         imageView.contentMode = .scaleAspectFill
-        imageView.layer.cornerRadius = 8.16
+        imageView.layer.cornerRadius = 8
         imageView.clipsToBounds = true
         return imageView
     }
@@ -110,7 +111,7 @@ class WelcomeView: UIView {
             make.top.equalToSuperview().offset(-100)
             make.leading.equalToSuperview().offset(-60)
             make.width.equalToSuperview().multipliedBy(3)
-            make.height.equalTo(500)
+            make.height.equalToSuperview().dividedBy(2.1)
         }
         
         logoImage.snp.makeConstraints{ make in
@@ -129,10 +130,10 @@ class WelcomeView: UIView {
         addSubview(fullStack)
         addSubview(logoImage)
         addSubview(labelWithText)
-        backgroundColor = .welcomeBackground
+        backgroundColor = .systemBackground
     }
     
-    public func setupViewWithTextAndImage(text: String, image: UIImage, isCoversHiden: Bool = true) {
+    public func setupViewWithTextAndImage(text: String, image: UIImage, isCoversHiden: Bool = false) {
         isCoversHiden ? fullStack.removeFromSuperview() : print("its covers!!!!")
         logoImage.image = image
         labelWithText.attributedText = NSMutableAttributedString(string: text, attributes: [NSAttributedString.Key.kern: -0.41, NSAttributedString.Key.paragraphStyle: paragraphStyle])
