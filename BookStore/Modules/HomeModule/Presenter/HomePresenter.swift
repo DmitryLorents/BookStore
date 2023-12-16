@@ -65,17 +65,12 @@ final class HomePresenter: HomePresenterProtocol {
     // MARK: - Public methods
 
     func viewDidLoad() {
-        fetchData()
+        
     }
     
     // MARK: - TODO
     func viewWillAppear() {
-        view?.render(
-            .init(topBooks: topBooks,
-                  recentBooks: recentBooks,
-                  topBooksHeader: topBooksHeader,
-                  recentBooksHeader: recentBooksHeader)
-        )
+        fetchData()
     }
     
     // MARK: - TODO

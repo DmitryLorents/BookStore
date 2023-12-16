@@ -74,10 +74,14 @@ final class BookSectionDataSource {
             recentBooks.map(Item.recent),
             toSection: .recent
         )
+        
+        snapshot.reloadSections(sections)
         dataSource.apply(snapshot)
     }
     
     func updateHeader(with model: HomeViewModel) {
+        dataSource.supplementaryViewProvider = nil
+        
         let supplementary: DataSource.SupplementaryViewProvider = { collectionView, kind, indexPath in
             let header = collectionView.dequeueReusableSupplementaryView(
                 ofKind: kind,
@@ -96,6 +100,7 @@ final class BookSectionDataSource {
                 header?.configure(with: model.recentBooksHeader.title, 
                                   buttonTitle: model.recentBooksHeader.button.title,
                                   tapAction: model.recentBooksHeader.button.action)
+                print("RECENT HEADER IS")
             default:
                 assertionFailure("Unknown header type!")
             }
@@ -104,6 +109,7 @@ final class BookSectionDataSource {
         }
         
         dataSource.supplementaryViewProvider = supplementary
+        
     }
     
 }
