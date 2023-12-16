@@ -79,28 +79,23 @@ final class HomePresenter: HomePresenterProtocol {
     
     // MARK: - TODO
     func viewDidAppear() {
-        print(#function)
         fetchData()
     }
     
     // MARK: - TODO
     func viewDidDisappear() {
-        print(#function)
     }
     
     func didSelectCategory(at index: Int) {
-        print(#function)
     }
     
     func didSelectTopBook(at index: Int) {
-        print(#function, index)
         let book = topBooks[index]
         view?.presentProductVC(book)
         
     }
     
     func didSelectRecentBook(at index: Int) {
-        print(#function, index)
         let book = recentBooks[index]
         view?.presentProductVC(book)
     }
@@ -133,12 +128,10 @@ final class HomePresenter: HomePresenterProtocol {
     // MARK: - Private methods
     
     private func seeAllTopBooksButtonTap() {
-        print(#function)
         view?.presentCartVC(topBooks, title: "Top books")
     }
     
     private func seeAllRecentBooksButtonTap() {
-        print(#function)
         view?.presentCartVC(recentBooks, title: "Recent books")
     }
     
