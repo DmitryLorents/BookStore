@@ -16,7 +16,9 @@ class CartViewController: UIViewController {
     private let cartView = CartView()
     private var books: [Book]? {
         didSet {
+            guard let books else {return}
             cartView.reloadTableView()
+            cartView.hideLabelAndImage(!books.isEmpty)
         }
     }
     private let storageManager = StorageManagerRealm.shared
@@ -46,8 +48,12 @@ class CartViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         //Favorites case
-        if title == nil { books = storageManager.getFavoritesBooks() }
-        cartView.checkIsEmptyBooks(books?.isEmpty ?? true)
+        if title == nil {
+            books = storageManager.getFavoritesBooks()
+            //cartView.hideLabelAndImage((books?.isEmpty) ?? false)
+        } else {
+            cartView.hideLabelAndImage(true)
+        }
     }
     
     //MARK: - PrivateMethods
@@ -94,14 +100,14 @@ extension CartViewController: UITableViewDataSource {
     }
     
     //FIXME: - надо скрыть менюшку с удалением
-//    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-//        guard let books else { return }
-//        if editingStyle == .delete {
-//            storageManager.deleteBook(withBook: books[indexPath.row])
-//            self.books?.remove(at: indexPath.row)
-//            tableView.reloadData()
-//        }
-//    }
+    //    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+    //        guard let books else { return }
+    //        if editingStyle == .delete {
+    //            storageManager.deleteBook(withBook: books[indexPath.row])
+    //            self.books?.remove(at: indexPath.row)
+    //            tableView.reloadData()
+    //        }
+    //    }
 }
 
 extension CartViewController: UITableViewDelegate {
@@ -111,7 +117,7 @@ extension CartViewController: UITableViewDelegate {
         navigationController?.pushViewController(ProductViewController(book: book), animated: true)
         
     }
-
+    
 }
 
 extension CartViewController: CartViewProtocol {
