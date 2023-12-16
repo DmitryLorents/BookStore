@@ -76,6 +76,6 @@ struct OpenLibraryEndpoints {
     }
     
     static func subject(category: String) -> Self {
-        .init(path: "subjects\(category).json")
+        .init(path: "subjects/\(category).json")
     }
 }

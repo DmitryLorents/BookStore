@@ -166,6 +166,8 @@ class CategoriesView: UIView {
     public func setupCollectionLayout(layout: UICollectionViewFlowLayout) {
         collectionView.setCollectionViewLayout(layout, animated: true)
     }
+    
+  
 
 }
 
