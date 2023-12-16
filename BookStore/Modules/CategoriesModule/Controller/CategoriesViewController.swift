@@ -57,60 +57,35 @@ class CategoriesViewController: UIViewController {
         return layout
     }
     
-//    private func fetchData() {
-//        Task.detached(priority: .medium) { [unowned self] in
-//            do {
-//                let model: APISearchModel = try await networking.fetchAsyncData(from: .subject(category: categoryName))
-//                let books: [Book] = try model.docs.map(toBook(_:))
-//                self.books = books
-//                await MainActor.run {
-////                    view?.render(
-////                        .init(topBooksHeader: topBooksHeader,
-////                              topBooks: topBooks,
-////                              categories: HomeCategory.allCases,
-////                              recentBooksHeader: recentBooksHeader,
-////                              recentBooks: recentBooks)
-////                    )
-//                    print("topBooksHeader.title")
-//                }
-//            } catch {
-//                await MainActor.run {
-//                    showError(error.localizedDescription)
-//                }
-//            }
-//        }
-//    }
-    
     func categoryCellTapped() {
-//        searchView?.startAnimateIndicator()
-//        Task.detached(priority: .userInitiated) { [unowned self] in
-//            do {
-//                async let model: APICategoryModel = try networking.fetchAsyncData(from: .subject(category: categoryName))
-//                let books: [Book] = try await model.cats.map(toBook(_:))
-//                await MainActor.run {
-//                    self.books = books
-//                    print("IGOR, ITS OK!")
-//                    print(self.books)
-//                }
-//            } catch {
-//                await MainActor.run {
-//                    showError(error.localizedDescription)
-//                    print("IGOR, VSE PLOHO!")
-//                }
-//            }
-//        }
+        Task.detached(priority: .userInitiated) { [unowned self] in
+            do {
+                async let model: CategoryCollection = try networking.fetchAsyncData(from: .subject(category: categoryName.lowercased()))
+                let books: [Book] = try await model.works.map(toBook(_:))
+                await MainActor.run {
+                    self.books = books
+                    print("IGOR, ITS OK!")
+                    presentCartVC(books)
+                }
+            } catch {
+                await MainActor.run {
+                    showError(error.localizedDescription)
+                    print("IGOR, VSE PLOHO!")
+                }
+            }
+        }
     }
     
     func showError(_ message: String) {
         
     }
     
-    private func toBook(_ cat: CategoryCollection.Work) -> Book {
+    private func toBook(_ cat: Work) -> Book {
         .init(key: cat.key,
               name: cat.title,
               author: cat.authors.first?.name ?? "",
               category: categoryName,
-              imageID: cat.cover_id,
+              imageID: cat.coverId,
               rating: 4)
     }
 
@@ -137,7 +112,7 @@ class CategoriesViewController: UIViewController {
         func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
             categoryName = data[indexPath.item].title
             categoryCellTapped()
-            presentCartVC(books)
+            
         }
     }
 

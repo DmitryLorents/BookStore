@@ -79,4 +79,8 @@ struct OpenLibraryEndpoints {
         return self.init(host: "openlibrary.org", path: key).url
     }
     
+    static func subject(category: String) -> Self {
+        .init(path: "subjects/\(category).json")
+    }
+    
 }
