@@ -19,6 +19,7 @@ class ProductViewController: UIViewController {
         self.view = productView
         productView.setVIewsData(book: book)
         setupNavigationBar()
+        saveToRecent()
     }
     
     //MARK: - Init
@@ -33,6 +34,11 @@ class ProductViewController: UIViewController {
     }
     
     //MARK: - Methods
+    
+    private func saveToRecent() {
+        guard let book else {return}
+        storageManager.addToRecent(book)
+    }
     
     private func setupNavigationBar() {
         let navBar = navigationController?.navigationBar
@@ -63,18 +69,18 @@ class ProductViewController: UIViewController {
     
     private func checkFavoriteStatus() -> Bool {
         guard let book else {return false}
-        return storageManager.checkDublicateBook(book)
+        return storageManager.checkDublicateBook(book, isFavorite: true)
     }
     
     @objc private func addToFavourite() {
         guard let book else {return}
-        storageManager.saveBook(book)
+        storageManager.addToFavorites(book)
         updateFavouriteBarButton(true)
     }
     
     @objc private func revomeFromFavourite() {
         guard let book else {return}
-        storageManager.deleteBook(withBook: book)
+        storageManager.deleteBook(book)
         updateFavouriteBarButton(false)
     }
 }
