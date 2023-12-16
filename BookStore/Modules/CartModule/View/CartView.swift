@@ -52,14 +52,12 @@ class CartView: UIView {
     }
     
     func checkIsEmptyBooks(_ isEmpty: Bool) {
-        if isEmpty {
-            imageView.isHidden = false
-            imageLabel.isHidden = false
-        } 
-        else {
-            imageView.isHidden = true
-            imageLabel.isHidden = true
-        }
+        isEmpty ? hidenLabelImage(isEmpty) : hidenLabelImage(isEmpty)
+    }
+    
+    func hidenLabelImage(_ change:Bool){
+        imageView.isHidden = !change
+        imageLabel.isHidden = !change
     }
     
     private func setupViews(){
