@@ -151,7 +151,6 @@ class ProductView: UIView {
     
     //MARK: - Methods
     func setVIewsData(book: Book?) {
-        print(#function)
         guard let book else {return}
         titleLabel.text = book.name
         authorTextLabel.text = book.author

@@ -15,10 +15,10 @@ final class BookModelData: Object {
     @Persisted var category: String
     @Persisted var imageID: Int
     @Persisted var rating: Double
-//    @Persisted var isRecent: Bool = false
-//    @Persisted var isFavorite: Bool = false
+    @Persisted var isRecent: Bool
+    @Persisted var isFavorite: Bool
     
-    convenience init(key: String, name: String, author: String, category: String, imageID: Int, rating: Double) {
+    convenience init(key: String, name: String, author: String, category: String, imageID: Int, rating: Double, isFavorite: Bool) {
         self.init()
         self.keyForServer = key
         self.name = name
@@ -26,6 +26,6 @@ final class BookModelData: Object {
         self.category = category
         self.imageID = imageID
         self.rating = rating
+        self.isFavorite = isFavorite
     }
 }
-
