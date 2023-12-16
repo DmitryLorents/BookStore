@@ -21,11 +21,13 @@ class CartViewController: UIViewController {
     }
     private let storageManager = StorageManagerRealm.shared
     private let titleCart:String?
+    private let hideButton:Bool
     
     // MARK: - Init
-    init (books: [Book]?, titleCart: String?) {
+    init (books: [Book]?, titleCart: String? ,hideButton: Bool = false) {
         self.books = books
         self.titleCart = titleCart
+        self.hideButton = hideButton
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -45,6 +47,7 @@ class CartViewController: UIViewController {
         super.viewWillAppear(animated)
         //Favorites case
         if title == nil { books = storageManager.getFavoritesBooks() }
+        cartView.checkIsEmptyBooks(books?.isEmpty ?? true)
     }
     
     //MARK: - PrivateMethods
@@ -74,8 +77,31 @@ extension CartViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let books, let cell = tableView.dequeueReusableCell(withIdentifier: CartViewCell.reuseID, for: indexPath) as? CartViewCell else { return .init() }
         cell.configureCell(with: books[indexPath.row])
+        if hideButton{
+            cell.crossButton.isHidden = true
+        }
+        else {
+            cell.crossButton.tag = indexPath.row
+            cell.crossButton.addTarget(self, action: #selector(crossButtonTapped), for: .touchUpInside)
+        }
         return cell
     }
+    
+    @objc func crossButtonTapped(sender: UIButton, _ tableView: UITableView) {
+        guard let books else { return }
+        storageManager.deleteBook(withBook: books[sender.tag])
+        self.books?.remove(at: sender.tag)
+    }
+    
+    //FIXME: - надо скрыть менюшку с удалением
+//    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+//        guard let books else { return }
+//        if editingStyle == .delete {
+//            storageManager.deleteBook(withBook: books[indexPath.row])
+//            self.books?.remove(at: indexPath.row)
+//            tableView.reloadData()
+//        }
+//    }
 }
 
 extension CartViewController: UITableViewDelegate {
