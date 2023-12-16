@@ -17,6 +17,22 @@ class CartView: UIView {
         return element
     }()
     
+    private let imageView:UIImageView = {
+        let element = UIImageView()
+        element.image = UIImage(systemName: "heart.fill")
+        element.tintColor = .label
+        element.clipsToBounds = true
+        element.contentMode = .scaleAspectFit
+        return element
+    }()
+    
+    private let imageLabel:UILabel = {
+        let element = UILabel()
+        element.text = "You can add your favorite books here."
+        element.font = .systemFont(ofSize: 16, weight: .regular)
+        return element
+    }()
+    
     private let indicator = UIActivityIndicatorView(style: .large)
     
     //MARK: - Init
@@ -35,20 +51,46 @@ class CartView: UIView {
         tableView.reloadData()
     }
     
+    func checkIsEmptyBooks(_ isEmpty: Bool) {
+        if isEmpty {
+            imageView.isHidden = false
+            imageLabel.isHidden = false
+        } 
+        else {
+            imageView.isHidden = true
+            imageLabel.isHidden = true
+        }
+    }
+    
     private func setupViews(){
         self.addSubview(tableView)
         tableView.addSubview(indicator)
+        self.addSubview(imageView)
+        self.addSubview(imageLabel)
         setupConstraints()
     }
     
     private func setupConstraints(){
         tableView.snp.makeConstraints { make in
-            make.top.bottom.equalTo(self.safeAreaLayoutGuide)
-            make.leading.equalToSuperview().inset(20)
-            make.trailing.equalToSuperview().inset(20)
+            make.top.equalTo(self.safeAreaLayoutGuide)
+            make.bottom.equalTo(self.safeAreaLayoutGuide).inset(15)
+            make.leading.equalToSuperview()
+            make.trailing.equalToSuperview()
         }
+        
         indicator.snp.makeConstraints { view in
             view.center.equalToSuperview()
+        }
+        
+        imageView.snp.makeConstraints { make in
+            make.width.height.equalTo(100)
+            make.centerX.equalToSuperview()
+            make.centerY.equalToSuperview()
+        }
+        
+        imageLabel.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(imageView.snp.bottom).offset(20)
         }
     }
 }
