@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SafariServices
 
 class ProductViewController: UIViewController {
     //MARK: - Parameters
@@ -76,5 +77,12 @@ class ProductViewController: UIViewController {
         guard let book else {return}
         storageManager.deleteBook(withBook: book)
         updateFavouriteBarButton(false)
+    }
+    
+    @objc func openBookWebPage() {
+        guard let key = book?.key else {return}
+        let descriptionURL = OpenLibraryEndpoints.returnDescriptionURL(key: key)
+        let webController = SFSafariViewController(url: descriptionURL)
+        present(webController, animated: true)
     }
 }
