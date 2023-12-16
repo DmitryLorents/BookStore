@@ -83,22 +83,22 @@ class CategoriesViewController: UIViewController {
     
     func categoryCellTapped() {
 //        searchView?.startAnimateIndicator()
-        Task.detached(priority: .userInitiated) { [unowned self] in
-            do {
-                async let model: APICategoryModel = try networking.fetchAsyncData(from: .subject(category: categoryName))
-                let books: [Book] = try await model.cats.map(toBook(_:))
-                await MainActor.run {
-                    self.books = books
-                    print("IGOR, ITS OK!")
-                    print(self.books)
-                }
-            } catch {
-                await MainActor.run {
-                    showError(error.localizedDescription)
-                    print("IGOR, VSE PLOHO!")
-                }
-            }
-        }
+//        Task.detached(priority: .userInitiated) { [unowned self] in
+//            do {
+//                async let model: APICategoryModel = try networking.fetchAsyncData(from: .subject(category: categoryName))
+//                let books: [Book] = try await model.cats.map(toBook(_:))
+//                await MainActor.run {
+//                    self.books = books
+//                    print("IGOR, ITS OK!")
+//                    print(self.books)
+//                }
+//            } catch {
+//                await MainActor.run {
+//                    showError(error.localizedDescription)
+//                    print("IGOR, VSE PLOHO!")
+//                }
+//            }
+//        }
     }
     
     func showError(_ message: String) {
