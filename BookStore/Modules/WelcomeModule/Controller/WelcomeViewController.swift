@@ -43,7 +43,6 @@ class WelcomeViewController: UIViewController, UIScrollViewDelegate {
     private lazy var pageControl: UIPageControl = {
         let pageControl = UIPageControl()
         pageControl.numberOfPages = 3
-//        pageControl.preferredIndicatorImage = UIImage(named: "pageActiveIndicator")
         pageControl.pageIndicatorTintColor = .gray
         pageControl.currentPageIndicatorTintColor = .black
         pageControl.addTarget(self, action: #selector(pageControlIndicatorTapped), for: .valueChanged)
