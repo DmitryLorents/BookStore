@@ -32,7 +32,6 @@ class HomeSearchControllerDelegate: NSObject, UISearchControllerDelegate, UISear
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchController.searchBar.text = ""
         searchController.searchBar.resignFirstResponder()
-        searchController.dismiss(animated: true, completion: nil)
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {

@@ -38,11 +38,11 @@ enum BookSection: Int, Hashable, CaseIterable {
 // MARK: - HomeViewModel
 
 struct HomeViewModel {
-    let topBooksHeader: Header
     let topBooks: [Book]
-    let categories: [HomeCategory]
-    let recentBooksHeader: Header
     let recentBooks: [Book]
+    let topBooksHeader: Header
+    let categories = HomeCategory.allCases
+    let recentBooksHeader: Header
     
     struct Header {
         let title: String

@@ -116,9 +116,7 @@ class WelcomeViewController: UIViewController, UIScrollViewDelegate {
     
     
     @objc private func getStartedButtonTapped(sender: UIButton) {
-        let vc = CustomTabBarController()
-        vc.modalPresentationStyle = .fullScreen //or .overFullScreen for transparency
-        self.present(vc, animated: true, completion: nil)
+        dismiss(animated: true)
     }
     
     @objc private func pageControlIndicatorTapped(sender: UIPageControl) {

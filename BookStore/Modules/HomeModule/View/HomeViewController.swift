@@ -16,6 +16,7 @@ protocol HomeViewProtocol: AnyObject {
     func renderNavigationItem()
     func presentCartVC(_ books: [Book], title: String?)
     func presentProductVC(_ book: Book)
+    func stopAnimateIndicator()
 }
 
 // MARK: - HomeViewController
@@ -55,10 +56,12 @@ final class HomeViewController: UIViewController {
     
     override func loadView() {
         super.loadView()
+        checkOnboarding()
         view.addSubview(mainCollectionView)
         view.addSubview(indicator)
         mainCollectionView.frame = view.bounds
         indicator.frame = view.bounds
+        
     }
     
     override func viewDidLoad() {
@@ -67,12 +70,17 @@ final class HomeViewController: UIViewController {
         indicator.startAnimating()
         colectionDelegateSetup()
         searchDelegateSetup()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupNavigationItem()
-        presenter.viewDidAppear()
+        presenter.viewWillAppear()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -96,6 +104,17 @@ final class HomeViewController: UIViewController {
         searchDelegeate.check()
     }
     
+    private func checkOnboarding() {
+        let onboardingShown = UserDefaults.standard.bool(forKey: "OnboardingShown")
+        
+        if !onboardingShown {
+            UserDefaults.standard.setValue(true, forKey: "OnboardingShown")
+            let vc = WelcomeViewController()
+            vc.modalPresentationStyle = .fullScreen
+            present(vc, animated: false)
+        }
+    }
+    
     // MARK: - Objective-C private methods
     
     @objc private func toggleSearchBar() {
@@ -111,9 +130,12 @@ final class HomeViewController: UIViewController {
 
 extension HomeViewController: HomeViewProtocol {
     func render(_ viewModel: HomeViewModel) {
-        indicator.stopAnimating()
         dataSource.updateHeader(with: viewModel)
         dataSource.update(topBooks: viewModel.topBooks, recentBooks: viewModel.recentBooks)
+    }
+    
+    func stopAnimateIndicator() {
+        indicator.stopAnimating()
     }
     
     func showError(_ message: String) {
@@ -131,7 +153,7 @@ extension HomeViewController: HomeViewProtocol {
 
     func renderNavigationItem() {
         navigationItem.searchController = nil
-        navigationController?.view.layoutIfNeeded()
+//        navigationController?.view.layoutIfNeeded()
         tabBarController?.tabBar.isHidden = false
     }
 }
