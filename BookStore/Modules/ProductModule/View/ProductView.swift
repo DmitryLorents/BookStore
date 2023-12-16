@@ -116,6 +116,7 @@ class ProductView: UIView {
         button.setTitleColor(ProductModel.ReadButton.textColor, for: .normal)
         button.backgroundColor = ProductModel.ReadButton.backGroundColor
         button.layer.cornerRadius = ProductModel.ReadButton.cornerRadius
+        button.addTarget(nil, action: #selector(ProductViewController.openBookWebPage), for: .touchUpInside)
         return button
     }()
     //MARK: - DescriptionViews
@@ -172,7 +173,7 @@ class ProductView: UIView {
                                 book?.key ?? ProductModel.DesctiptionTextLabel.text))
                 let bookDetail = try await model.description
                 await MainActor.run {
-                    self.descriptionTextLabel.text = bookDetail
+                    self.descriptionTextLabel.text = (bookDetail ?? "") + "\n\n" // hotFix scrollView bug (eating last string, ambiguous scroll view height)
                 }
             } catch {
                 await MainActor.run {
@@ -181,7 +182,6 @@ class ProductView: UIView {
             }
             await self.indicator.stopAnimating()
         }
-        
     }
     
     private func setHierarchy() {
