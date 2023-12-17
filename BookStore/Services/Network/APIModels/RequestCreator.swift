@@ -79,4 +79,16 @@ struct OpenLibraryEndpoints {
         return self.init(host: "openlibrary.org", path: key).url
     }
     
+    static func weelky() -> Self {
+        return self.init(path: "trending/weekly.json")
+    }
+    
+    static func monthly() -> Self {
+        return self.init(path: "trending/monthly.json")
+    }
+    
+    static func yearly() -> Self {
+        return self.init(path: "trending/yearly.json")
+    }
+    
 }
