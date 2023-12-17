@@ -8,7 +8,9 @@
 
 * MVC
 * AutoLayout programmaticaly + Snapkit
-* UIAnimtion
+* UISearchController
+* Async/Await
+* Realm
 * UserDefaults
 * iOS 15+
 
@@ -17,27 +19,29 @@
 ## Developers *(team #7)*:
 
 * [DmitryLorents *(teamleader)*](https://github.com/DmitryLorents)
-* [Artemaj9](https://github.com/Artemaj9)
-* [nikolay1414](https://github.com/nikolay1414)
-* [Artem Vekshin](https://github.com/O4ErtO)
-* [Nikita Savchik](https://github.com/SavchikN)
+* [MaximGoryachkin](https://github.com/MaximGoryachkin)
+* [Privetyanikita](https://github.com/Privetyanikita)
+* [Sacujo](https://github.com/Sacujo)
+* [studyingProjects](https://github.com/studyingProjects)
 
 
 ## Screenshots
 <p align="center">
-<img src="" width="140"/> <img src="" width="140"/>  <img src="" width="140"/> 
+<img src="https://github.com/DmitryLorents/BookStore/blob/develop/BookStore/SupportingFiles/Assets.xcassets/ReadmeImages/WelcomeVC.imageset/WelcomeVC.png" width="140"/> <img src="https://github.com/DmitryLorents/BookStore/blob/develop/BookStore/SupportingFiles/Assets.xcassets/ReadmeImages/HomeVC.imageset/HomeVC.png" width="140"/>  <img src="https://github.com/DmitryLorents/BookStore/blob/develop/BookStore/SupportingFiles/Assets.xcassets/ReadmeImages/SearchVC.imageset/SearchVC.png" width="140"/> 
 </p>
 
 <p align="center">
-  <img src="" width="140"/>  <img src="" width="140"/>
+  <img src="https://github.com/DmitryLorents/BookStore/blob/develop/BookStore/SupportingFiles/Assets.xcassets/ReadmeImages/CategoriesVC.imageset/CategoriesVC.png" width="140"/> <img src="https://github.com/DmitryLorents/BookStore/blob/develop/BookStore/SupportingFiles/Assets.xcassets/ReadmeImages/LikesVC.imageset/LikesVC.png" width="140"/>  <img src="https://github.com/DmitryLorents/BookStore/blob/develop/BookStore/SupportingFiles/Assets.xcassets/ReadmeImages/AccountVC.imageset/AccountVC.png" width="140"/> 
 </p>
 
+<p align="center">
+  <img src="https://github.com/DmitryLorents/BookStore/blob/develop/BookStore/SupportingFiles/Assets.xcassets/ReadmeImages/ProductVC.imageset/ProductVC.png" width="140"/> <img src="https://github.com/DmitryLorents/BookStore/blob/develop/BookStore/SupportingFiles/Assets.xcassets/ReadmeImages/ReadVC.imageset/ReadVC.png" width="140"/>
 ---
 
 ## Video demonstration of the application
 
 <p align="center">
-  <img src="" width="300"/>
+  <img src="https://github.com/DmitryLorents/BookStore/blob/develop/BookStore/SupportingFiles/Assets.xcassets/ReadmeImages/Animation.dataset/Animation.gif" width="300"/>
 </p>
 
 
@@ -45,5 +49,4 @@
 
 ## Description
 
-NLP Rainbow is a game for a company in which you need to guess colors. The color of the text is different from the name of the color, which makes it more difficult to name the color correctly. This effect allows you to engage both hemispheres of the brain, increases reaction speed, and enhances concentration.
-The game has a main screen, a screen for the game itself with the ability to pause. Statistics screen with the ability to clear. A screen with numerous gameplay settings and a screen with game rules.
+This is an application for searching books. It has a built-in search by title/author, etc. There is a separate screen for selecting books by category. It is possible to add books to favorites and read them online.
