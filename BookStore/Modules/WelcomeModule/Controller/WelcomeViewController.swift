@@ -46,6 +46,7 @@ class WelcomeViewController: UIViewController, UIScrollViewDelegate {
         pageControl.pageIndicatorTintColor = .gray
         pageControl.currentPageIndicatorTintColor = .black
         pageControl.addTarget(self, action: #selector(pageControlIndicatorTapped), for: .valueChanged)
+        pageControl.isHidden = true
         return pageControl
     }()
     
