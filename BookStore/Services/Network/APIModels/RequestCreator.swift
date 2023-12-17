@@ -89,6 +89,7 @@ struct OpenLibraryEndpoints {
     
     static func yearly() -> Self {
         return self.init(path: "trending/yearly.json")
+    }
 
     static func subject(category: String) -> Self {
         .init(path: "subjects/\(category).json")
