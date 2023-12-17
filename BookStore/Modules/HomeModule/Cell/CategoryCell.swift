@@ -33,8 +33,10 @@ class CategoryCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure(with categoty: HomeCategory) {
-        categoryButton.text = categoty.rawValue
+    func configure(with categoty: CategoryViewModel) {
+        categoryButton.text = categoty.title
+        isChange = categoty.isActive
+        checkCell()
     }
     
     func resetCell() {

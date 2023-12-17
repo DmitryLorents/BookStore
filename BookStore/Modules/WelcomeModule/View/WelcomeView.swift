@@ -115,12 +115,12 @@ class WelcomeView: UIView {
         }
         
         logoImage.snp.makeConstraints{ make in
-            make.top.equalToSuperview().offset(400)
+            make.top.equalTo(fullStack.snp.bottom).inset(-100)
             make.centerX.equalToSuperview()
         }
         
         labelWithText.snp.makeConstraints{ make in
-            make.top.equalTo(logoImage.snp.bottom).offset(10)
+            make.top.equalTo(logoImage.snp.bottom).offset(50)
             make.centerX.equalToSuperview()
         }
        

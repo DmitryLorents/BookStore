@@ -12,12 +12,12 @@ struct APISearchModel: Codable {
 }
 
 struct Doc: Codable {
-    let key: String
-    let title: String
-    let authorName: [String]
+    let key: String?
+    let title: String?
+    let authorName: [String]?
     let subjectFacet: [String]? // category
-    let ratingsAverage: Double // several rating
-    let ratingsSortable: Double // rating in API
-    let coverI: Int // image ID
+    let ratingsAverage: Double? // several rating
+    let ratingsSortable: Double? // rating in API
+    let coverI: Int? // image ID
     let isbn: [String]? // If coverI is empty, check this number
 }

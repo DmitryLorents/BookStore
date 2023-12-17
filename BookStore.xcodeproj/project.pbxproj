@@ -64,6 +64,7 @@
 		8920C96A2B249FA60034513A /* APIBookModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8920C9692B249FA60034513A /* APIBookModel.swift */; };
 		8920C96C2B249FCC0034513A /* RequestCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8920C96B2B249FCC0034513A /* RequestCreator.swift */; };
 		8956F75F2B1E00D7006D786E /* UIView + ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8956F75E2B1E00D7006D786E /* UIView + ext.swift */; };
+		89FFF6462B2EE097003B26A7 /* APITrendingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89FFF6452B2EE097003B26A7 /* APITrendingModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -122,6 +123,7 @@
 		8920C9692B249FA60034513A /* APIBookModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIBookModel.swift; sourceTree = "<group>"; };
 		8920C96B2B249FCC0034513A /* RequestCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestCreator.swift; sourceTree = "<group>"; };
 		8956F75E2B1E00D7006D786E /* UIView + ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView + ext.swift"; sourceTree = "<group>"; };
+		89FFF6452B2EE097003B26A7 /* APITrendingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APITrendingModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -564,6 +566,7 @@
 				8920C9672B249F790034513A /* APISearchModel.swift */,
 				8920C9692B249FA60034513A /* APIBookModel.swift */,
 				8920C96B2B249FCC0034513A /* RequestCreator.swift */,
+				89FFF6452B2EE097003B26A7 /* APITrendingModel.swift */,
 			);
 			path = APIModels;
 			sourceTree = "<group>";
@@ -696,6 +699,7 @@
 				0AD9EF432B23090F0099F0A2 /* CategoryCustomCell.swift in Sources */,
 				89209CCC2B29897B00FCF147 /* UIBarButtonItem + ext.swift in Sources */,
 				89209CC52B286ABE00FCF147 /* HomeViewController.swift in Sources */,
+				89FFF6462B2EE097003B26A7 /* APITrendingModel.swift in Sources */,
 				0AD9EF522B2327310099F0A2 /* CustomButton.swift in Sources */,
 				0A162AD22AFD20FA00DF885A /* ProductView.swift in Sources */,
 				0A162AD12AFD20FA00DF885A /* ProductModel.swift in Sources */,

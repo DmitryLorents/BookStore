@@ -41,7 +41,7 @@ struct HomeViewModel {
     let topBooks: [Book]
     let recentBooks: [Book]
     let topBooksHeader: Header
-    let categories = HomeCategory.allCases
+    let categories: [CategoryViewModel]
     let recentBooksHeader: Header
     
     struct Header {
@@ -53,6 +53,11 @@ struct HomeViewModel {
         let title: String
         let action: () -> Void
     }
+}
+
+struct CategoryViewModel: Hashable {
+    let title: String
+    var isActive: Bool
 }
 
 
