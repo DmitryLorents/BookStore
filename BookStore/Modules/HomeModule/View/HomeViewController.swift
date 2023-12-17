@@ -153,28 +153,6 @@ extension HomeViewController: HomeViewProtocol {
 
     func renderNavigationItem() {
         navigationItem.searchController = nil
-//        navigationController?.view.layoutIfNeeded()
         tabBarController?.tabBar.isHidden = false
     }
 }
-
-
-
-//
-//struct ListProvider: PreviewProvider {
-//    static var previews: some View {
-//        ConteinerView().ignoresSafeArea()
-//    }
-//
-//    struct ConteinerView: UIViewControllerRepresentable {
-//        let homeVC = HomeViewController(presenter: HomePresenter())
-//
-//        func makeUIViewController(context: Context) -> some UIViewController {
-//            homeVC
-//        }
-//
-//        func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
-//
-//        }
-//    }
-//}
