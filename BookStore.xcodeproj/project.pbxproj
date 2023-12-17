@@ -39,10 +39,11 @@
 		848EAC052B2A2A6F006C6395 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 848EAC042B2A2A6F006C6395 /* RealmSwift */; };
 		848EAC082B2A2B79006C6395 /* BookModelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848EAC072B2A2B79006C6395 /* BookModelData.swift */; };
 		848EAC0A2B2A2CBB006C6395 /* StorageManagerRealm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848EAC092B2A2CBB006C6395 /* StorageManagerRealm.swift */; };
-		84F669B12B2D269000699415 /* ListsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F669B02B2D269000699415 /* ListsViewController.swift */; };
-		84F669B32B2D26A600699415 /* ListsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F669B22B2D26A600699415 /* ListsModel.swift */; };
-		84F669B52B2D26C000699415 /* ListsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F669B42B2D26C000699415 /* ListsView.swift */; };
+		84F669B12B2D269000699415 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F669B02B2D269000699415 /* ListViewController.swift */; };
+		84F669B32B2D26A600699415 /* ListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F669B22B2D26A600699415 /* ListModel.swift */; };
+		84F669B52B2D26C000699415 /* ListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F669B42B2D26C000699415 /* ListView.swift */; };
 		84F669B72B2D29EA00699415 /* ListViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F669B62B2D29EA00699415 /* ListViewCell.swift */; };
+		84FC72872B2EAC380044E672 /* ListModelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FC72862B2EAC380044E672 /* ListModelData.swift */; };
 		89209CBA2B286ABE00FCF147 /* BookCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89209CA72B286ABE00FCF147 /* BookCell.swift */; };
 		89209CBB2B286ABE00FCF147 /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89209CA82B286ABE00FCF147 /* CategoryCell.swift */; };
 		89209CBC2B286ABE00FCF147 /* SectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89209CA92B286ABE00FCF147 /* SectionHeaderView.swift */; };
@@ -96,10 +97,11 @@
 		0AD9EF4F2B2327310099F0A2 /* AccountView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
 		848EAC072B2A2B79006C6395 /* BookModelData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookModelData.swift; sourceTree = "<group>"; };
 		848EAC092B2A2CBB006C6395 /* StorageManagerRealm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManagerRealm.swift; sourceTree = "<group>"; };
-		84F669B02B2D269000699415 /* ListsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListsViewController.swift; sourceTree = "<group>"; };
-		84F669B22B2D26A600699415 /* ListsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListsModel.swift; sourceTree = "<group>"; };
-		84F669B42B2D26C000699415 /* ListsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListsView.swift; sourceTree = "<group>"; };
+		84F669B02B2D269000699415 /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
+		84F669B22B2D26A600699415 /* ListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListModel.swift; sourceTree = "<group>"; };
+		84F669B42B2D26C000699415 /* ListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListView.swift; sourceTree = "<group>"; };
 		84F669B62B2D29EA00699415 /* ListViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewCell.swift; sourceTree = "<group>"; };
+		84FC72862B2EAC380044E672 /* ListModelData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListModelData.swift; sourceTree = "<group>"; };
 		89209CA72B286ABE00FCF147 /* BookCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookCell.swift; sourceTree = "<group>"; };
 		89209CA82B286ABE00FCF147 /* CategoryCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryCell.swift; sourceTree = "<group>"; };
 		89209CA92B286ABE00FCF147 /* SectionHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionHeaderView.swift; sourceTree = "<group>"; };
@@ -417,6 +419,7 @@
 			children = (
 				848EAC072B2A2B79006C6395 /* BookModelData.swift */,
 				848EAC092B2A2CBB006C6395 /* StorageManagerRealm.swift */,
+				84FC72862B2EAC380044E672 /* ListModelData.swift */,
 			);
 			path = StorageManager;
 			sourceTree = "<group>";
@@ -434,7 +437,7 @@
 		84F669AD2B2D263400699415 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				84F669B42B2D26C000699415 /* ListsView.swift */,
+				84F669B42B2D26C000699415 /* ListView.swift */,
 				84F669B62B2D29EA00699415 /* ListViewCell.swift */,
 			);
 			path = View;
@@ -443,7 +446,7 @@
 		84F669AE2B2D265000699415 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				84F669B22B2D26A600699415 /* ListsModel.swift */,
+				84F669B22B2D26A600699415 /* ListModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -451,7 +454,7 @@
 		84F669AF2B2D265C00699415 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				84F669B02B2D269000699415 /* ListsViewController.swift */,
+				84F669B02B2D269000699415 /* ListViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -651,16 +654,16 @@
 				0AD9EF452B23090F0099F0A2 /* GradientView.swift in Sources */,
 				0ACD9E902B02BF3600FE9DBA /* SceneDelegate.swift in Sources */,
 				0AD9EF332B2244990099F0A2 /* CartModel.swift in Sources */,
-				84F669B52B2D26C000699415 /* ListsView.swift in Sources */,
+				84F669B52B2D26C000699415 /* ListView.swift in Sources */,
 				89209CC32B286ABE00FCF147 /* HomeModel.swift in Sources */,
 				8920C9642B249ED80034513A /* NetworkManager.swift in Sources */,
 				0AD9EF412B23090F0099F0A2 /* CategoriesViewController.swift in Sources */,
 				0AD9EF502B2327310099F0A2 /* AccountViewController.swift in Sources */,
 				0AD9EF1F2B1C3C8A0099F0A2 /* CustomTabBarController.swift in Sources */,
 				0ACD9E8E2B02BF0700FE9DBA /* WelcomeView.swift in Sources */,
-				84F669B12B2D269000699415 /* ListsViewController.swift in Sources */,
+				84F669B12B2D269000699415 /* ListViewController.swift in Sources */,
 				8920C96C2B249FCC0034513A /* RequestCreator.swift in Sources */,
-				84F669B32B2D26A600699415 /* ListsModel.swift in Sources */,
+				84F669B32B2D26A600699415 /* ListModel.swift in Sources */,
 				8920C9682B249F790034513A /* APISearchModel.swift in Sources */,
 				848EAC082B2A2B79006C6395 /* BookModelData.swift in Sources */,
 				0AD9EF352B2244990099F0A2 /* CartView.swift in Sources */,
@@ -684,6 +687,7 @@
 				0AD9EF442B23090F0099F0A2 /* CategoriesView.swift in Sources */,
 				0AD9EF532B2327310099F0A2 /* AccountView.swift in Sources */,
 				89209CC62B286ABE00FCF147 /* BooksCollectionDelegate.swift in Sources */,
+				84FC72872B2EAC380044E672 /* ListModelData.swift in Sources */,
 				0ACD9E8C2B02BF0700FE9DBA /* WelcomeViewController.swift in Sources */,
 				0AD9EF322B2244990099F0A2 /* CartViewController.swift in Sources */,
 				89209CBA2B286ABE00FCF147 /* BookCell.swift in Sources */,

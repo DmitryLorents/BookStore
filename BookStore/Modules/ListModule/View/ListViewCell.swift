@@ -68,13 +68,13 @@ class ListViewCell:UITableViewCell{
         }
         
         arrowImageView.snp.makeConstraints { make in
-            make.width.height.equalTo(16)
+            make.width.height.equalTo(20)
             make.centerY.equalTo(viewForCell)
             make.leading.equalTo(nameListLabel.snp.trailing).offset(10)
             make.trailing.equalTo(viewForCell.snp.trailing).inset(20)
         }
     }
-    func configureCell(nameList: ListsModel){
+    func configureCell(nameList: ListModel){
         nameListLabel.text = nameList.name
     }
             

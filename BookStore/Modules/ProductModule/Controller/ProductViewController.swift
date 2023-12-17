@@ -91,4 +91,26 @@ class ProductViewController: UIViewController {
         let webController = SFSafariViewController(url: descriptionURL)
         present(webController, animated: true)
     }
+    
+    @objc func addBookToList() {
+        guard let book else {return}
+        let listButton = storageManager.getListName()
+        let alertController = UIAlertController(title: "Add to list", message: nil, preferredStyle: .alert)
+                
+        for index in 0..<listButton.count {
+            let actionTitle = listButton[index]
+            let action = UIAlertAction(title: actionTitle.name, style: .default) { (action:UIAlertAction) in
+                print("chose \(index + 1): \(actionTitle)")
+                self.storageManager.addBookToList(book, listName: actionTitle.name)
+                }
+                alertController.addAction(action)
+            }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .destructive) { (action:UIAlertAction) in
+            print("Cancel")
+        }
+        
+        alertController.addAction(cancelAction)
+        present(alertController, animated: true, completion: nil)
+    }
 }

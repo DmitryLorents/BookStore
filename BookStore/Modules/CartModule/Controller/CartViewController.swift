@@ -24,12 +24,14 @@ class CartViewController: UIViewController {
     private let storageManager = StorageManagerRealm.shared
     private let titleCart:String?
     private let hideButton:Bool
+    private let isNotLikes:Bool
     
     // MARK: - Init
-    init (books: [Book]?, titleCart: String? ,hideButton: Bool = false) {
+    init (books: [Book]?, titleCart: String? ,hideButton: Bool = false, isNotLikes:Bool = false) {
         self.books = books
         self.titleCart = titleCart
         self.hideButton = hideButton
+        self.isNotLikes = isNotLikes
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -95,8 +97,17 @@ extension CartViewController: UITableViewDataSource {
     
     @objc func crossButtonTapped(sender: UIButton, _ tableView: UITableView) {
         guard let books else { return }
-        //        storageManager.deleteBook(withBook: books[sender.tag])
-        self.books?.remove(at: sender.tag)
+        guard let titleCart else { return }
+        
+//        isNotLikes ? storageManager.deleteBookFromList(books[sender.tag], listName: titleCart) : storageManager.deleteBook(books[sender.tag])
+        if isNotLikes{
+            print("isNotLikes")
+            storageManager.deleteBookFromList(books[sender.tag], listName: titleCart)
+        }else {
+            print("isLikes")
+            storageManager.deleteBook(books[sender.tag])
+            self.books?.remove(at: sender.tag)
+        }
     }
     
     //FIXME: - надо скрыть менюшку с удалением
