@@ -23,10 +23,7 @@ final class BooksCollectionDelegate: NSObject, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         switch BookSection(rawValue: indexPath.section) {
         case .categories:
-            let cells = collectionView.visibleCells.map { $0 as? CategoryCell }
-            cells.forEach { $0?.resetCell() }
-            let cell = collectionView.cellForItem(at: indexPath) as? CategoryCell
-            cell?.checkCell()
+            didSelectCategoryAt?(indexPath.item)
         case .top:
             print("didSelectTopAt?\(indexPath.item)")
             didSelectTopAt?(indexPath.item)

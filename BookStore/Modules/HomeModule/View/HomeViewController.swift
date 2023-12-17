@@ -12,11 +12,13 @@ import SwiftUI
 
 protocol HomeViewProtocol: AnyObject {
     func render(_ viewModel: HomeViewModel)
+    func render(_ topBooks: [Book], _ recentBooks: [Book], _ categories: [CategoryViewModel])
     func showError(_ message: String)
     func renderNavigationItem()
     func presentCartVC(_ books: [Book], title: String?)
     func presentProductVC(_ book: Book)
     func stopAnimateIndicator()
+    func startAnimateIndicator()
 }
 
 // MARK: - HomeViewController
@@ -131,11 +133,19 @@ final class HomeViewController: UIViewController {
 extension HomeViewController: HomeViewProtocol {
     func render(_ viewModel: HomeViewModel) {
         dataSource.updateHeader(with: viewModel)
-        dataSource.update(topBooks: viewModel.topBooks, recentBooks: viewModel.recentBooks)
+        dataSource.update(categoryModels: viewModel.categories, topBooks: viewModel.topBooks, recentBooks: viewModel.recentBooks)
+    }
+    
+    func startAnimateIndicator() {
+        indicator.startAnimating()
     }
     
     func stopAnimateIndicator() {
         indicator.stopAnimating()
+    }
+    
+    func render(_ topBooks: [Book], _ recentBooks: [Book], _ categories: [CategoryViewModel]) {
+        dataSource.update(categoryModels: categories, topBooks: topBooks, recentBooks: recentBooks)
     }
     
     func showError(_ message: String) {

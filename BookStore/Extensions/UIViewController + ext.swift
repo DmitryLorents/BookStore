@@ -17,9 +17,6 @@ extension UIViewController {
             presenter: presenter,
             searchController: searchController
         )
-        let searchDelegate = HomeSearchControllerDelegate(
-            searchController: searchController,
-            presenter: presenter)
         presenter.view = homeViewController
         presenter.searchView = searchResultsController
         return homeViewController

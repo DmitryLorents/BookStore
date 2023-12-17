@@ -10,21 +10,21 @@ import UIKit
 final class BookSectionDataSource {
     private let collectionView: UICollectionView
     private let dataSource: DataSource
-    
-    var dataModel = DataModel()
-    
-    struct DataModel {
-        let topHeader: HomeViewModel.Button
-        let topBooks: [Book]
-        
-        init(
-            topHeader: HomeViewModel.Button = .init(title: "", action: {}),
-            topBooks: [Book] = .init()
-        ) {
-            self.topHeader = topHeader
-            self.topBooks = topBooks
-        }
-    }
+//    
+//    var dataModel = DataModel()
+//    
+//    struct DataModel {
+//        let topHeader: HomeViewModel.Button
+//        let topBooks: [Book]
+//        
+//        init(
+//            topHeader: HomeViewModel.Button = .init(title: "", action: {}),
+//            topBooks: [Book] = .init()
+//        ) {
+//            self.topHeader = topHeader
+//            self.topBooks = topBooks
+//        }
+//    }
     
     //MARK: - init(_:)
     init(_ collectionView: UICollectionView) {
@@ -39,10 +39,6 @@ final class BookSectionDataSource {
             case .categories(let category):
                 let cell = cell as? CategoryCell
                 cell?.configure(with: category)
-                cell?.resetCell()
-                if (indexPath.section, indexPath.item) == (0, 0) {
-                    cell?.checkCell()
-                }
             case .top(let book):
                 let cell = cell as? BookCell
                 cell?.configure(with: book)
@@ -59,12 +55,12 @@ final class BookSectionDataSource {
     }
     
     //MARK: - Public methods
-    func update(topBooks: [Book] = [], recentBooks: [Book] = []) {
+    func update(categoryModels: [CategoryViewModel], topBooks: [Book] = [], recentBooks: [Book] = []) {
         var snapshot = DataSnapshot()
         let sections = BookSection.allCases
         snapshot.appendSections(sections)
         snapshot.appendItems(
-            HomeCategory.allCases.map(Item.categories),
+            categoryModels.map(Item.categories),
             toSection: .categories
         )
         snapshot.appendItems(
@@ -135,7 +131,7 @@ private extension BookSectionDataSource {
     }
  
     enum Item: Hashable {
-        case categories(HomeCategory)
+        case categories(CategoryViewModel)
         case top(Book)
         case recent(Book)
         
