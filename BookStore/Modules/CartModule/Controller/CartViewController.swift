@@ -23,14 +23,14 @@ class CartViewController: UIViewController {
     }
     private let storageManager = StorageManagerRealm.shared
     private let titleCart:String?
-    private let hideButton:Bool
+    private let isHideCrossButton:Bool
     private let isNotLikes:Bool
     
     // MARK: - Init
-    init (books: [Book]?, titleCart: String? ,hideButton: Bool = false, isNotLikes:Bool = false) {
+    init (books: [Book]?, titleCart: String? ,isHideCrossButton: Bool = false, isNotLikes:Bool = false) {
         self.books = books
         self.titleCart = titleCart
-        self.hideButton = hideButton
+        self.isHideCrossButton = isHideCrossButton
         self.isNotLikes = isNotLikes
         super.init(nibName: nil, bundle: nil)
     }
@@ -85,7 +85,7 @@ extension CartViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let books, let cell = tableView.dequeueReusableCell(withIdentifier: CartViewCell.reuseID, for: indexPath) as? CartViewCell else { return .init() }
         cell.configureCell(with: books[indexPath.row])
-        if hideButton{
+        if isHideCrossButton{
             cell.crossButton.isHidden = true
         }
         else {
@@ -97,28 +97,26 @@ extension CartViewController: UITableViewDataSource {
     
     @objc func crossButtonTapped(sender: UIButton, _ tableView: UITableView) {
         guard let books else { return }
-        guard let titleCart else { return }
         
-//        isNotLikes ? storageManager.deleteBookFromList(books[sender.tag], listName: titleCart) : storageManager.deleteBook(books[sender.tag])
-        if isNotLikes{
-            print("isNotLikes")
+        if self.isNotLikes, let titleCart {
             storageManager.deleteBookFromList(books[sender.tag], listName: titleCart)
-        }else {
-            print("isLikes")
+            self.books?.remove(at: sender.tag)
+        }
+        else {
             storageManager.deleteBook(books[sender.tag])
             self.books?.remove(at: sender.tag)
         }
     }
     
     //FIXME: - надо скрыть менюшку с удалением
-    //    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-    //        guard let books else { return }
-    //        if editingStyle == .delete {
-    //            storageManager.deleteBook(withBook: books[indexPath.row])
-    //            self.books?.remove(at: indexPath.row)
-    //            tableView.reloadData()
-    //        }
-    //    }
+//        func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+//            guard let books else { return }
+//            if editingStyle == .delete {
+//                storageManager.deleteBook(books[indexPath.row])
+//                self.books?.remove(at: indexPath.row)
+//                tableView.reloadData()
+//            }
+//        }
 }
 
 extension CartViewController: UITableViewDelegate {

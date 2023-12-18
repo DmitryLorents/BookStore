@@ -45,7 +45,7 @@ class ListViewController:UIViewController{
     }
     
     func addListToArr(nameList: String) {
-        namesLists?.append(ListModel(name: nameList, books: []))
+        namesLists?.insert(ListModel(name: nameList, books: []), at: 0)
         listView.tableView.reloadData()
     }
     

@@ -122,7 +122,7 @@ class StorageManagerRealm{
         let lists = realm.objects(ListModelData.self)
         var listsModel = [ListModel]()
         for list in lists {
-            listsModel.append(ListModel(name: list.name, books: transferListToArrBook(bookModelDataList: list.books)))
+            listsModel.insert(ListModel(name: list.name, books: transferListToArrBook(bookModelDataList: list.books)), at: 0)
         }
         return listsModel
     }
