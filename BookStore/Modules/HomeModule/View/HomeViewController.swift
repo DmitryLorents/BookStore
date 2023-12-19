@@ -153,7 +153,7 @@ extension HomeViewController: HomeViewProtocol {
     }
     
     func presentCartVC(_ books: [Book], title: String?) {
-        navigationController?.pushViewController(CartViewController(books: books, titleCart: title), animated: true)
+        navigationController?.pushViewController(CartViewController(books: books, titleCart: title, isHideCrossButton: true), animated: true)
     }
     
     func presentProductVC(_ book: Book) {

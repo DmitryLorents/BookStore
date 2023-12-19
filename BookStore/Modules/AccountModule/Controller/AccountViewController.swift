@@ -90,7 +90,8 @@ class AccountViewController: UIViewController {
     }
     
     @objc func listTupped(){
-        print("List open")
+        let vc = ListViewController()
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     @objc func hideKeyboard(){

@@ -103,7 +103,7 @@ class AccountView: UIView {
         
         nameTextField.snp.makeConstraints { make in
             make.centerY.equalTo(substrateView)
-            make.trailing.equalTo(substrateView.snp.trailing).inset(10)
+            make.width.equalTo(100)
             make.leading.equalTo(nameLabel.snp.trailing).offset(57)
         }
         

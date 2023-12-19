@@ -108,6 +108,7 @@ class ProductView: UIView {
         button.setTitleColor(ProductModel.AddToListButton.textColor, for: .normal)
         button.backgroundColor = ProductModel.AddToListButton.backGroundColor
         button.layer.cornerRadius = ProductModel.AddToListButton.cornerRadius
+        button.addTarget(nil, action: #selector(ProductViewController.addBookToList), for: .touchUpInside)
         return button
     }()
     private lazy var readButton = {

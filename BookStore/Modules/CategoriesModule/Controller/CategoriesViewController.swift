@@ -91,7 +91,7 @@ class CategoriesViewController: UIViewController {
 
     func presentCartVC(_ books: [Book]) {
         print(#function)
-        navigationController?.pushViewController(CartViewController(books: books, titleCart: "\(categoryName) books"), animated: true)
+        navigationController?.pushViewController(CartViewController(books: books, titleCart: "\(categoryName) books",isHideCrossButton: true), animated: true)
     }
 
 }

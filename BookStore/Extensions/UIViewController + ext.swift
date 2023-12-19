@@ -9,7 +9,7 @@ import UIKit
 
 extension UIViewController {
     static var homeBuilder: UIViewController {
-        let searchResultsController = CartViewController(books: nil, titleCart: "")
+        let searchResultsController = CartViewController(books: nil, titleCart: "",isHideCrossButton: true)
         let searchController = UISearchController(searchResultsController: searchResultsController)
         searchController.showsSearchResultsController = true
         let presenter = HomePresenter()
